@@ -1,14 +1,15 @@
 import {Box, Flex} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
+import {CityInput} from "../CityInput";
 
 export const CalculatorPage = () =>{
 
-    const [message, setMessage] = useState("");
+    const [inputComponent, setInputComponent] = useState(<CityInput/>);
 
-    const handleClick = (newMessage) =>
+    const handleClick = (inputComponent) =>
     {
-        setMessage(newMessage);
+        setInputComponent(inputComponent);
     }
 
     return(
@@ -16,11 +17,9 @@ export const CalculatorPage = () =>{
         <Box>
             <CalculatorComponent handleClick={handleClick}/>
         </Box>
-        <Box>
-            <Flex marginLeft={3}>
-                {message}
-            </Flex>
-        </Box>
+        <Flex marginLeft={3} alignItems="flex-start">
+            {inputComponent}
+        </Flex>
     </Flex>
 );
 }
