@@ -10,7 +10,7 @@ export const ResultPage = () => {
         </Box>
         
         <Flex marginLeft={3} alignItems="flex-start">
-            <ResultMap></ResultMap>
+            <ResultMap /> 
         </Flex>
 
         <Flex marginLeft={3} alignItems="flex-start">
