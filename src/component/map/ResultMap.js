@@ -1,6 +1,6 @@
 import { position } from "@chakra-ui/react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, MarkerF, PolylineF } from "@react-google-maps/api";
 import {Component} from "react";
 
 const containerStyle = {
@@ -36,6 +36,13 @@ const markers = [
   }
 ];
 
+const coordinatesForPolyline = [{ lat: 41.881832, lng: -87.623177 },
+  { lat: 39.739235, lng: -104.99025 },
+  { lat: 34.052235, lng: -118.243683 },
+  { lat: 40.712776, lng: -74.005974 }
+
+];
+
 const handleOnLoad = (map) => {
   const bounds = new window.google.maps.LatLngBounds();
   markers.forEach(({ position }) => bounds.extend(position));
@@ -57,16 +64,25 @@ export class ResultMap extends Component {
             onLoad={(map) => handleOnLoad(map)}
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={10}
-            children=
+            zoom={10}           
+            >
+          
             {markers.map( marker => (
-                <MarkerF
-                key={marker.id}
-                position={marker.position}
-                >
-                </MarkerF>
-              ))}
-              >
+                  <MarkerF
+                  key={marker.id}
+                  position={marker.position}
+                  ></MarkerF>))}
+            
+            {<PolylineF
+            path={coordinatesForPolyline}
+            geodesic={true}
+            options={{
+              strokeColor: "#ff2527",
+              strokeOpacity: 0.75,
+              strokeWeight: 2,
+            }}
+            >
+            </PolylineF>}
           </GoogleMap>
       </LoadScript>
     )
