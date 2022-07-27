@@ -5,17 +5,20 @@ import {CityInput} from "../CityInput";
 
 export const CalculatorPage = () =>{
 
-    const [inputComponent, setInputComponent] = useState(<CityInput/>);
-
     const handleClick = (inputComponent) =>
     {
         setInputComponent(inputComponent);
     }
+    
+    const [city, setCity] = useState();
+    const [accommodation,setAccommodation] = useState();
+    const [inputComponent, setInputComponent] = useState(<CityInput setCity={setCity} setAccommodation={setAccommodation} nextStep={handleClick}/>);
 
+    console.log(accommodation)
     return(
     <Flex flexDirection='row'>
         <Box>
-            <CalculatorComponent handleClick={handleClick}/>
+            <CalculatorComponent handleClick={handleClick} selectedCity={city}/>
         </Box>
         <Flex marginLeft={3} alignItems="flex-start">
             {inputComponent}

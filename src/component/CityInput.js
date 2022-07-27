@@ -8,10 +8,12 @@ import {
     Input,
     VStack
 } from "@chakra-ui/react";
-import { SearchIcon } from '@chakra-ui/icons'
+
+import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
 import geodb from "../api/geodb";
+import {AccommodationInput} from "./AccommodationInput";
 
 const SearchBar = (props) => {
     return (
@@ -60,32 +62,67 @@ const SearchBar = (props) => {
 }
 
 const CityList = (props) => {
-    console.log(props.cities);
     const cities = props.cities.map( (city) => {
-        return <CityCard city={city} mt={2}/>
+        return (
+            <CityCard
+                city={city} mt={2}
+                setSelectedCity={props.setSelectedCity}
+                setStepFinished={props.setStepFinished}/>
+        )
     })
     return (
-        <VStack spacing={1} mt={4} align='stretch'>
-            {cities}
-        </VStack>)
+            <VStack spacing={1} mt={1} mb={1} align='stretch'>
+                {cities}
+            </VStack>
+    )
 }
 
 const CityCard = (props) => {
     const onClick =  () => {
-        alert(JSON.stringify({"latitude": props.city.latitude, "longitude": props.city.longitude}, null, 2));
+        props.setSelectedCity(props.city)
+        props.setStepFinished(true)
     }
     return (
-        <Button variant='outline' onClick={onClick}>{`${props.city.city}, ${props.city.country}`}</Button>
+        <Button variant='outline' onClick={onClick}>
+            {`${props.city.name}, ${props.city.country}`}
+        </Button>
     )
 }
 
-export const CityInput = () =>{
-    const [cities, setCities] = useState([]);
+export const CityInput = (props) =>{
+    const [selectedCity, setSelectedCity] = useState();
+    const [stepFinished, setStepFinished] = useState(false);
+    const [citiesResponse, setCitiesResponse] = useState([]);
+
+    const cities = citiesResponse.map((city) => {
+        return {
+            name: city.name,
+            region: city.region,
+            country: city.country,
+            latitude: city.latitude,
+            longitude: city.longitude
+        }
+    })
 
     return(
         <Flex direction="column" alignContent="space-around" mt='2vh'>
-            <SearchBar setCities={setCities}/>
-            <CityList cities={cities}/>
+            <SearchBar setCities={setCitiesResponse} />
+            <CityList
+                cities={cities}
+                setSelectedCity={setSelectedCity}
+                setStepFinished={setStepFinished}/>
+            <Button
+                rightIcon={<ArrowForwardIcon />}
+                colorScheme='pink'
+                variant='outline'
+                isDisabled={!stepFinished}
+                onClick={() => {
+                    props.nextStep(<AccommodationInput selectedCity={selectedCity} nextStep={props.nextStep}/>)
+                    props.setCity(selectedCity)
+                }}
+            >
+                Continua con Alojamiento
+            </Button>
         </Flex>
     )
 }
