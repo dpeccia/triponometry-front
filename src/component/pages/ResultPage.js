@@ -3,16 +3,6 @@ import { ResultMap } from "../map/ResultMap";
 
 export const ResultPage = () => {
 
-    // const handleClick = (inputComponent) =>
-    // {
-    //     setInputComponent(inputComponent);
-    // }
-    
-    // const [city, setCity] = useState();
-    // const [accommodation,setAccommodation] = useState();
-    // const [inputComponent, setInputComponent] = useState(<CityInput setCity={setCity} setAccommodation={setAccommodation} nextStep={handleClick}/>);
-
-    // console.log(accommodation)
     return(
     <Flex flexDirection='row'>
         <Box>
@@ -28,5 +18,8 @@ export const ResultPage = () => {
         </Flex>
     </Flex>
     )
+
 }
+
+
     
