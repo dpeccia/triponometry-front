@@ -1,13 +1,13 @@
 import { position } from "@chakra-ui/react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { GoogleMap, LoadScript, MarkerF, PolylineF } from "@react-google-maps/api";
-import {Component} from "react";
+import { Component } from "react";
 
 const containerStyle = {
-    width: '400px',
-    height: '400px'
-  };
-  
+  width: '400px',
+  height: '400px'
+};
+
 const center = {
   lat: -3.745,
   lng: -38.523
@@ -37,9 +37,9 @@ const markers = [
 ];
 
 const coordinatesForPolyline = [{ lat: 41.881832, lng: -87.623177 },
-  { lat: 39.739235, lng: -104.99025 },
-  { lat: 34.052235, lng: -118.243683 },
-  { lat: 40.712776, lng: -74.005974 }
+{ lat: 39.739235, lng: -104.99025 },
+{ lat: 34.052235, lng: -118.243683 },
+{ lat: 40.712776, lng: -74.005974 }
 
 ];
 
@@ -51,29 +51,30 @@ const handleOnLoad = (map) => {
 
 export class ResultMap extends Component {
 
-  constructor(props){  
-    super(props);  
-//    this.setPlacesInformation();
+  constructor(props) {
+    super(props);
+    //    this.setPlacesInformation();
   }
 
   render() {
-  return (
+    return (
       <LoadScript
         googleMapsApiKey="AIzaSyDYHoM5Y6ZVqIX5tR76bPVTN8dCYtpQDTM">
-          <GoogleMap
-            onLoad={(map) => handleOnLoad(map)}
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}           
-            >
-          
-            {markers.map( marker => (
-                  <MarkerF
-                  key={marker.id}
-                  position={marker.position}
-                  ></MarkerF>))}
-            
-            {<PolylineF
+        <GoogleMap
+          onLoad={(map) => handleOnLoad(map)}
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+        >
+
+          {markers.map(marker => (
+            <MarkerF
+              key={marker.id}
+              position={marker.position}
+            ></MarkerF>))}
+
+          {/* TODO: PolylineF solamente crea una ruta directa, no una ruta "viable". */}
+          {<PolylineF
             path={coordinatesForPolyline}
             geodesic={true}
             options={{
@@ -81,9 +82,9 @@ export class ResultMap extends Component {
               strokeOpacity: 0.75,
               strokeWeight: 2,
             }}
-            >
-            </PolylineF>}
-          </GoogleMap>
+          >
+          </PolylineF>}
+        </GoogleMap>
       </LoadScript>
     )
   }
