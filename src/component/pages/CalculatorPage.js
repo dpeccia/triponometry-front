@@ -3,22 +3,30 @@ import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
 import {CityInput} from "../CityInput";
 
-export const CalculatorPage = () =>{
+export const CalculatorPage = () => {
+
+    const [calculatorInputs, setCalculatorInputs] = useState({
+        city: {},
+        accommodation: {},
+        activities: {},
+    });
 
     const handleClick = (inputComponent) =>
     {
         setInputComponent(inputComponent);
     }
-    
-    const [city, setCity] = useState();
-    const [accommodation,setAccommodation] = useState();
-    const [inputComponent, setInputComponent] = useState(<CityInput setCity={setCity} setAccommodation={setAccommodation} nextStep={handleClick}/>);
 
-    console.log(accommodation)
+    const [inputComponent, setInputComponent] = useState(
+        <CityInput
+            nextStep={handleClick}
+            setCalculatorInputs={setCalculatorInputs}
+        />
+    );
+
     return(
     <Flex flexDirection='row'>
         <Box>
-            <CalculatorComponent handleClick={handleClick} selectedCity={city}/>
+            <CalculatorComponent handleClick={handleClick} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs}/>
         </Box>
         <Flex marginLeft={3} alignItems="flex-start">
             {inputComponent}

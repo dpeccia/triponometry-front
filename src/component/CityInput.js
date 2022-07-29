@@ -117,8 +117,14 @@ export const CityInput = (props) =>{
                 variant='outline'
                 isDisabled={!stepFinished}
                 onClick={() => {
-                    props.nextStep(<AccommodationInput selectedCity={selectedCity} nextStep={props.nextStep}/>)
-                    props.setCity(selectedCity)
+                    props.setCalculatorInputs(prevState => ({...prevState, city: selectedCity}))
+                    props.nextStep(
+                        <AccommodationInput
+                            selectedCity={selectedCity}
+                            nextStep={props.nextStep}
+                            setCalculatorInputs={props.setCalculatorInputs}
+                        />
+                    )
                 }}
             >
                 Continua con Alojamiento
