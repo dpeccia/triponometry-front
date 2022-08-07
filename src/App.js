@@ -9,12 +9,11 @@ import {Header} from "./component/Header";
 function App() {
   return (
     <ChakraProvider>
-      <Flex  direction='column' minH='100vh'>
+      <Flex direction='column' minH='100vh'>
           <Header />
-          <Flex p={4} grow='1'>
-              <Outlet/>
+          <Flex p={8} direction='row'>
+              <Outlet grow='1'/>
           </Flex>
-          <Flex p={2} bg='#6F6F6F'/>
       </Flex>
     </ChakraProvider>
   );
