@@ -3,6 +3,7 @@ import {Box, SimpleGrid, VStack, IconButton, HStack} from "@chakra-ui/react";
 import { BedIcon, BusIcon, DestinationIcon, DollarIcon, HourglassIcon, CalendarIcon } from "../icons/icons";
 import {AccommodationInput} from "../AccommodationInput";
 import {ActivitiesInputs} from "../ActivitiesInput";
+import { HorariosInput } from "./horarios/HorariosInput";
 
 
 export const CalculatorComponent = (props) =>
@@ -14,7 +15,7 @@ export const CalculatorComponent = (props) =>
         <HStack alignItems='flex-start'>
             <SimpleGrid columns={2} spacing={2} w='calc(10vW)' marginBottom={5}>
                 <IconButton icon={<BedIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<AccommodationInput selectedCity={props.calculatorInputs.city} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)}/>
-                <IconButton icon={<HourglassIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Horarios")} />
+                <IconButton icon={<HourglassIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<HorariosInput/>)} />
                 <IconButton icon={<BusIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Transporte")} />
                 <IconButton icon={<DestinationIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<ActivitiesInputs selectedAccommodation={props.calculatorInputs.accommodation} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)}/>
                 <IconButton icon={<CalendarIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Dias")}/>

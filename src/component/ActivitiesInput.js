@@ -12,6 +12,7 @@ import {
 import {ArrowForwardIcon, ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import {useState} from "react";
 import opentripmapradius from "../api/opentripmapradius";
+import { HorariosInput } from "./calculator/horarios/HorariosInput";
 
 const SelectActivities = (props) => {
     const [selectedCategory, setSelectedCategory] = useState()
@@ -152,7 +153,7 @@ export const ActivitiesInputs = (props) => {
                 onClick={() => {
                     props.setCalculatorInputs(prevState => ({...prevState, activities: selectedActivities}))
                     props.nextStep(
-                        // TODO
+                        <HorariosInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>
                     )
                 }}
             >
