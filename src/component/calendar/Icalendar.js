@@ -18,7 +18,7 @@ ATTENDEE;CN="Mike Douglass";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:ma
 
     return (
       <ICalendarLink event={event} rawContent={rawContent}>
-        Add to Calendar
+        Download
       </ICalendarLink>
     );
   }

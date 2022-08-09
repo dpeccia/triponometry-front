@@ -1,5 +1,4 @@
 import React from 'react';
-import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -10,16 +9,16 @@ const localizer = momentLocalizer(moment);
 var myEvents = [
     {
       'title': 'Evento 1',
-      'allDay': true,
+      //'allDay': true,
       'start': new Date(2022, 6, 0),
       'end': new Date(2022, 6, 0)
     },
     {
       'title': 'Evento 2',
-      'start': new Date(2022, 6, 28,15,25),
-      'end': new Date(2022, 6, 28,20)
+      'start': new Date(2022, 6, 28,0,60*8),
+      'end': new Date(2022, 6, 28,0,9*60)
     },
-  
+
     {
       'title': 'Evento 3',
       'start': new Date(2022, 6, 29, 20, 30),
@@ -106,13 +105,10 @@ export var MyBigCalendar = () => (
     <Calendar
       localizer={localizer}
       views={['week', 'day','month']}
-      view={state.view}
+      //view={state.view}
       events={myEvents}
       step={60}
       defaultDate={new Date(2022, 6, 29)}
-      onView={(view)=>{
-        this.setState({view})
-    }}
     />
   </div>
 );
