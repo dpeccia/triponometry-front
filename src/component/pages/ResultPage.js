@@ -1,6 +1,5 @@
 import { Box, Flex, IconButton, VStack } from "@chakra-ui/react";
 import { ResultMap } from "../map/ResultMap";
-import { ResultCalendar } from "../calendar/Calendar";
 import { InfoCalculation } from "../infoCalculation/InfoCalculation";
 import {ICalendar} from "../calendar/Icalendar";
 import {MyBigCalendar} from "../calendar/BigCalendar";
