@@ -9,7 +9,10 @@ export const CalculatorPage = () => {
         city: {},
         accommodation: {},
         activities: [],
-        horarios: {}
+        horarios: {},
+        mobility: {},
+        days: {},
+        money: {}
     });
 
     const handleClick = (inputComponent) =>

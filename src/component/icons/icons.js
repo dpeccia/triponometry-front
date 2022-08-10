@@ -1,7 +1,7 @@
 import { createIcon, Icon} from "@chakra-ui/icons";
 
 export const BedIcon = props => 
-<Icon viewBox="0 0 79 72" {...props}><rect width={79} height={72} fill="url(#pattern0)" /><defs><pattern id="pattern0" patternContentUnits="objectBoundingBox" width={1} height={1}>
+<Icon viewBox="0 0 79 72" {...props}><rect width='100%' height='100%' fill="url(#pattern0)" /><defs><pattern id="pattern0" patternContentUnits="objectBoundingBox" width='100%' height='100%'>
 <use xlinkHref="#image0_4_49" transform="translate(0 -0.0486111) scale(0.00195312 0.00214301)" />
 </pattern>
 <image id="image0_4_49" width={512} height={512} xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAO

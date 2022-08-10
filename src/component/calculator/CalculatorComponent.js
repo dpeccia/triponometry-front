@@ -1,45 +1,14 @@
 import { AddIcon, ArrowRightIcon, EditIcon, MinusIcon } from "@chakra-ui/icons";
-import {Box, SimpleGrid, VStack, IconButton, HStack, Tag, TagLabel, TagCloseButton, Text} from "@chakra-ui/react";
+import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
 import { BedIcon, BusIcon, DestinationIcon, DollarIcon, HourglassIcon, CalendarIcon } from "../icons/icons";
 import {AccommodationInput} from "../AccommodationInput";
 import {ActivitiesInputs} from "../ActivitiesInput";
 import { HorariosInput } from "./horarios/HorariosInput";
-
-const ItemCard = (props) => {
-    if(props.children) return (
-        <Tag
-            borderRadius='full'
-            variant='solid'
-            colorScheme='blackAlpha'
-            m={1}
-            boxShadow='md'
-        >
-            <TagLabel>{props.children}</TagLabel>
-            <TagCloseButton />
-        </Tag>
-    )
-}
-
-const MealCard = (props) => {
-    if(props.meal) return (
-        <ItemCard>{`${props.meal.number}${props.meal.time} para ${props.mealType}`}</ItemCard>
-    )
-}
-
-const BedCard = (props) => {
-    if(props.bed) return (
-        <ItemCard>{`${props.bedType} a las ${props.bed}hs`}</ItemCard>
-    )
-}
-
-const FreeDayCard = (props) => {
-    if(props.freeDay) return (
-        <ItemCard>{`${props.freeDay} dias libres`}</ItemCard>
-    )
-}
+import { CalculatorScreen } from "./CalculatorScreen";
+import { ItemCard, MealCard, BedCard, FreeDayCard } from "./CalculatorTag";
+import { CalculatorButton } from "./CalculatorButton";
 
 export const CalculatorComponent = (props) =>{
-
     const generateTags = (calculatorInputs) => {
         return(
             <>
@@ -62,31 +31,38 @@ export const CalculatorComponent = (props) =>{
     }
 
     return(
-        <Box marginRight={3} bg='gray.300' borderRadius='lg'>
+        <Box margin={5} bg='#94A1AA' borderRadius='40px' px='5' py='6' boxShadow='lg'>
             <VStack>
-                <Box bg='green.100' w='calc(20vw)' h='calc(30vh)' margin={5} marginRight={2} borderRadius='lg'>
-                    { generateTags(props.calculatorInputs) }
-                </Box>
-                <HStack alignItems='flex-start'>
-                    <SimpleGrid columns={2} spacing={2} w='calc(10vW)' marginBottom={5}>
-                        <IconButton icon={<BedIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<AccommodationInput selectedCity={props.calculatorInputs.city} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)}/>
-                        <IconButton icon={<HourglassIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<HorariosInput/>)} />
-                        <IconButton icon={<BusIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Transporte")} />
-                        <IconButton icon={<DestinationIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick(<ActivitiesInputs selectedAccommodation={props.calculatorInputs.accommodation} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)}/>
-                        <IconButton icon={<CalendarIcon w='calc(4vw)' h='calc(4vh)'/>} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Dias")}/>
-                        <IconButton icon={<DollarIcon w='calc(4vw)' h='calc(4vh)' />} w='calc(5vw)' h='calc(5vh)' onClick={() => props.handleClick("Seleccionar Presupuesto")}/>
-                    </SimpleGrid>
-                    <HStack>
-                        <VStack>
-                            <IconButton icon={<MinusIcon w='calc(2vw)' h='calc(2vh)'/>} w='calc(5vw)' h='calc(5vh)'  onClick={() => props.handleClick("Eliminar")} />
-                            <IconButton icon={<AddIcon w='calc(2vw)' h='calc(2vh)' />}  w='calc(5vw)' h='calc(11vh)' onClick={() => props.handleClick("Agregar")}/>
-                        </VStack>
-                        <VStack>
-                            <IconButton icon={<EditIcon w='calc(2vw)' h='calc(2vh)'/>} w='calc(5vw)' h='calc(5vh)'  onClick={() => props.handleClick("Editar")}/>
-                            <IconButton icon={<ArrowRightIcon w='calc(2vw)' h='calc(2vh)' />}  w='calc(5vw)' h='calc(11vh)' onClick={() => props.handleClick("Calcular")}/>
-                        </VStack>
-                    </HStack>
-                </HStack>
+                <CalculatorScreen>
+                    {generateTags(props.calculatorInputs)}
+                </CalculatorScreen>
+                <Grid w='100%' templateRows='repeat(3, 1fr)' templateColumns='repeat(4, 1fr)' gap={4}>
+                    <CalculatorButton column='1' row='1' icon={<BedIcon w='70%' h='70%'/>} input={props.calculatorInputs.accommodation}
+                        onClick={() => props.handleClick(<AccommodationInput selectedCity={props.calculatorInputs.city} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)} />
+                    <CalculatorButton column='1' row='2' icon={<BusIcon w='70%' h='70%'/>} input={props.calculatorInputs.mobility}
+                        onClick={() => props.handleClick("Seleccionar Transporte")} />
+                    <CalculatorButton column='1' row='3' icon={<CalendarIcon w='70%' h='70%'/>} input={props.calculatorInputs.days}
+                        onClick={() => props.handleClick("Seleccionar Dias")} />
+                    <CalculatorButton column='2' row='1' icon={<HourglassIcon w='70%' h='70%'/>} input={props.calculatorInputs.horarios}
+                        onClick={() => props.handleClick(<HorariosInput/>)} />
+                    <CalculatorButton column='2' row='2' icon={<DestinationIcon w='70%' h='70%'/>} input={props.calculatorInputs.activities}
+                        onClick={() => props.handleClick(<ActivitiesInputs selectedAccommodation={props.calculatorInputs.accommodation} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)} />
+                    <CalculatorButton column='2' row='3' icon={<DollarIcon w='70%' h='70%'/>} input={props.calculatorInputs.money}
+                        onClick={() => props.handleClick("Seleccionar Presupuesto")} />
+
+                    <GridItem gridColumnStart='3' gridRowStart='1' w='100%' h='70px'>
+                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<MinusIcon w='40%' h='40%'/>} onClick={() => props.handleClick("Eliminar")} />
+                    </GridItem>
+                    <GridItem gridColumnStart='4' gridRowStart='1' w='100%' h='70px'>
+                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<EditIcon w='40%' h='40%'/>} onClick={() => props.handleClick("Editar")}/>
+                    </GridItem>
+                    <GridItem gridColumnStart='3' gridRowStart='2' w='100%' h='100%' rowSpan='2'>
+                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<AddIcon w='35%' h='35%' />} onClick={() => props.handleClick("Agregar")}/>
+                    </GridItem>
+                    <GridItem gridColumnStart='4' gridRowStart='2' w='100%' h='100%' rowSpan='2'>
+                        <IconButton bg='#EFB4BF' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<ArrowRightIcon w='35%' h='35%' />} onClick={() => props.handleClick("Calcular")}/>
+                    </GridItem>
+                </Grid>
             </VStack>
         </Box>
     )
