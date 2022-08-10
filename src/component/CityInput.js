@@ -5,7 +5,7 @@ import {
     FormLabel,
     HStack,
     IconButton,
-    Input,
+    Input, useToast,
     VStack
 } from "@chakra-ui/react";
 
@@ -78,9 +78,16 @@ const CityList = (props) => {
 }
 
 const CityCard = (props) => {
+    const toast = useToast()
     const onClick =  () => {
         props.setSelectedCity(props.city)
         props.setStepFinished(true)
+        toast({
+            title: 'Ciudad seleccionada!',
+            description: `Elegiste ${props.city.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
     return (
         <Button variant='outline' onClick={onClick}>

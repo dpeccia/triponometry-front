@@ -4,7 +4,7 @@ import { useState } from "react"
 export const MealsComponent = ({label, handleChange}) =>{
 
     const [isDisabled, setIsDisabled] = useState(true)
-    const [time, setTime] = useState('H')
+    const [time, setTime] = useState('h')
     const [number, setNumber] = useState()
 
 
@@ -27,8 +27,8 @@ export const MealsComponent = ({label, handleChange}) =>{
                     <NumberInputField size='3'/>
                 </NumberInput>
                 <Select w='fit-content' isDisabled={isDisabled} id='time' onChange={(event) => {setTime(event.target.value)}}> 
-                    <option value='H'>Horas</option>
-                    <option value='M'>Minutos</option>
+                    <option value='h'>Horas</option>
+                    <option value='min'>Minutos</option>
                 </Select>
             </HStack>
         </HStack>

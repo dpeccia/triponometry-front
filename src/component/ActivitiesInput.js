@@ -6,7 +6,7 @@ import {
     MenuButton,
     MenuItemOption,
     MenuList,
-    MenuOptionGroup,
+    MenuOptionGroup, useToast,
     VStack
 } from "@chakra-ui/react";
 import {ArrowForwardIcon, ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
@@ -108,9 +108,16 @@ const ActivitiesList = (props) => {
 }
 
 const ActivitiesCard = (props) => {
+    const toast = useToast()
     const onClick =  () => {
         props.setSelectedActivities([... props.selectedActivities, props.activity])
         props.setStepFinished(true)
+        toast({
+            title: 'Actividad seleccionada!',
+            description: `Elegiste ${props.activity.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
     return (
         <Button variant='outline' onClick={onClick}>
@@ -157,7 +164,7 @@ export const ActivitiesInputs = (props) => {
                     )
                 }}
             >
-                Continua con NOSE
+                Continua con HORARIOS
             </Button>
         </Flex>
     )

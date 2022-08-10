@@ -5,7 +5,7 @@ import {
     FormLabel,
     HStack,
     IconButton,
-    Input,
+    Input, useToast,
     VStack
 } from "@chakra-ui/react";
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
@@ -85,9 +85,16 @@ const AccommodationList = (props) => {
 }
 
 const AccommodationCard = (props) => {
+    const toast = useToast()
     const onClick =  () => {
         props.setSelectedAccommodation(props.accommodation)
         props.setStepFinished(true)
+        toast({
+            title: 'Alojamiento seleccionado!',
+            description: `Elegiste ${props.accommodation.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
     return (
         <Button variant='outline' onClick={onClick}>

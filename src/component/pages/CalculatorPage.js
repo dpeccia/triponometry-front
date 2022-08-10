@@ -8,7 +8,7 @@ export const CalculatorPage = () => {
     const [calculatorInputs, setCalculatorInputs] = useState({
         city: {},
         accommodation: {},
-        activities: {},
+        activities: [],
         horarios: {}
     });
 
