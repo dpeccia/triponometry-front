@@ -1,7 +1,7 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons"
 import { Box, Center, Divider, Heading, VStack, Button, SimpleGrid, Input } from "@chakra-ui/react"
 import { useState } from "react"
-import { IncrementDecrementInputComponent } from "../../commons/IncrementDecrementInputComponent"
+import {IncrementDecrementInputComponent} from "../../../utils/IncrementDecrementInputComponent";
 import { MealsComponent } from "./MealsComponent"
 
 export const HorariosInput = (props) => {

@@ -1,12 +1,13 @@
-import { AddIcon, ArrowRightIcon, EditIcon, MinusIcon } from "@chakra-ui/icons";
+import {AddIcon, ArrowRightIcon, CalendarIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
 import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
-import { BedIcon, BusIcon, DestinationIcon, DollarIcon, HourglassIcon, CalendarIcon } from "../icons/icons";
-import {AccommodationInput} from "../AccommodationInput";
-import {ActivitiesInputs} from "../ActivitiesInput";
-import { HorariosInput } from "./horarios/HorariosInput";
+
 import { CalculatorScreen } from "./CalculatorScreen";
 import { ItemCard, MealCard, BedCard, FreeDayCard } from "./CalculatorTag";
 import { CalculatorButton } from "./CalculatorButton";
+import {AccommodationInput} from "./inputs/AccommodationInput";
+import {HorariosInput} from "./inputs/horarios/HorariosInput";
+import {ActivitiesInputs} from "./inputs/ActivitiesInput";
+import {BedIcon, BusIcon, DestinationIcon, DollarIcon, HourglassIcon} from "./CalculatorIcons";
 
 export const CalculatorComponent = (props) =>{
     const generateTags = (calculatorInputs) => {

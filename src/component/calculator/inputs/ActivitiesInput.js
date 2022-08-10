@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 import {ArrowForwardIcon, ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import {useState} from "react";
-import opentripmapradius from "../api/opentripmapradius";
-import { HorariosInput } from "./calculator/horarios/HorariosInput";
+import opentripmapradius from "../../../api/opentripmapradius";
+import {HorariosInput} from "./horarios/HorariosInput";
+
 
 const SelectActivities = (props) => {
     const [selectedCategory, setSelectedCategory] = useState()

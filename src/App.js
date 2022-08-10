@@ -1,7 +1,7 @@
 import './App.css';
 import {Outlet} from "react-router"
 import {ChakraProvider, Flex} from '@chakra-ui/react'
-import {Header} from "./component/Header";
+import {Header} from "./component/utils/Header";
 
 
 

@@ -12,7 +12,7 @@ import {
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
-import geodb from "../api/geodb";
+import geodb from "../../../api/geodb";
 import {AccommodationInput} from "./AccommodationInput";
 
 const SearchBar = (props) => {

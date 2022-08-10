@@ -1,7 +1,8 @@
 import {Box, Flex} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
-import {CityInput} from "../CityInput";
+import {CityInput} from "../calculator/inputs/CityInput";
+
 
 export const CalculatorPage = () => {
 

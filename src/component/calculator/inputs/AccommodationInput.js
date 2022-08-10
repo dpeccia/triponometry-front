@@ -11,8 +11,9 @@ import {
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
-import opentripmapradius from "../api/opentripmapradius";
 import {ActivitiesInputs} from "./ActivitiesInput";
+import opentripmapradius from "../../../api/opentripmapradius";
+
 
 const SearchBar = (props) => {
     return (
