@@ -5,14 +5,14 @@ import {
     FormLabel,
     HStack,
     IconButton,
-    Input,
+    Input, useToast,
     VStack
 } from "@chakra-ui/react";
 
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
-import geodb from "../api/geodb";
+import geodb from "../../../api/geodb";
 import {AccommodationInput} from "./AccommodationInput";
 
 const SearchBar = (props) => {
@@ -78,9 +78,16 @@ const CityList = (props) => {
 }
 
 const CityCard = (props) => {
+    const toast = useToast()
     const onClick =  () => {
         props.setSelectedCity(props.city)
         props.setStepFinished(true)
+        toast({
+            title: 'Ciudad seleccionada!',
+            description: `Elegiste ${props.city.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
     return (
         <Button variant='outline' onClick={onClick}>
@@ -117,8 +124,14 @@ export const CityInput = (props) =>{
                 variant='outline'
                 isDisabled={!stepFinished}
                 onClick={() => {
-                    props.nextStep(<AccommodationInput selectedCity={selectedCity} nextStep={props.nextStep}/>)
-                    props.setCity(selectedCity)
+                    props.setCalculatorInputs(prevState => ({...prevState, city: selectedCity}))
+                    props.nextStep(
+                        <AccommodationInput
+                            selectedCity={selectedCity}
+                            nextStep={props.nextStep}
+                            setCalculatorInputs={props.setCalculatorInputs}
+                        />
+                    )
                 }}
             >
                 Continua con Alojamiento

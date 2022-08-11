@@ -5,13 +5,15 @@ import {
     FormLabel,
     HStack,
     IconButton,
-    Input,
+    Input, useToast,
     VStack
 } from "@chakra-ui/react";
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
-import opentripmapradius from "../api/opentripmapradius";
+import {ActivitiesInputs} from "./ActivitiesInput";
+import opentripmapradius from "../../../api/opentripmapradius";
+
 
 const SearchBar = (props) => {
     return (
@@ -84,9 +86,16 @@ const AccommodationList = (props) => {
 }
 
 const AccommodationCard = (props) => {
+    const toast = useToast()
     const onClick =  () => {
         props.setSelectedAccommodation(props.accommodation)
         props.setStepFinished(true)
+        toast({
+            title: 'Alojamiento seleccionado!',
+            description: `Elegiste ${props.accommodation.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
     return (
         <Button variant='outline' onClick={onClick}>
@@ -125,11 +134,17 @@ export const AccommodationInput = (props) => {
                 variant='outline'
                 isDisabled={!stepFinished}
                 onClick={() => {
-                    props.nextStep()
-                    props.setAccommodation(selectedAccommodation)
+                    props.setCalculatorInputs(prevState => ({...prevState, accommodation: selectedAccommodation}))
+                    props.nextStep(
+                        <ActivitiesInputs
+                            selectedAccommodation={selectedAccommodation}
+                            nextStep={props.nextStep}
+                            setCalculatorInputs={props.setCalculatorInputs}
+                        />
+                    )
                 }}
             >
-                Continua con A CHEQUEAR
+                Continua con Actividades
             </Button>
         </Flex>
     )
