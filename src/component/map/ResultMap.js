@@ -2,8 +2,8 @@ import { GoogleMap, KmlLayer, LoadScript, } from "@react-google-maps/api";
 import { Component } from "react"
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '100%',
+  height: '500px'
 };
 
 export class ResultMap extends Component {
