@@ -1,7 +1,7 @@
 import {Box, Flex} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
-import {CityInput} from "../calculator/inputs/CityInput";
+import {CityInput} from "../calculator/inputs/city/CityInput";
 
 
 export const CalculatorPage = () => {
@@ -29,11 +29,9 @@ export const CalculatorPage = () => {
     );
 
     return(
-    <Flex flexDirection='row'>
-        <Box>
-            <CalculatorComponent handleClick={handleClick} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs}/>
-        </Box>
-        <Flex marginLeft={3} alignItems="flex-start">
+    <Flex>
+        <CalculatorComponent handleClick={handleClick} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs}/>
+        <Flex marginLeft={3} >
             {inputComponent}
         </Flex>
     </Flex>
