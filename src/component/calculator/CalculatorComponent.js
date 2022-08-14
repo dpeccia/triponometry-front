@@ -1,4 +1,4 @@
-import {AddIcon, ArrowRightIcon, CalendarIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
+import {AddIcon, ArrowRightIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
 import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
 
 import { CalculatorScreen } from "./CalculatorScreen";
@@ -7,7 +7,14 @@ import { CalculatorButton } from "./CalculatorButton";
 import {AccommodationInput} from "./inputs/AccommodationInput";
 import {HorariosInput} from "./inputs/horarios/HorariosInput";
 import {ActivitiesInputs} from "./inputs/ActivitiesInput";
-import {BedIcon, BusIcon, DestinationIcon, DollarIcon, HourglassIcon} from "./CalculatorIcons";
+import {
+    BedIcon,
+    BusIcon,
+    CalendarIcon,
+    DestinationIcon,
+    DollarIcon,
+    HourglassIcon
+} from "./CalculatorIcons";
 
 export const CalculatorComponent = (props) =>{
     const generateTags = (calculatorInputs) => {
@@ -32,7 +39,7 @@ export const CalculatorComponent = (props) =>{
     }
 
     return(
-        <Box margin={5} bg='#94A1AA' borderRadius='40px' px='5' py='6' boxShadow='lg'>
+        <Box margin={5} bg='#94A1AA' h='572px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
             <VStack>
                 <CalculatorScreen>
                     {generateTags(props.calculatorInputs)}

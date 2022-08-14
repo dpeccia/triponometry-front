@@ -1,8 +1,9 @@
 import { IconButton, GridItem } from "@chakra-ui/react";
+import {isEmpty} from "lodash";
 
 export const CalculatorButton = (props) => {
     const checkInput = (input) => {
-        if (Object.keys(input).length === 0) 
+        if (isEmpty(Object.keys(input).length))
             return ({
                 isDisabled: true,
                 filter: 'grayscale(100%)',
