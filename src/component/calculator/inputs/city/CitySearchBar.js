@@ -14,7 +14,13 @@ export const CitySearchBar = (props) => {
                     const response = await geodb.get(
                         '',
                         {
-                            params: {sort: '-population', namePrefix: values.city, limit: '10', languageCode: 'es', types: 'city'},
+                            params: {
+                                sort: '-population',
+                                namePrefix: values.city,
+                                limit: '10',
+                                languageCode: 'es',
+                                types: 'city'
+                            },
                         });
                     props.setCities(response.data.data);
                 }}

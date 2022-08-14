@@ -1,6 +1,6 @@
 import {Flex, Heading} from "@chakra-ui/react";
 import {useState} from "react";
-import {AccommodationInput} from "../AccommodationInput";
+import {AccommodationInput} from "../accommodation/AccommodationInput";
 import {uniqWith} from "lodash";
 import {CitySearchBar} from "./CitySearchBar";
 import {CityList} from "./CityList";
