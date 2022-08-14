@@ -3,7 +3,7 @@ import {isEmpty} from "lodash";
 
 export const CalculatorButton = (props) => {
     const checkInput = (input) => {
-        if (isEmpty(Object.keys(input).length))
+        if (isEmpty(Object.keys(input)))
             return ({
                 isDisabled: true,
                 filter: 'grayscale(100%)',

@@ -6,15 +6,8 @@ import { ItemCard, MealCard, BedCard, FreeDayCard } from "./CalculatorTag";
 import { CalculatorButton } from "./CalculatorButton";
 import {AccommodationInput} from "./inputs/AccommodationInput";
 import {HorariosInput} from "./inputs/horarios/HorariosInput";
-import {ActivitiesInputs} from "./inputs/ActivitiesInput";
-import {
-    BedIcon,
-    BusIcon,
-    CalendarIcon,
-    DestinationIcon,
-    DollarIcon,
-    HourglassIcon
-} from "./CalculatorIcons";
+import { ActivitiesInputs } from "./inputs/activities/ActivitiesInput";
+import {BedIcon, BusIcon, DestinationIcon, CalendarIcon, DollarIcon, HourglassIcon} from "./CalculatorIcons";
 
 export const CalculatorComponent = (props) =>{
     const generateTags = (calculatorInputs) => {

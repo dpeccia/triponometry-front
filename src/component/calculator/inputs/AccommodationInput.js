@@ -11,8 +11,8 @@ import {
 import {ArrowForwardIcon, SearchIcon} from '@chakra-ui/icons'
 import { Formik, Field } from "formik";
 import {useState} from "react";
-import {ActivitiesInputs} from "./ActivitiesInput";
-import opentripmapradius from "../../../api/opentripmapradius";
+import { ActivitiesInputs } from "./activities/ActivitiesInput";
+import opentripmap from "../../../api/opentripmap";
 
 
 const SearchBar = (props) => {
@@ -23,8 +23,7 @@ const SearchBar = (props) => {
                     accommodation: "",
                 }}
                 onSubmit={ async (values) => {
-                    const response = await opentripmapradius.get(
-                        '',
+                    const response = await opentripmap.get('/radius',
                         {
                             params: {
                                 lat: props.cityLat,
