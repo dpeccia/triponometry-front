@@ -1,32 +1,22 @@
-import { GoogleMap} from "@react-google-maps/api";
-import { Component } from "react"
+import { GoogleMap } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: '100%',
-  height: '500px'
+  width: '100%', height: '350px'
 };
 
-export class ResultMap extends Component {
-
-  //Habria que cambiar test por el id del viaje
- kmlTest ="https://yji8each99.execute-api.us-east-1.amazonaws.com/dev/agenda/kml/test";
-
- render() {
-
-   return (
-       <GoogleMap
-         center={{ lat: 48.865127, lng: 2.350331 }}
-         mapContainerStyle={containerStyle}
-         zoom={4}
-         onLoad={map => {
-            new window.google.maps.KmlLayer(this.kmlTest, {
-            suppressInfoWindows: true,
-            preserveViewport: false,
-            map: map
-          });
-        }}
-       >
-       </GoogleMap>
-   )
- }
+export const ResultMap = ({ mapId, accommodation }) => {
+  const kmlTest =`https://yji8each99.execute-api.us-east-1.amazonaws.com/dev/s3/${mapId}.xml`;
+  return (
+    <GoogleMap
+      center={{ lat: accommodation.latitude, lng: accommodation.longitude }}
+      mapContainerStyle={containerStyle}
+      zoom={10}
+      onLoad={map => {
+        new window.google.maps.KmlLayer(kmlTest, {
+          suppressInfoWindows: true,
+          preserveViewport: false,
+          map: map
+        });
+    }}/>
+  );
 }

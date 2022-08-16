@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { Box } from '@chakra-ui/layout';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 
@@ -98,17 +99,17 @@ var myEvents = [
 
 var state = {view: 'week'}
   
-export var MyBigCalendar = () => (
-
-    
-  <div style={{ height: 700 }}>
-    <Calendar
-      localizer={localizer}
-      views={['week', 'day','month']}
-      //view={state.view}
-      events={myEvents}
-      step={60}
-      defaultDate={new Date(2022, 6, 29)}
-    />
-  </div>
-);
+export const MyBigCalendar = () => {
+  return (
+    <Box h='650px' w='900px' mt={5}>
+      <Calendar
+        localizer={localizer}
+        views={['week', 'day','month']}
+        //view={state.view}
+        events={myEvents}
+        step={60}
+        defaultDate={new Date(2022, 6, 29)}
+      />
+    </Box>
+  );
+}

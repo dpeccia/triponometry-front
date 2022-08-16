@@ -1,10 +1,9 @@
 import {BrowserRouter, Route} from "react-router-dom";
 import {Routes, useLocation} from "react-router";
 import App from "./App";
-import {CalculatorPage} from "./component/pages/CalculatorPage";
 import {ExplorerPage} from "./component/pages/ExplorerPage";
 import {MyCalculationsPage} from "./component/pages/MyCalculationsPage";
-import {ResultPage} from "./component/pages/ResultPage";
+import { NewCalculationPage } from "./component/pages/NewCalculationPage";
 
 const NotFound = () => {
     const {pathname} = useLocation();
@@ -18,10 +17,9 @@ export function TriponometryRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path={'/'} element={<App/>}>
-                    <Route path="" exact element={<CalculatorPage/>}/>
+                    <Route path="nuevo" exact element={<NewCalculationPage/>}/>
                     <Route path="explorar" exact element={<ExplorerPage/>}/>
                     <Route path="mis-calculos" exact element={<MyCalculationsPage/>}/>
-                    <Route path="resultado" exact element={<ResultPage/>}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>

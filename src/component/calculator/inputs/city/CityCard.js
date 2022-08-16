@@ -1,12 +1,23 @@
 import {Box, Flex, useToast} from "@chakra-ui/react";
 import {FiMapPin} from "react-icons/fi";
+import { getWikidataImage } from "../../../../api/wikidata";
+import { useState } from "react";
+import { Spinner } from "@chakra-ui/spinner";
 
 export const CityCard = (props) => {
     const toast = useToast()
+    const [showSpinner, setShowSpinner] = useState(false)
 
-    const onClick =  () => {
-        props.setSelectedCity(props.city)
+    const onClick = async () => {
+        setShowSpinner(true)
+        const wikiDataId = props.city.wikiDataId
+        const image = await getWikidataImage(wikiDataId)
+        
+        const cityWithImage = {...props.city, imageUrl: image}
+        
+        props.setSelectedCity(cityWithImage)
         props.setStepFinished(true)
+        setShowSpinner(false)
         toast({
             title: 'Ciudad seleccionada!',
             description: `Elegiste ${props.city.name}`,
@@ -14,6 +25,13 @@ export const CityCard = (props) => {
             duration: 1800,
         })
     }
+
+    const showChargingSpinner = () => {
+        if (showSpinner) {
+            return <Spinner justifySelf='flex-end' thickness='4px' speed='0.65s' emptyColor='gray.200' color='gray.500' size='md'/>
+        }
+    }
+
     return (
         <Box as='button' m={1} w='90%' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={onClick}>
             <Flex p={2} alignItems='center' >
@@ -35,6 +53,7 @@ export const CityCard = (props) => {
                         </Box>
                     </Box>
                 </Flex>
+                {showChargingSpinner()}
             </Flex>
         </Box>
     )

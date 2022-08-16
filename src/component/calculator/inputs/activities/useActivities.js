@@ -53,7 +53,6 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
         const wikiDataId = activity.wikidata
         const response = await wikidataDetails.get(`${wikiDataId}.json`)
 
-
         const wikiDataDetailsObject = response.data.entities[wikiDataId]
         
         const imageName = wikiDataDetailsObject?.claims?.P18[0]?.mainsnak?.datavalue?.value
@@ -72,7 +71,6 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
                 origin: "*"
             }
         })
-
         
         const image = imagePageResponse?.data?.query?.pages[0]?.thumbnail?.source
         const description = wikiDataDetailsObject?.descriptions?.en?.value
@@ -90,7 +88,6 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
     const search = async (term, category) => {
         setActivities(null)
         const {endpoint, parameters} = getSearchEndpoint(term, category);
-
         
         const response = await opentripmap.get(endpoint, parameters);
     

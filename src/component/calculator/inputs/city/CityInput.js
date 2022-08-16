@@ -17,6 +17,8 @@ export const CityInput = (props) =>{
 
     const cities = uniqWith(citiesResponse, equalCities).map((city) => {
         return {
+            imageUrl: null,
+            wikiDataId: city.wikiDataId,
             name: city.name,
             region: city.region,
             country: city.country,

@@ -12,7 +12,7 @@ const Spacer = () =>
 
 const NavBar = () =>
     <Flex bg='#F0A7B4' grow='1' justifyContent="flex-end" alignItems="center">
-        <Link as={ReachLink} to='' mr={4} >
+        <Link as={ReachLink} to='/nuevo' mr={4} >
             Nuevo
         </Link>
         <Link as={ReachLink} to='/explorar' mr={4}>
