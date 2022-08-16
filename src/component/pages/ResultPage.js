@@ -1,4 +1,4 @@
-import { Box, Flex, VStack, HStack, Spacer } from "@chakra-ui/react";
+import { Flex} from "@chakra-ui/react";
 import { ResultMap } from "../map/ResultMap";
 import { InfoCalculation } from "../infoCalculation/InfoCalculation";
 import { MyBigCalendar } from "../calendar/BigCalendar";

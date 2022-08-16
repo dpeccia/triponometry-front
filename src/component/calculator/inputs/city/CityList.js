@@ -1,5 +1,5 @@
 import {CityCard} from "./CityCard";
-import {Box, VStack} from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import {ScrollingBox} from "../../../utils/ScrollingBox";
 
 export const CityList = (props) => {
