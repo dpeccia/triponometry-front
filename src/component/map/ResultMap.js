@@ -1,4 +1,4 @@
-import { GoogleMap, KmlLayer, LoadScript, } from "@react-google-maps/api";
+import { GoogleMap} from "@react-google-maps/api";
 import { Component } from "react"
 
 const containerStyle = {
@@ -14,8 +14,6 @@ export class ResultMap extends Component {
  render() {
 
    return (
-     <div className="App">
-     <LoadScript googleMapsApiKey="AIzaSyAIQZSE4hWZYz9YcyNuTCSjjs6j3jObME0">
        <GoogleMap
          center={{ lat: 48.865127, lng: 2.350331 }}
          mapContainerStyle={containerStyle}
@@ -29,8 +27,6 @@ export class ResultMap extends Component {
         }}
        >
        </GoogleMap>
-     </LoadScript>
-   </div>
    )
  }
 }
