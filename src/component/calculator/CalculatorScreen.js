@@ -20,6 +20,7 @@ export const CalculatorScreen = (props) => {
                 <BedCard bed={calculatorInputs.horarios.despertarse} bedType='Despertarse'/>
                 <BedCard bed={calculatorInputs.horarios.dormirse} bedType='Dormirse'/>
                 <FreeDayCard freeDay={calculatorInputs.horarios.libres}/>
+                <ItemCard>{calculatorInputs.mobility}</ItemCard>
             </>
         )
     }

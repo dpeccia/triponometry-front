@@ -1,5 +1,6 @@
 import {AddIcon, ArrowRightIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
 import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
+import { TransportationInput } from "./TransportationInput";
 
 import { CalculatorScreen } from "./CalculatorScreen";
 import { CalculatorButton } from "./CalculatorButton";
@@ -19,11 +20,11 @@ export const CalculatorComponent = (props) => {
                     <CalculatorButton column='1' row='1' icon={<BedIcon w='70%' h='70%'/>} input={props.calculatorInputs.accommodation}
                         onClick={() => props.handleClick(<AccommodationInput selectedCity={props.calculatorInputs.city} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='1' row='2' icon={<BusIcon w='70%' h='70%'/>} input={props.calculatorInputs.mobility}
-                        onClick={() => props.handleClick("Seleccionar Transporte")} />
+                        onClick={() => props.handleClick(<TransportationInput setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='1' row='3' icon={<CalendarIcon w='70%' h='70%'/>} input={props.calculatorInputs.days}
                         onClick={() => props.handleClick("Seleccionar Dias")} />
                     <CalculatorButton column='2' row='1' icon={<HourglassIcon w='70%' h='70%'/>} input={props.calculatorInputs.horarios}
-                        onClick={() => props.handleClick(<HorariosInput/>)} />
+                        onClick={() => props.handleClick(<HorariosInput setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='2' row='2' icon={<DestinationIcon w='70%' h='70%'/>} input={props.calculatorInputs.activities}
                         onClick={() => props.handleClick(<ActivitiesInputs selectedAccommodation={props.calculatorInputs.accommodation} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='2' row='3' icon={<DollarIcon w='70%' h='70%'/>} input={props.calculatorInputs.money}

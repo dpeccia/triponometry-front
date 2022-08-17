@@ -13,7 +13,7 @@ export const NewCalculationPage = () => {
     const handleClick = (inputComponent) => { setInputComponent(inputComponent) }
 
     const [calculatorInputs, setCalculatorInputs] = useState({
-        city: {}, accommodation: {}, activities: [], horarios: {}, mobility: {}, days: {}, money: {}
+        city: {}, accommodation: {}, activities: [], horarios: {}, mobility: "", days: {}, money: {}
     });
     const [inputComponent, setInputComponent] = useState(
         <CityInput nextStep={handleClick} setCalculatorInputs={setCalculatorInputs}/>
