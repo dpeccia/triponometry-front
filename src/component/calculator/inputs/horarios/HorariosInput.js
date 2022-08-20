@@ -2,6 +2,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons"
 import { Box, Center, Divider, Heading, VStack, Button, SimpleGrid, Input } from "@chakra-ui/react"
 import { useState } from "react"
 import {IncrementDecrementInputComponent} from "../../../utils/IncrementDecrementInputComponent";
+import { TransportationInput } from "../../TransportationInput";
 import { MealsComponent } from "./MealsComponent"
 
 export const HorariosInput = (props) => {
@@ -60,9 +61,11 @@ export const HorariosInput = (props) => {
                     variant='outline'
                     onClick={() => {
                         props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
+                        props.nextStep(<TransportationInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)
+
                     }}
                 >
-                    Continua con ALGO
+                    Continua con Transporte
                 </Button>
             </VStack>
         </Center>
