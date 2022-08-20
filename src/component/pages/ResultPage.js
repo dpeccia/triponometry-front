@@ -4,8 +4,10 @@ import { MyBigCalendar } from "../calendar/BigCalendar";
 import { TripInfo } from "../resultPage/TripInfo";
 import { CalculatorScreen } from "../calculator/CalculatorScreen";
 import { LoadScript } from "@react-google-maps/api";
+import {ICalendar} from "../calendar/Icalendar"
 
 export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
+
     const showMap = () => {
         if(window.google) {
             return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
@@ -15,6 +17,14 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                 <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
             </LoadScript>
         );
+    }
+
+    const showBigCalendar = () => {
+        return <MyBigCalendar />
+    }
+
+    const showICalendar = () => {
+        return <ICalendar />
     }
 
     return (
@@ -27,7 +37,8 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                     </Box>
                     {showMap()}
                 </Flex>
-                <MyBigCalendar />
+                {showBigCalendar()}
+                {showICalendar()}
             </Flex>
         </Flex>
     );
