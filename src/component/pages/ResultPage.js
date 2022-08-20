@@ -20,7 +20,7 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
     }
 
     const showBigCalendar = () => {
-        return <MyBigCalendar />
+        return <MyBigCalendar events={calculatorOutputs.events}/>
     }
 
     const showICalendar = () => {
