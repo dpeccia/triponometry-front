@@ -11,9 +11,10 @@ function App() {
     <ChakraProvider>
       <Flex direction='column' minH='100vh'>
           <Header />
-          <Flex p={8} direction='row'>
-              <Outlet grow='1'/>
+          <Flex p={8} direction='row' grow='1'>
+              <Outlet />
           </Flex>
+          <Flex p={2} bg='#6F6F6F'/>
       </Flex>
     </ChakraProvider>
   );

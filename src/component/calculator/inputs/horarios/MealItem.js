@@ -1,7 +1,7 @@
-import { Box, Checkbox, HStack, NumberInput, NumberInputField, Select } from "@chakra-ui/react"
+import { Checkbox, HStack, NumberInput, NumberInputField, Select } from "@chakra-ui/react"
 import { useState } from "react"
 
-export const MealsComponent = ({label, handleChange}) =>{
+export const MealItem = ({label, handleChange}) => {
 
     const [isDisabled, setIsDisabled] = useState(true)
     const [time, setTime] = useState('h')
@@ -26,7 +26,7 @@ export const MealsComponent = ({label, handleChange}) =>{
                 <NumberInput isDisabled={isDisabled} id='number' onChange={(event) => {setNumber(event)}}>
                     <NumberInputField size='3'/>
                 </NumberInput>
-                <Select w='fit-content' isDisabled={isDisabled} id='time' onChange={(event) => {setTime(event.target.value)}}> 
+                <Select w='fit-content' size='sm' isDisabled={isDisabled} id='time' onChange={(event) => {setTime(event.target.value)}}>
                     <option value='h'>Horas</option>
                     <option value='min'>Minutos</option>
                 </Select>

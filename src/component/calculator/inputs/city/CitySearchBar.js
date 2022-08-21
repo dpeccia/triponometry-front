@@ -2,6 +2,7 @@ import {Field, Formik} from "formik";
 import geodb from "../../../../api/geodb";
 import {FormControl, FormErrorMessage, HStack, IconButton, Input} from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
+import {isEmpty} from "lodash";
 
 export const CitySearchBar = (props) => {
     return (
@@ -11,6 +12,7 @@ export const CitySearchBar = (props) => {
                     city: "",
                 }}
                 onSubmit={ async (values) => {
+                    props.setIsLoading(true);
                     const response = await geodb.get(
                         '',
                         {
@@ -22,7 +24,9 @@ export const CitySearchBar = (props) => {
                                 types: 'city'
                             },
                         });
-                    props.setCities(response.data.data);
+                    props.setIsLoading(false);
+                    props.setIsEmpty(isEmpty(response.data.data));
+                    props.setCitiesResponse(response.data.data);
                 }}
             >
                 {({ handleSubmit,  errors, touched}) => (

@@ -33,7 +33,7 @@ export const CityCard = (props) => {
     }
 
     return (
-        <Box as='button' m={1} w='90%' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={onClick}>
+        <Box as='button' m={1} w='95%' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={onClick}>
             <Flex p={2} alignItems='center' >
                 <FiMapPin size={25}/>
                 <Flex grow={2} direction="column" ml={4} mr={2} alignItems='flex-start'>

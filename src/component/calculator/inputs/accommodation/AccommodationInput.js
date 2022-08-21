@@ -1,14 +1,16 @@
 import {Flex, Heading} from "@chakra-ui/react";
 import {useState} from "react";
 import {ActivitiesInputs} from "../activities/ActivitiesInput";
-import {AccommodationSearchBar} from "../accommodation/AccommodationSearchBar";
-import {AccommodationList} from "../accommodation/AccommodationList";
+import {AccommodationSearchBar} from "./AccommodationSearchBar";
+import {AccommodationList} from "./AccommodationList";
 import {NextButton} from "../../../utils/NextButton";
 
 export const AccommodationInput = (props) => {
     const [selectedAccommodation, setSelectedAccommodation] = useState();
     const [stepFinished, setStepFinished] = useState(false);
     const [accommodationsResponse, setAccommodationsResponse] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
 
     const accommodations = accommodationsResponse.map((accommodations) => {
         return {
@@ -31,18 +33,22 @@ export const AccommodationInput = (props) => {
     }
 
     return(
-        <Flex direction="column" alignContent="space-around" mt='3vh'>
+        <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
             <Heading textAlign='center' marginBottom={3}>
                 Alojamiento
             </Heading>
             <AccommodationSearchBar
                 setAccommodationsResponse={setAccommodationsResponse}
+                setIsLoading={setIsLoading}
+                setIsEmpty={setIsEmpty}
                 cityLat={props.selectedCity.latitude}
                 cityLon={props.selectedCity.longitude}/>
             <AccommodationList
                 accommodations={accommodations}
                 setSelectedAccommodation={setSelectedAccommodation}
-                setStepFinished={setStepFinished}/>
+                setStepFinished={setStepFinished}
+                isLoading={isLoading}
+                isEmpty={isEmpty}/>
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}

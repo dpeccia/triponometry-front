@@ -1,4 +1,4 @@
-import { createIcon, Icon} from "@chakra-ui/icons";
+import {Icon} from "@chakra-ui/icons";
 
 export const BedIcon = props => 
 <Icon viewBox="0 0 79 72" {...props}><rect width='100%' height='100%' fill="url(#pattern0)" /><defs><pattern id="pattern0" patternContentUnits="objectBoundingBox" width='100%' height='100%'>

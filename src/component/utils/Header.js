@@ -1,17 +1,17 @@
-import {Avatar, Box, Button, Container, Flex, Image, Link, WrapItem} from "@chakra-ui/react";
+import {Avatar, Flex, Image, Link, WrapItem} from "@chakra-ui/react";
 import {Link as ReachLink} from "react-router-dom";
 
 
 const Logo = () =>
-    <Flex justifyContent='center' alignContent='center' m={2} mr={8}>
-        <Image w='20vh' src={'../nombre-triponometry.png'} />
+    <Flex minW='500px' ml='15px' p={1} justifyContent='flex-start' alignItems='center'>
+        <Image src={'../nombre-triponometry.png'} w='235px'/>
     </Flex>
 
 const Spacer = () =>
-    <Flex bg='#F4E0B2' minW={4}/>
+    <Flex bg='#F4E0B2' minW='10px'/>
 
 const NavBar = () =>
-    <Flex bg='#F0A7B4' grow='1' justifyContent="flex-end" alignItems="center">
+    <Flex bg='#F0A7B4' grow='1' minW='700px' justifyContent='flex-end' alignItems='center'>
         <Link as={ReachLink} to='/nuevo' mr={4} >
             Nuevo
         </Link>
@@ -27,7 +27,7 @@ const NavBar = () =>
     </Flex>
 
 export const Header = () =>
-    <Flex direction='row' maxH='8vh' justifyContent='flex-start'>
+    <Flex direction='row' justifyContent='flex-start'>
         <Logo/>
         <Spacer/>
         <NavBar/>

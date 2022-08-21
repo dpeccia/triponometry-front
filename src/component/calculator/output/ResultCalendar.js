@@ -97,9 +97,9 @@ var myEvents = [
     // }
 ]
 
-var state = {view: 'week'}
+// var state = {view: 'week'}
   
-export const MyBigCalendar = () => {
+export const ResultCalendar = () => {
   return (
     <Box h='650px' w='900px' mt={5}>
       <Calendar
