@@ -13,7 +13,7 @@ import getEventBackgroundColor from '../utils/CalendarDayColorMap';
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
-export const MyBigCalendar = ({events}) => {
+export var MyBigCalendar = ({events}) => {
 
   const eventPropGetter = useCallback(
     (event, start, end, isSelected) => ({
@@ -36,6 +36,15 @@ export const MyBigCalendar = ({events}) => {
     return new Event(event.name,event.start,event.end);
   });
 
+  const tripLengthInDays = (date1,date2) =>{
+    let difference = date1.getDate() - date2.getDate();
+    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+    return TotalDays+1;
+  }
+
+  console.log(tripLengthInDays(myEvents[0].start,myEvents[myEvents.length-1].end));
+
+
   return (
     <Box h='650px' w='900px' mt={5}>
       <Calendar
@@ -46,6 +55,8 @@ export const MyBigCalendar = ({events}) => {
         events={myEvents}
         defaultDate={myEvents[0].start}
         onDoubleClickEvent={onDoubleClickEvent}
+        length={tripLengthInDays(myEvents[0].start,myEvents[myEvents.length-1].end) }
+        min={myEvents[0].start}
       />
     </Box>
   );
