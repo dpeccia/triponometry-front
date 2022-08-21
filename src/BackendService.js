@@ -29,7 +29,8 @@ export const calculateNewTrip = async (calculatorInputs) => {
         "freeDays": 0,
         "places": places,
         "timePerDay": 600, // 10 hours hardcoded for now 
-        "travelMode": "DRIVING"
+        "travelMode": "DRIVING",
+        "startHour": 9
     }
 
     const backendResponse = await backend.post(
