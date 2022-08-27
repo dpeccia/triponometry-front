@@ -4,7 +4,7 @@ import { MyBigCalendar } from "../calendar/BigCalendar";
 import { TripInfo } from "../resultPage/TripInfo";
 import { CalculatorScreen } from "../calculator/CalculatorScreen";
 import { LoadScript } from "@react-google-maps/api";
-import {ICalendar} from "../calendar/Icalendar"
+import {ICalendar} from "../calendar/Icalendar";
 
 export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
 
@@ -24,7 +24,7 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
     }
 
     const showICalendar = () => {
-        return <ICalendar />
+        return <ICalendar events={calculatorOutputs.events}/>
     }
 
     return (
