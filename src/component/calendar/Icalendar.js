@@ -1,8 +1,5 @@
 import React from "react";
-import { Input } from '@chakra-ui/react'
 import axios from 'axios';
-import Event from '../utils/Event';
-import { StartDatePicker } from "./StartDayPicker";
 
 const backend = axios.create({
   baseURL: 'http://localhost:8080/',
@@ -50,7 +47,6 @@ export const ICalendar = ({events}) => {
   return (
     <div>
       <button onClick={() => {downloadTxtFile()}}>Download Calendar</button>
-      {/* <StartDatePicker></StartDatePicker> */}
     </div>
   );
   
