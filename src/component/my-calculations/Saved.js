@@ -1,18 +1,24 @@
 import CalculationCard from "./CalculationCard";
-import { Flex } from '@chakra-ui/react'
+import {Flex} from '@chakra-ui/react'
 import { FaEdit, FaArchive, FaShareSquare } from 'react-icons/fa'; 
-import CardButton from "./CardButton";
+import {EditCalculationModal} from "./modals/EditCalculationModal";
+import {ArchiveCalculationModal} from "./modals/ArchiveCalculationModal";
+import {ShareCalculationModal} from "./modals/ShareCalculationModal";
 
 const Saved = ({ savedCalculations }) => {
-    const onHover = { bg: "gray.50", shadow: 'xl', filter: 'auto', brightness: '95%'}
+    const onHover = { shadow: 'xl', filter: 'auto'}
 
     const calculationCards = savedCalculations.map((calculation) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} background='white' onHover={onHover}>
-                <CardButton icon={FaEdit} />
-                <CardButton icon={FaShareSquare} />
-                <CardButton/>
-                <CardButton icon={FaArchive} />
+                <ShareCalculationModal
+                    icon={FaShareSquare}/>
+                <EditCalculationModal
+                    icon={FaEdit}
+                    calculationName={calculation.name}/>
+                <ArchiveCalculationModal
+                    icon={FaArchive}
+                    calculationName={calculation.name}/>
             </CalculationCard>
         );
     });
