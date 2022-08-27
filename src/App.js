@@ -1,16 +1,17 @@
 import './App.css';
 import {Outlet} from "react-router"
-import {ChakraProvider, Flex} from '@chakra-ui/react'
+import {ChakraProvider, Flex, useStatStyles} from '@chakra-ui/react'
 import {Header} from "./component/utils/Header";
 
 
 
 
-function App() {
+function App(props) {
+
   return (
     <ChakraProvider>
       <Flex direction='column' minH='100vh'>
-          <Header />
+          <Header username={props.username} pfp={props.pfp}/>
           <Flex p={8} direction='row' grow='1'>
               <Outlet />
           </Flex>
