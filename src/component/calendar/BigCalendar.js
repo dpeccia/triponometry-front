@@ -41,9 +41,7 @@ export var MyBigCalendar = ({events}) => {
     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
     return TotalDays+1;
   }
-
-  console.log(tripLengthInDays(myEvents[0].start,myEvents[myEvents.length-1].end));
-
+;
 
   return (
     <Box h='650px' w='900px' mt={5}>
