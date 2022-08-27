@@ -25,12 +25,16 @@ export const calculateNewTrip = async (calculatorInputs) => {
 
     // TODO: agregar nombre de actividad
     const backendCalculatorInputs = {
-        "daysRestriction": 0,
-        "freeDays": 0,
         "places": places,
         "timePerDay": 600, // 10 hours hardcoded for now 
         "travelMode": "DRIVING",
-        "startHour": 9
+        "startHour": 9,
+        "lunch": 45,
+        "dinner": 60,
+        "daysRestriction": 5,
+        "breakfast": 30,
+        "freeDays": 2,
+        "snack": 0
     }
 
     const backendResponse = await backend.post(
