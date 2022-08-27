@@ -7,8 +7,8 @@ import {
   Views,
   momentLocalizer,
 } from 'react-big-calendar';
-import Event from '../utils/Event';
-import getEventBackgroundColor from '../utils/CalendarDayColorMap';
+import CalendarEvent from '../../utils/Event';
+import getEventBackgroundColor from '../../utils/CalendarDayColorMap';
 
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
@@ -33,7 +33,7 @@ export var ResultCalendar = ({events}) => {
   }, [])
 
   const myEvents = events.map(event => {
-    return new Event(event.name,event.start,event.end);
+    return new CalendarEvent(event.name,event.start,event.end);
   });
 
   const tripLengthInDays = (date1,date2) =>{
