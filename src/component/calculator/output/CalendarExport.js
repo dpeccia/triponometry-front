@@ -5,7 +5,7 @@ const backend = axios.create({
   baseURL: 'http://localhost:8080/',
 });
 
-export const ICalendar = ({events}) => {
+export const CalendarExport = ({events}) => {
 
   var rawContent = '';
 

@@ -1,4 +1,4 @@
-import {Box, Flex, Spinner} from "@chakra-ui/react";
+import {Flex, Spinner} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
 import {CityInput} from "../calculator/inputs/city/CityInput";
@@ -57,11 +57,11 @@ export const NewCalculationPage = () => {
     }
 
     return (
-        <Flex>
+        <>
             <CalculatorComponent handleClick={handleClick} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs} calculateTrip={calculateTrip} />
-            <Flex marginLeft={3}>
+            <Flex marginLeft={3} grow='1' justifyContent='center'>
                 {inputComponent}
             </Flex>
-        </Flex>
+        </>
     );
 }

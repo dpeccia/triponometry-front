@@ -2,6 +2,7 @@ import {Field, Formik} from "formik";
 import {FormControl, FormErrorMessage, HStack, IconButton, Input} from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
 import opentripmap from "../../../../api/opentripmap";
+import {isEmpty} from "lodash";
 
 export const AccommodationSearchBar = (props) => {
     return (
@@ -11,6 +12,7 @@ export const AccommodationSearchBar = (props) => {
                     accommodation: "",
                 }}
                 onSubmit={ async (values) => {
+                    props.setIsLoading(true);
                     const response = await opentripmap.get(
                         '/radius',
                         {
@@ -26,6 +28,8 @@ export const AccommodationSearchBar = (props) => {
                                 apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
                             },
                         });
+                    props.setIsLoading(false);
+                    props.setIsEmpty(isEmpty(response.data));
                     props.setAccommodationsResponse(response.data);
                 }}
             >

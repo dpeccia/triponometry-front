@@ -13,7 +13,7 @@ import getEventBackgroundColor from '../utils/CalendarDayColorMap';
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
-export var MyBigCalendar = ({events}) => {
+export var ResultCalendar = ({events}) => {
 
   const eventPropGetter = useCallback(
     (event, start, end, isSelected) => ({

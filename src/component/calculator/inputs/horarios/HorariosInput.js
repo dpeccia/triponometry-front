@@ -1,9 +1,10 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons"
-import { Box, Center, Divider, Heading, VStack, Button, SimpleGrid, Input } from "@chakra-ui/react"
-import { useState } from "react"
-import {IncrementDecrementInputComponent} from "../../../utils/IncrementDecrementInputComponent";
-import { TransportationInput } from "../../TransportationInput";
-import { MealsComponent } from "./MealsComponent"
+import {Heading,Flex} from "@chakra-ui/react"
+import {useState} from "react"
+import {MealInput} from "./MealInput";
+import {BedInput} from "./BedInput";
+import {FreeDaysInput} from "./FreeDaysInput";
+import {NextButton} from "../../../utils/NextButton";
+import {MobilityInput} from "../mobility/MobilityInput";
 
 export const HorariosInput = (props) => {
 
@@ -17,57 +18,23 @@ export const HorariosInput = (props) => {
         libres: null
     })
 
+    const onClick = () => {
+        props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
+        props.nextStep(<MobilityInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)
+    }
+
     return(
-        <Center>
-            <VStack w='100%'>
-                <Heading textAlign='center' marginBottom={5}>
+            <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
+                <Heading textAlign='center' marginBottom={3}>
                     Horarios
                 </Heading>
-                <Box borderRadius='lg' marginBottom={2} borderWidth='1px'>
-                    <Heading textAlign='left' fontSize='lg'>Comidas</Heading>
-                    <Divider borderColor={"black"} marginBottom={2}/>
-                    <SimpleGrid columns={2} spacing={2}>
-                        <MealsComponent label={"Desayuno"} handleChange={(value) => {setSelectedHorarios(prevState => ({...prevState, desayuno: value}))}}/>
-                        <MealsComponent label={"Merienda"} handleChange={(value) => {setSelectedHorarios(prevState => ({...prevState, merienda: value}))}}/>
-                        <MealsComponent label={"Almuerzo"} handleChange={(value) => {setSelectedHorarios(prevState => ({...prevState, almuerzo: value}))}}/>
-                        <MealsComponent label={"Cena"} handleChange={(value) => {setSelectedHorarios(prevState => ({...prevState, cena: value}))}}/>
-                    </SimpleGrid>
-                </Box>
-
-                <Box borderRadius='lg' marginBottom={2} borderWidth='1px' alignSelf='stretch'>
-                    <Heading textAlign='left' fontSize='lg'>Levantarse Dormirse</Heading>
-                    <Divider borderColor={"black"} marginBottom={2}/>
-                        <VStack columns={2} spacing={2}>
-                            <Box>
-                                Quiero levantarme no antes de las: {<Input type="time" marginLeft={1} w='auto' onChange={(event) => {setSelectedHorarios(prevState => ({...prevState, despertarse: event.target.value}))}}/>}
-                            </Box>
-                            <Box>
-                                Quiero dormirme no despues de las: {<Input type="time" marginLeft={1} w='auto' onChange={(event) => {setSelectedHorarios(prevState => ({...prevState, dormirse: event.target.value}))}}/>}
-                            </Box>
-                        </VStack>
-                </Box>
-
-                <Box borderRadius='lg' marginBottom={2} borderWidth='1px' alignSelf='stretch'>
-                    <Heading textAlign='left' fontSize='lg'>Dias Libres</Heading>
-                    <Divider borderColor={"black"} marginBottom={2}/>
-                    <Center>
-                            Quiero tener {<IncrementDecrementInputComponent handleChange={(value) => {setSelectedHorarios(prevState => ({...prevState, libres: value}))}}/>} dias sin actividades predefinidas
-                    </Center>
-                </Box>
-
-                <Button
-                    rightIcon={<ArrowForwardIcon />}
-                    colorScheme='pink'
-                    variant='outline'
-                    onClick={() => {
-                        props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
-                        props.nextStep(<TransportationInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)
-
-                    }}
-                >
-                    Continua con Transporte
-                </Button>
-            </VStack>
-        </Center>
+                <MealInput setSelectedHorarios={setSelectedHorarios}/>
+                <BedInput setSelectedHorarios={setSelectedHorarios}/>
+                <FreeDaysInput setSelectedHorarios={setSelectedHorarios}/>
+                <NextButton
+                    stepFinished={true} //TODO: cambiar cuando valido que haya cargado algo
+                    onClick={onClick}
+                    description='Continua con Transporte'/>
+            </Flex>
     )
 }

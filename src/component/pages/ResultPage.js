@@ -1,10 +1,10 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { ResultMap } from "../map/ResultMap";
-import { MyBigCalendar } from "../calendar/BigCalendar";
-import { TripInfo } from "../resultPage/TripInfo";
+import { ResultMap } from "../calculator/output/ResultMap";
+import { ResultCalendar } from "../calculator/output/ResultCalendar";
+import { TripInfo } from "../calculator/output/TripInfo";
 import { CalculatorScreen } from "../calculator/CalculatorScreen";
 import { LoadScript } from "@react-google-maps/api";
-import {ICalendar} from "../calendar/Icalendar";
+import { CalendarExport } from "../calculator/output/CalendarExport";
 
 export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
 
@@ -19,12 +19,12 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
         );
     }
 
-    const showBigCalendar = () => {
-        return <MyBigCalendar events={calculatorOutputs.events}/>
+    const showResultCalendar = () => {
+        return <ResultCalendar events={calculatorOutputs.events}/>
     }
 
-    const showICalendar = () => {
-        return <ICalendar events={calculatorOutputs.events}/>
+    const showExportCalendar = () => {
+        return <CalendarExport events={calculatorOutputs.events}/>
     }
 
     return (
@@ -37,8 +37,8 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                     </Box>
                     {showMap()}
                 </Flex>
-                {showBigCalendar()}
-                {showICalendar()}
+                {showResultCalendar()}
+                {showExportCalendar()}
             </Flex>
         </Flex>
     );

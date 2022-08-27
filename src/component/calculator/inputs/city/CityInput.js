@@ -9,7 +9,9 @@ import {NextButton} from "../../../utils/NextButton";
 export const CityInput = (props) =>{
     const [selectedCity, setSelectedCity] = useState();
     const [stepFinished, setStepFinished] = useState(false);
-    const [citiesResponse, setCitiesResponse] = useState([]);
+    const [citiesResponse, setCitiesResponse] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
 
     const equalCities = (city,othCity) => {
         return city.city === othCity.city && city.country === othCity.country
@@ -39,15 +41,20 @@ export const CityInput = (props) =>{
     }
 
     return(
-        <Flex direction="column" alignContent="space-around" mt='3vh'>
+        <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
             <Heading textAlign='center' marginBottom={3}>
                 Ciudad
             </Heading>
-            <CitySearchBar setCities={setCitiesResponse} />
+            <CitySearchBar
+                setCitiesResponse={setCitiesResponse}
+                setIsLoading={setIsLoading}
+                setIsEmpty={setIsEmpty}/>
             <CityList
                 cities={cities}
                 setSelectedCity={setSelectedCity}
-                setStepFinished={setStepFinished}/>
+                setStepFinished={setStepFinished}
+                isLoading={isLoading}
+                isEmpty={isEmpty}/>
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}

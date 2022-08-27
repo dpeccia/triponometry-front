@@ -1,6 +1,6 @@
-import {AddIcon, ArrowRightIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
+import {AddIcon, EditIcon, MinusIcon} from "@chakra-ui/icons";
 import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
-import { TransportationInput } from "./TransportationInput";
+import { MobilityInput } from "./inputs/mobility/MobilityInput";
 
 import { CalculatorScreen } from "./CalculatorScreen";
 import { CalculatorButton } from "./CalculatorButton";
@@ -13,14 +13,14 @@ import {ActivitiesInputs} from "./inputs/activities/ActivitiesInput";
 
 export const CalculatorComponent = (props) => {
     return(
-        <Box margin={5} bg='#94A1AA' h='572px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
+        <Box bg='#94A1AA' minW='440px' h='572px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
             <VStack>
                 <CalculatorScreen calculatorInputs={props.calculatorInputs} width='400px' height='250px' />
                 <Grid w='100%' templateRows='repeat(3, 1fr)' templateColumns='repeat(4, 1fr)' gap={4}>
                     <CalculatorButton column='1' row='1' icon={<BedIcon w='70%' h='70%'/>} input={props.calculatorInputs.accommodation}
                         onClick={() => props.handleClick(<AccommodationInput selectedCity={props.calculatorInputs.city} nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='1' row='2' icon={<BusIcon w='70%' h='70%'/>} input={props.calculatorInputs.mobility}
-                        onClick={() => props.handleClick(<TransportationInput setCalculatorInputs={props.setCalculatorInputs}/>)} />
+                        onClick={() => props.handleClick(<MobilityInput setCalculatorInputs={props.setCalculatorInputs}/>)} />
                     <CalculatorButton column='1' row='3' icon={<CalendarIcon w='70%' h='70%'/>} input={props.calculatorInputs.days}
                         onClick={() => props.handleClick("Seleccionar Dias")} />
                     <CalculatorButton column='2' row='1' icon={<HourglassIcon w='70%' h='70%'/>} input={props.calculatorInputs.horarios}

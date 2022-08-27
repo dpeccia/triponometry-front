@@ -1,8 +1,13 @@
 import {Box} from "@chakra-ui/react";
-import {AccommodationCard} from "../accommodation/AccommodationCard";
+import {AccommodationCard} from "./AccommodationCard";
 import {ScrollingBox} from "../../../utils/ScrollingBox";
+import {ProgressSearchBox} from "../../../utils/ProgressSearchBox";
+import {EmptySearchBox} from "../../../utils/EmptySearchBox";
 
 export const AccommodationList = (props) => {
+    if(props.isLoading) return <ProgressSearchBox/>
+    if(props.isEmpty) return <EmptySearchBox/>
+    
     const accommodations = props.accommodations.map( (accommodation) => {
         return (
             <AccommodationCard
@@ -12,7 +17,7 @@ export const AccommodationList = (props) => {
         )
     })
     return (
-        <Box w='400px' h='420px' marginBottom={1} p={2}>
+        <Box w='100%' h='420px' mb={1} p={2}>
             <ScrollingBox>
                 {accommodations}
             </ScrollingBox>
