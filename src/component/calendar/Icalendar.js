@@ -1,40 +1,57 @@
 import React from "react";
+import { Input } from '@chakra-ui/react'
+import axios from 'axios';
+import Event from '../utils/Event';
+import { StartDatePicker } from "./StartDayPicker";
 
-export class ICalendar extends React.Component {
+const backend = axios.create({
+  baseURL: 'http://localhost:8080/',
+});
 
-  rawContent = "";
+export const ICalendar = ({events}) => {
 
-  constructor(props) {
-    super(props);
-    this.loadRawContent();
+  var rawContent = '';
+
+  const calendarRequest = {
+    "events": events,
+    "startDate": {
+      "day": 29,
+      "hour": 0,
+      "minute": 0,
+      "month": 7,
+      "year": 2022
+    }
   }
 
-  //El raw va a venir apuntando a endpoint aparte que no está creado todavía, despues hay que tocar este metodo
-  loadRawContent(){
-      fetch("")
-      .then(r => r.text())
-      .then(text => {
-        this.rawContent = text;
-      });
+  const loadData = async () => {
+    await backend.post(
+      'calendar/rawContent', 
+      calendarRequest, 
+      { headers: {"Access-Control-Allow-Origin": "*"}}
+    ).catch((error) => {
+      return null
+    }).then((response) => {
+      rawContent = response.data;
+    });
   }
 
-  render() {
+  const downloadTxtFile = async () => {
+    await loadData();
+    const element = document.createElement("a");
+    const file = new Blob([rawContent], {
+      type: "text/plain"
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "myCalendar.ics";
+    document.body.appendChild(element);
+    element.click();
+  };
 
-    const downloadTxtFile = () => {
-      const element = document.createElement("a");
-      const file = new Blob([this.rawContent], {
-        type: "text/plain"
-      });
-      element.href = URL.createObjectURL(file);
-      element.download = "myFile.ics";
-      document.body.appendChild(element);
-      element.click();
-    };
-
-    return (
-      <div>
-        <button onClick={downloadTxtFile}>Download Calendar</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <button onClick={() => {downloadTxtFile()}}>Download Calendar</button>
+      {/* <StartDatePicker></StartDatePicker> */}
+    </div>
+  );
+  
 }
