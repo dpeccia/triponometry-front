@@ -1,4 +1,4 @@
-import { Grid, Box, Badge, Image } from '@chakra-ui/react'
+import {Box, Badge, Image, Flex} from '@chakra-ui/react'
 
 const CalculationCard = (props) => {
     const { calculation, background, onHover, children } = props;
@@ -32,19 +32,16 @@ const CalculationCard = (props) => {
             <Box display='flex' justifyContent='space-between'>
                 <Box p='5'>
                     {getCalculationLabel()}
-
                     <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' noOfLines={1}>
                         {calculation.name}
                     </Box>
-
                     <Box>
                         {calculation.price}
                     </Box>
                 </Box>
-
-                <Grid p='5' templateColumns='repeat(2, 1fr)' gap={2}>
+                <Flex p='5' alignItems='center' w='120px' wrap='wrap' justifyContent='end' >
                     {children}
-                </Grid>
+                </Flex>
             </Box>
         </Box>
     );
