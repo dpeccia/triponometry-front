@@ -4,8 +4,14 @@ const backend = axios.create({
     baseURL: 'http://localhost:8080/',
 });
 
+const getMinutes = (mealTime) => {
+    if (mealTime.time === 'h') return mealTime.number * 60
+    return mealTime.number
+}
+
 export const calculateNewTrip = async (calculatorInputs) => {
     const accomodation = {
+        name: calculatorInputs.accommodation.name,
         coordinates: {
             latitude: calculatorInputs.accommodation.latitude,
             longitude: calculatorInputs.accommodation.longitude
@@ -14,6 +20,7 @@ export const calculateNewTrip = async (calculatorInputs) => {
     }
     const activities = calculatorInputs.activities.map((activity) => {
         return ({
+            name: activity.name,
             coordinates: {
                 latitude: activity.latitude,
                 longitude: activity.longitude
@@ -23,18 +30,18 @@ export const calculateNewTrip = async (calculatorInputs) => {
     })
     const places = [accomodation].concat(activities)
 
-    // TODO: agregar nombre de actividad
     const backendCalculatorInputs = {
         "places": places,
-        "timePerDay": 600, // 10 hours hardcoded for now 
-        "travelMode": "DRIVING",
-        "startHour": 9,
-        "lunch": 45,
-        "dinner": 60,
-        "daysRestriction": 5,
-        "breakfast": 30,
-        "freeDays": 2,
-        "snack": 0
+        "travelMode": calculatorInputs.mobility,
+        "time": {
+            "startHour": calculatorInputs.horarios.despertarse,
+            "finishHour": calculatorInputs.horarios.dormirse,
+            "breakfast": getMinutes(calculatorInputs.horarios.desayuno),
+            "lunch": getMinutes(calculatorInputs.horarios.almuerzo),
+            "snack": getMinutes(calculatorInputs.horarios.merienda),
+            "dinner": getMinutes(calculatorInputs.horarios.cena),
+            "freeDays": calculatorInputs.horarios.libres
+        }
     }
 
     const backendResponse = await backend.post(

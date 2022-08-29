@@ -39,7 +39,7 @@ export const MobilityInput = (props) => {
                         <Flex direction='column' alignContent='stretch'>
                             <Box as='button' m={1} borderWidth='1px' borderRadius='lg' overflow='hidden'>
                                 <Flex p={2} alignItems='center' >
-                                    <Radio value='walking'>
+                                    <Radio value='WALKING'>
                                         <Flex ml={1} mr={1} alignItems='flex-start' justifyContent='space-between'>
                                             <Box mr={2}>
                                                 <MdDirectionsWalk size={25}/>
@@ -56,7 +56,7 @@ export const MobilityInput = (props) => {
                             </Box>
                             <Box as='button' m={1} borderWidth='1px' borderRadius='lg' overflow='hidden'>
                                 <Flex p={2} alignItems='center' >
-                                    <Radio value='driving'>
+                                    <Radio value='DRIVING'>
                                         <Flex ml={1} mr={1} alignItems='flex-start' justifyContent='space-between'>
                                             <Box mr={2}>
                                                 <AiFillCar size={25}/>
@@ -74,7 +74,7 @@ export const MobilityInput = (props) => {
                             </Box>
                             <Box as='button' m={1} borderWidth='1px' borderRadius='lg' overflow='hidden'>
                                 <Flex p={2} alignItems='center' >
-                                    <Radio value='cycling'>
+                                    <Radio value='BICYCLING'>
                                         <Flex ml={1} mr={1} alignItems='flex-start' justifyContent='space-between'>
                                             <Box mr={2}>
                                                 <MdDirectionsBike size={25}/>

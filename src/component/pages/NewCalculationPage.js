@@ -28,7 +28,7 @@ export const NewCalculationPage = () => {
         const response = await calculateNewTrip(calculatorInputs)
         
         if (response) {
-            setCalculatorOutputs({ mapId: response.kml, events: response.events})
+            setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount })
         } else {
             setShowResults(false)
             toast({

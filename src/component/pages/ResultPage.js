@@ -29,7 +29,7 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
 
     return (
         <Flex flexDirection="column" width="100%">
-            <TripInfo calculatorInputs={calculatorInputs}/>
+            <TripInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
             <Flex justify='space-around'>
                 <Flex flexDirection="column">
                     <Box margin={5} bg='#94A1AA' borderTopRadius='40px' px='5' py='6' boxShadow='lg'>
