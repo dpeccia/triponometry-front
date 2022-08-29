@@ -1,5 +1,5 @@
 import { GoogleMap } from "@react-google-maps/api";
-import { MapExport } from "./MapExport";
+import { Export } from "./Export";
 
 const containerStyle = {
   width: '100%', height: '350px'
@@ -21,7 +21,7 @@ export const ResultMap = ({ mapId, accommodation }) => {
           map: map
         });
     }}/>
-    <MapExport kmlId={mapId}></MapExport>
+    <Export exportType='map'requestData={mapId} fileType='text/xml' fileName='myMap.kml' downloadText='Download Map'></Export>
     </div>
   );
 }
