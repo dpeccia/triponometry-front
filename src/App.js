@@ -1,4 +1,3 @@
-import './App.css';
 import {Outlet} from "react-router"
 import {ChakraProvider, Flex, useStatStyles} from '@chakra-ui/react'
 import {Header} from "./component/utils/Header";
