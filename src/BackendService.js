@@ -25,11 +25,16 @@ export const calculateNewTrip = async (calculatorInputs) => {
 
     // TODO: agregar nombre de actividad
     const backendCalculatorInputs = {
-        "daysRestriction": 0,
-        "freeDays": 0,
         "places": places,
         "timePerDay": 600, // 10 hours hardcoded for now 
-        "travelMode": "DRIVING"
+        "travelMode": "DRIVING",
+        "startHour": 9,
+        "lunch": 45,
+        "dinner": 60,
+        "daysRestriction": 5,
+        "breakfast": 30,
+        "freeDays": 2,
+        "snack": 0
     }
 
     const backendResponse = await backend.post(
@@ -74,4 +79,41 @@ export const singUp = async (email, password) => {
         })
 
         return response
+}
+
+export const loadCalendarEvents = async (eventsList) => {
+    const calendarRequest = {
+        "events": eventsList,
+        "startDate": {
+          "day": 29,
+          "hour": 0,
+          "minute": 0,
+          "month": 7,
+          "year": 2022
+        }
+    };
+
+    const response = await backend.post(
+      'calendar/rawContent', 
+      calendarRequest, 
+      { headers: {"Access-Control-Allow-Origin": "*"}}
+    ).catch((error) => {
+      return null
+    }).then((response) => {
+        return response?.data;
+    });
+
+    return response
+}
+
+export const loadMapKml = async (kmlId) => {
+    const response = await backend.get(`trip/kml/${kmlId}`,
+    {headers: {"Access-Control-Allow-Origin": "*"}})
+    .catch((error) => {
+      return null
+    }).then((response) => {
+        return response?.data;
+    });
+
+    return response
 }

@@ -4,8 +4,10 @@ import { ResultCalendar } from "../calculator/output/ResultCalendar";
 import { TripInfo } from "../calculator/output/TripInfo";
 import { CalculatorScreen } from "../calculator/CalculatorScreen";
 import { LoadScript } from "@react-google-maps/api";
+import { Export } from "../calculator/output/Export";
 
 export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
+
     const showMap = () => {
         if(window.google) {
             return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
@@ -15,6 +17,14 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                 <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
             </LoadScript>
         );
+    }
+
+    const showResultCalendar = () => {
+        return <ResultCalendar events={calculatorOutputs.events}/>
+    }
+
+    const showExportCalendar = () => {
+        return <Export exportType='calendar'requestData={calculatorOutputs.events} fileType='text/plain' fileName='myCalendar.ics' downloadText='Download Calendar'></Export>
     }
 
     return (
@@ -27,7 +37,8 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                     </Box>
                     {showMap()}
                 </Flex>
-                <ResultCalendar />
+                {showResultCalendar()}
+                {showExportCalendar()}
             </Flex>
         </Flex>
     );

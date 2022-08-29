@@ -25,10 +25,10 @@ export const NewCalculationPage = () => {
         setCalculatorOutputs(null)
         setShowResults(true)
 
-        const kmlId = await calculateNewTrip(calculatorInputs)
+        const response = await calculateNewTrip(calculatorInputs)
         
-        if (kmlId) {
-            setCalculatorOutputs({ mapId: kmlId })
+        if (response) {
+            setCalculatorOutputs({ mapId: response.kml, events: response.events})
         } else {
             setShowResults(false)
             toast({
