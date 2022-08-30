@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 const backend = axios.create({
     baseURL: 'http://localhost:8080/',
@@ -47,6 +48,26 @@ export const calculateNewTrip = async (calculatorInputs) => {
     const backendResponse = await backend.post(
         '/trip/optimal-route', 
         backendCalculatorInputs, 
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
+    return backendResponse?.data
+}
+
+export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs) => {
+    const request = {
+        "name": tripName,
+        "calculatorInputs": _.omit(calculatorInputs, ['days', 'money']),
+        "calculatorOutputs": calculatorOutputs
+    }
+
+    console.log(request)
+
+    const backendResponse = await backend.post(
+        '/trip', 
+        request, 
         { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
     ).catch((error) => {
         return null

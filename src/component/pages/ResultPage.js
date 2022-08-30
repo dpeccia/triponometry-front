@@ -5,6 +5,7 @@ import { TripInfo } from "../calculator/output/TripInfo";
 import { CalculatorScreen } from "../calculator/CalculatorScreen";
 import { LoadScript } from "@react-google-maps/api";
 import { Export } from "../calculator/output/Export";
+import { SaveModal } from "./SaveModal";
 
 export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
 
@@ -40,6 +41,7 @@ export const ResultPage = ({ calculatorInputs, calculatorOutputs }) => {
                 {showResultCalendar()}
                 {showExportCalendar()}
             </Flex>
+            <SaveModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
         </Flex>
     );
 }

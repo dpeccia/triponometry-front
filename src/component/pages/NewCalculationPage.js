@@ -32,8 +32,8 @@ export const NewCalculationPage = () => {
         } else {
             setShowResults(false)
             toast({
-                title: 'An error occurred',
-                description: 'Unable to calculate new trip',
+                title: 'Ocurrio un error',
+                description: 'No se pudo calcular su nuevo viaje',
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,
