@@ -10,6 +10,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import { useState } from "react"
+import { archiveTrip } from "../../../BackendService";
 
 export const ArchiveCalculationModal = (props) => {
     const OverlayOne = () => (
@@ -21,6 +22,14 @@ export const ArchiveCalculationModal = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+
+    const archiveCalculation = async () => {
+        const response = await archiveTrip(props.calculationId)
+        if(response) {
+            props.fetchCalculations()
+            onClose()
+        }
+    }
 
     return (
         <>
@@ -47,7 +56,7 @@ export const ArchiveCalculationModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF'> Si, archivar </Button>
+                        <Button variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Si, archivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

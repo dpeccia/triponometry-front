@@ -63,11 +63,37 @@ export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs)
         "calculatorOutputs": calculatorOutputs
     }
 
-    console.log(request)
-
     const backendResponse = await backend.post(
         '/trip', 
         request, 
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
+    return backendResponse?.data
+}
+
+export const archiveTrip = async (tripId) => {
+    const request = {
+        "id": tripId,
+        "newStatus": "ARCHIVED"
+    }
+
+    const backendResponse = await backend.put(
+        `/trip`,
+        request ,
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
+    return backendResponse?.data
+}
+
+export const getMyTrips = async () => {
+    const backendResponse = await backend.get(
+        '/trip', 
         { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
     ).catch((error) => {
         return null
