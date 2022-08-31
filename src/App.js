@@ -10,7 +10,7 @@ function App(props) {
   return (
     <ChakraProvider>
       <Flex direction='column' minH='100vh'>
-          <Header username={props.username} pfp={props.pfp}/>
+          <Header username={props.username} pfp={props.pfp} logout={props.logout}/>
           <Flex p={8} direction='row' grow='1'>
               <Outlet />
           </Flex>

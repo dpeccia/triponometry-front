@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Image, Link, Divider, VStack, Heading, Text, Input, Button, useToast} from "@chakra-ui/react"
+import { Box, Flex, HStack, Image, Link, Divider, VStack, Heading, Text, Input, Button} from "@chakra-ui/react"
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
@@ -54,14 +54,14 @@ export const LoginPage = (props) => {
 
                 <VStack alignItems='baseline' ml={4}>
 
-                    <Box mb={2}>
+                    <Box margin="auto">
                         <Heading fontSize='2xl' alignSelf='self-start'> Bienvenido </Heading>
                         <Text fontSize='xs' alignSelf='self-start' color='blackAlpha.600'>Inicia sesión para continuar</Text>
                     </Box>
 
-                    <Box>
+                    <VStack>
                         {error !== null ? (<ErrorBadge msg={error}/>) : (<></>)}
-                        <Input placeholder='Email' mb={1} onChange={handleEmailChange} isInvalid={error !== null}/>
+                        <Input placeholder='Email' mb={1} onChange={handleEmailChange} isInvalid={error !== null} size="md"  maxWidth="-moz-initial"/>
                         <PasswordInput handleChange={handlePasswordChange} isInvalid={error !== null}/>
                         <Link as={ReachLink} to="/help-password" fontSize='xs'>
                             Olvidaste tu Contraseña? 
@@ -75,7 +75,7 @@ export const LoginPage = (props) => {
                                 Iniciar Sesión
                             </Button>
                         </HStack>
-                    </Box>
+                    </VStack>
                 </VStack>
             </HStack>
         </Box>

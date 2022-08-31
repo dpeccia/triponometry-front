@@ -79,7 +79,7 @@ export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs)
 export const logout = async () => {
     const response = await backend.delete('/user/tokens',{ headers: {"Access-Control-Allow-Origin": "*"} , withCredentials: true})
         .catch((error) => {
-            console.log(error)
+            return null
         })
 
         if(response){
@@ -144,4 +144,12 @@ export const loadMapKml = async (kmlId) => {
     });
 
     return response
+}
+
+export const checkLogin = async () => {
+    const response = await backend.get('/user', {withCredentials: true})
+        .catch((error) => {
+            return null
+        })
+    return response?.data
 }
