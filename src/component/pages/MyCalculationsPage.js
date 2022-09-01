@@ -1,7 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import Saved from "../my-calculations/Saved";
-import Drafts from "../my-calculations/Drafts";
-import Archive from "../my-calculations/Archive";
+import TabSaved from "../my-calculations/TabSaved";
+import TabDrafts from "../my-calculations/TabDrafts";
+import TabArchive from "../my-calculations/TabArchive";
 import { useEffect, useState } from 'react';
 import { getMyTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
@@ -57,13 +57,13 @@ export const MyCalculationsPage = () => {
 
             <TabPanels>
                 <TabPanel>
-                    { isLoading ? <SpinnerSearchBox/> : <Saved savedCalculations={calculations.saved} fetchCalculations={fetchCalculations}/> }
+                    { isLoading ? <SpinnerSearchBox/> : <TabSaved savedCalculations={calculations.saved} fetchCalculations={fetchCalculations}/> }
                 </TabPanel>
                 <TabPanel>
-                    { isLoading ? <SpinnerSearchBox/> : <Drafts draftsCalculations={calculations.drafts} /> }
+                    { isLoading ? <SpinnerSearchBox/> : <TabDrafts draftsCalculations={calculations.drafts} /> }
                 </TabPanel>
                 <TabPanel>
-                    { isLoading ? <SpinnerSearchBox/> : <Archive archivedCalculations={calculations.archive} /> }
+                    { isLoading ? <SpinnerSearchBox/> : <TabArchive archivedCalculations={calculations.archive} /> }
                 </TabPanel>
             </TabPanels>
         </Tabs>

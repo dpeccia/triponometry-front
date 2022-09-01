@@ -1,17 +1,16 @@
 import CalculationCard from "./CalculationCard";
 import { Flex } from '@chakra-ui/react'
-import { FaTrashAlt } from 'react-icons/fa'; 
-import {DeleteCalculationModal} from "./modals/DeleteCalculationModal";
+import { FaShareSquare } from 'react-icons/fa'; 
+import {ShareCalculationModal} from "./modals/ShareCalculationModal";
 
-const Drafts = ({ draftsCalculations }) => {
+const TabArchive = ({ archivedCalculations }) => {
     const onHover = { shadow: 'xl', filter: 'auto'}
 
-    const calculationCards = draftsCalculations.map((calculation) => {
+    const calculationCards = archivedCalculations.map((calculation) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} background='gray.300' onHover={onHover}>
-                <DeleteCalculationModal
-                    icon={FaTrashAlt}
-                    calculationName={calculation.name}/>
+                <ShareCalculationModal
+                    icon={FaShareSquare}/>
             </CalculationCard>
         );
     });
@@ -23,4 +22,4 @@ const Drafts = ({ draftsCalculations }) => {
     );
 }
 
-export default Drafts;
+export default TabArchive;

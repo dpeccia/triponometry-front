@@ -5,7 +5,7 @@ import {EditCalculationModal} from "./modals/EditCalculationModal";
 import {ArchiveCalculationModal} from "./modals/ArchiveCalculationModal";
 import {ShareCalculationModal} from "./modals/ShareCalculationModal";
 
-const Saved = (props) => {
+const TabSaved = (props) => {
     const onHover = { shadow: 'xl', filter: 'auto'}
 
     const calculationCards = props.savedCalculations.map((calculation) => {
@@ -25,4 +25,4 @@ const Saved = (props) => {
     );
 }
 
-export default Saved;
+export default TabSaved;

@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react"
 import { archiveTrip } from "../../../BackendService";
+import {useToast} from "@chakra-ui/toast";
 
 export const ArchiveCalculationModal = (props) => {
     const OverlayOne = () => (
@@ -20,14 +21,30 @@ export const ArchiveCalculationModal = (props) => {
         />
     )
 
+    const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
     const archiveCalculation = async () => {
         const response = await archiveTrip(props.calculationId)
         if(response) {
+            toast({
+                title: 'Viaje archivado!',
+                description: `Su viaje a ${props.calculationName} fue archivado correctamente`,
+                variant: 'top-accent',
+                status: 'success',
+                isClosable: true,
+            })
             props.fetchCalculations()
             onClose()
+        } else {
+            toast({
+                title: 'Ocurrio un error',
+                description: 'No se pudo archivar su viaje',
+                variant: 'top-accent',
+                status: 'error',
+                isClosable: true,
+            })
         }
     }
 
