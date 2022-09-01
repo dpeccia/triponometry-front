@@ -102,6 +102,17 @@ export const getMyTrips = async () => {
     return backendResponse?.data
 }
 
+export const getMyTrip = async (id) => {
+    const backendResponse = await backend.get(
+        `/trip/info?tripId=${id}`,
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+
+    return backendResponse?.data
+}
+
 export const getAllTrips = async () => {
     const backendResponse = await backend.get(
         '/trip/all',

@@ -1,6 +1,8 @@
 import {Box, Badge, Image, Flex} from '@chakra-ui/react'
+import {useNavigate} from "react-router";
 
 const CalculationCard = (props) => {
+    const navigate = useNavigate()
     const { calculation, background, onHover, children } = props;
 
     const getCalculationImage = () => {
@@ -27,8 +29,9 @@ const CalculationCard = (props) => {
 
     return (
         <Box m='3' maxW='22em' bg={background} borderWidth='1px' borderRadius='xl' boxShadow='md' overflow='hidden' _hover={onHover}>
-            {getCalculationImage()}
-
+            <Box as='button' onClick={ () => navigate(`/mis-calculos/${calculation.id}`)}>
+                {getCalculationImage()}
+            </Box>
             <Box display='flex' justifyContent='space-between'>
                 <Box p='5'>
                     {getCalculationLabel()}

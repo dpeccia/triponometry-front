@@ -27,7 +27,6 @@ export const ShareCalculationModal = (props) => {
     const [value, setValue] = useState(`http://localhost:3000${location.pathname}`)
     const { hasCopied, onCopy } = useClipboard(value)
 
-    console.log(location)
     return (
         <>
             <IconButton
