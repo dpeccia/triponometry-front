@@ -2,11 +2,11 @@ import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {getMyTrip} from "../../BackendService";
 import {SpinnerSearchBox} from "../utils/SpinnerSearchBox";
-import {TripResult} from "../calculation/TripResult";
-import {Flex} from "@chakra-ui/react";
-import {TripInfo} from "../calculator/output/TripInfo";
+import {ResultTrip} from "../result/ResultTrip";
+import {Box, Flex} from "@chakra-ui/react";
 import {FaEdit} from "react-icons/fa";
 import {EditCalculationModal} from "../my-calculations/modals/EditCalculationModal";
+import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
 
 export const MyCalculationPage = () => {
     const params = useParams();
@@ -32,13 +32,13 @@ export const MyCalculationPage = () => {
         <Flex flexDirection="column" width="100%">
             { isLoading ? <SpinnerSearchBox/> :
                     <>
-                        <Flex alignItems='center'>
-                            <TripInfo calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
-                            <EditCalculationModal icon={FaEdit} calculationName={calculation.name}/>
+                        <Flex alignItems='center' justifyContent='space-between'>
+                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                            <Box w='50px'>
+                                <EditCalculationModal icon={FaEdit} calculationName={calculation.name}/>
+                            </Box>
                         </Flex>
-                        <TripResult calculatorInputs={calculation.calculatorInputs}
-                                    calculatorOutputs={calculation.calculatorOutputs}/>
-
+                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
                     </>
             }
 

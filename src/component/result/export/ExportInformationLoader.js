@@ -1,4 +1,4 @@
-import { loadCalendarEvents, loadMapKml } from "../../BackendService";
+import { loadCalendarEvents, loadMapKml } from "../../../BackendService";
 
 export default class ExportInformationLoader {
     

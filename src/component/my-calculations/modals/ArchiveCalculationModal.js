@@ -36,7 +36,7 @@ export const ArchiveCalculationModal = (props) => {
             <IconButton
                 as={props.icon}
                 size='sm'
-                ml={1}
+                m={1}
                 p={2}
                 onClick={() => {
                     setOverlay(<OverlayOne />)

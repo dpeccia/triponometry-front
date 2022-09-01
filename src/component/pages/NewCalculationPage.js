@@ -2,7 +2,7 @@ import {Flex, Spinner} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
 import {CityInput} from "../calculator/inputs/city/CityInput";
-import { ResultPage } from "./ResultPage";
+import { NewCalculationResult } from "../calculator/output/NewCalculationResult";
 import { calculateNewTrip } from "../../BackendService";
 import { isNull } from "lodash";
 import { Heading } from "@chakra-ui/layout";
@@ -52,7 +52,7 @@ export const NewCalculationPage = () => {
         }
 
         return (
-            <ResultPage calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+            <NewCalculationResult calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
         );
     }
 

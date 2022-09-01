@@ -11,16 +11,9 @@ const Saved = (props) => {
     const calculationCards = props.savedCalculations.map((calculation) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} background='white' onHover={onHover}>
-                <ShareCalculationModal
-                    icon={FaShareSquare}/>
-                <EditCalculationModal
-                    icon={FaEdit}
-                    calculationName={calculation.name}/>
-                <ArchiveCalculationModal
-                    icon={FaArchive}
-                    fetchCalculations={props.fetchCalculations}
-                    calculationId={calculation.id}
-                    calculationName={calculation.name}/>
+                <ShareCalculationModal icon={FaShareSquare}/>
+                <EditCalculationModal icon={FaEdit} calculationName={calculation.name}/>
+                <ArchiveCalculationModal icon={FaArchive} fetchCalculations={props.fetchCalculations} calculationId={calculation.id} calculationName={calculation.name}/>
             </CalculationCard>
         );
     });

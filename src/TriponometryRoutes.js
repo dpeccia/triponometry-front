@@ -49,7 +49,7 @@ export function TriponometryRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout}/>}>
-                    <Route path="" exact element={<LandingPage/>}/>
+                    <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="nuevo" exact element={<NewCalculationPage/>}/>

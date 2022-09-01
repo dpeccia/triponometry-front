@@ -42,7 +42,7 @@ const CalculationCard = (props) => {
                         {calculation.price}
                     </Box>
                 </Box>
-                <Flex p='5' alignItems='center' w='120px' wrap='wrap' justifyContent='end' >
+                <Flex p='4' alignItems='center' w='120px' wrap='wrap' justifyContent='end' >
                     {children}
                 </Flex>
             </Box>

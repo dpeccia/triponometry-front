@@ -1,6 +1,6 @@
 import { Box, VStack, Heading, Flex, Image, Center, Input, Button, Link , Text, HStack, useToast} from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
-import { PasswordInput } from "../utils/PasswordInput"
+import { PasswordInput } from "../login/PasswordInput"
 import { FcGoogle } from "react-icons/fc";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
 import validator from 'validator'

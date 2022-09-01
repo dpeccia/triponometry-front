@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
 import { logIn } from "../../BackendService";
 import { ErrorBadge } from "../login/ErrorBadge";
-import { PasswordInput } from "../utils/PasswordInput";
+import { PasswordInput } from "../login/PasswordInput";
 
 export const LoginPage = (props) => {
 
