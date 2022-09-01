@@ -20,7 +20,7 @@ export const CitySearchBar = (props) => {
                                 sort: '-population',
                                 namePrefix: values.city,
                                 limit: '10',
-                                languageCode: 'es',
+                                languageCode: 'en',
                                 types: 'city'
                             },
                         });
