@@ -3,12 +3,13 @@ import {Routes, useLocation, Navigate} from "react-router";
 import App from "./App";
 import {ExplorerPage} from "./component/pages/ExplorerPage";
 import {MyCalculationsPage} from "./component/pages/MyCalculationsPage";
-import { NewCalculationPage } from "./component/pages/NewCalculationPage";
-import { LoginPage } from "./component/pages/LoginPage";
-import { SignUpPage } from "./component/pages/SignUpPage";
-import { useState, useEffect } from "react";
-import { checkLogin, logout } from "./BackendService";
+import {NewCalculationPage} from "./component/pages/NewCalculationPage";
 import {MyCalculationPage} from "./component/pages/MyCalculationPage";
+import {LandingPage} from "./component/pages/LandingPage";
+import {LoginPage} from "./component/pages/LoginPage";
+import {SignUpPage} from "./component/pages/SignUpPage";
+import {useState, useEffect} from "react";
+import {checkLogin, logout} from "./BackendService";
 
 const NotFound = () => {
     const {pathname} = useLocation();
@@ -48,14 +49,16 @@ export function TriponometryRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout}/>}>
-                    <Route path="" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
-                    <Route path="nuevo" exact element={<NewCalculationPage/>}/>
+                    <Route path="" exact element={<LandingPage/>}/>
+                    <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
+                    <Route path="nuevo" exact element={<NewCalculationPage/>}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
                     <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage />))}/>
                     <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage />))}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>
-        </BrowserRouter>)
+        </BrowserRouter>
+    )
 }
