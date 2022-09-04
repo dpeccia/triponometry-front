@@ -10,6 +10,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import { useState } from "react"
+import {FaEdit} from "react-icons/fa";
 
 export const EditCalculationModal = (props) => {
     const OverlayOne = () => (
@@ -24,16 +25,26 @@ export const EditCalculationModal = (props) => {
 
     return (
         <>
-            <IconButton
-                as={props.icon}
-                size='sm'
-                m={1}
-                p={2}
-                onClick={() => {
-                    setOverlay(<OverlayOne />)
-                    onOpen()
-                }}
-            />
+            {
+                props.hasText ? (
+                    <Button rightIcon={<FaEdit />} bg='#94A1AA' variant='solid' alignSelf='flex-end'
+                        onClick={() => {
+                            setOverlay(<OverlayOne />)
+                            onOpen()
+                        }}
+                    >
+                        Editar calculo
+                    </Button>
+                ) : (
+                    <IconButton as={FaEdit} size='sm' m={1} p={2}
+                        onClick={() => {
+                            setOverlay(<OverlayOne />)
+                            onOpen()
+                        }}
+                    />
+                )
+            }
+
             <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 {overlay}
                 <ModalContent>

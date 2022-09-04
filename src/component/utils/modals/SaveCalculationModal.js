@@ -11,11 +11,11 @@ import {
 import { useState } from "react"
 import { FaSave } from "react-icons/fa";
 import { isEmpty } from "lodash";
-import { saveNewTrip } from "../../BackendService";
+import { saveNewTrip } from "../../../BackendService";
 import { useToast } from "@chakra-ui/toast";
 import { useNavigate } from "react-router";
 
-export const SaveModal = ({ calculatorInputs, calculatorOutputs }) => {
+export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) => {
     const toast = useToast()
     const navigate = useNavigate()
 

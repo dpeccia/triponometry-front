@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import {getMyTrip} from "../../BackendService";
 import {SpinnerSearchBox} from "../utils/SpinnerSearchBox";
 import {ResultTrip} from "../result/ResultTrip";
-import {Box, Flex} from "@chakra-ui/react";
+import {Box, Button, Flex} from "@chakra-ui/react";
 import {FaEdit} from "react-icons/fa";
-import {EditCalculationModal} from "../my-calculations/modals/EditCalculationModal";
+import {EditCalculationModal} from "../utils/modals/EditCalculationModal";
 import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
 import { NotFound } from "./NotFoundPage";
 
@@ -42,9 +42,12 @@ export const MyCalculationPage = () => {
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
                             <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
-                            <Box w='50px'>
-                                <EditCalculationModal icon={FaEdit} calculationName={calculation.name}/>
-                            </Box>
+                            {
+                                calculation.status === 'ACTIVE' ?
+                                    <Flex mt={2} justifyContent='flex-end'>
+                                        <EditCalculationModal icon={FaEdit} calculationName={calculation.name} hasText={true}/>
+                                    </Flex> : <Button> Desarchivar </Button>
+                            }
                         </Flex>
                         <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
                     </>

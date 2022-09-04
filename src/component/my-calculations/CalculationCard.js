@@ -1,12 +1,11 @@
 import {Box, Badge, Image, Flex} from '@chakra-ui/react'
-import {useNavigate} from "react-router";
+import {isUndefined} from "lodash";
 
 const CalculationCard = (props) => {
-    const navigate = useNavigate()
     const { calculation, background, onHover, children } = props;
 
     const getCalculationImage = () => {
-        if (calculation.imageUrl == undefined)
+        if (isUndefined(calculation.imageUrl))
             return <Image w='18em' h='15em' objectFit='contain' src='../logo-triponometry.png' filter='grayscale(100%)'/>
         return (
             <Image w='22em' h='15em' objectFit='cover' src={calculation.imageUrl} />
@@ -14,7 +13,7 @@ const CalculationCard = (props) => {
     }
 
     const getCalculationLabel = () => {
-        if (calculation.days == undefined) return
+        if (isUndefined(calculation.days)) return
         return (
             <Box display='flex' alignItems='baseline'>
                 <Badge borderRadius='full' px='2' colorScheme='red'>
@@ -29,7 +28,7 @@ const CalculationCard = (props) => {
 
     return (
         <Box m='3' maxW='22em' bg={background} borderWidth='1px' borderRadius='xl' boxShadow='md' overflow='hidden' _hover={onHover}>
-            <Box as='button' onClick={ () => navigate(`/mis-calculos/${calculation.id}`)}>
+            <Box as='button' onClick={props.navigateTo}>
                 {getCalculationImage()}
             </Box>
             <Box display='flex' justifyContent='space-between'>

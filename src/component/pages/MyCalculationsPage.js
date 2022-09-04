@@ -34,6 +34,7 @@ export const MyCalculationsPage = () => {
                     return {
                         id: draftTrip.id,
                         name: draftTrip.name,
+                        status: draftTrip.status,
                     }
                 }),
                 archive: tripsResponse.archived.map((archivedTrip) => toCalculationCardInfo(archivedTrip))
