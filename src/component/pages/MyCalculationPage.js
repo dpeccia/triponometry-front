@@ -7,11 +7,13 @@ import {Box, Flex} from "@chakra-ui/react";
 import {FaEdit} from "react-icons/fa";
 import {EditCalculationModal} from "../my-calculations/modals/EditCalculationModal";
 import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
+import { NotFound } from "./NotFoundPage";
 
 export const MyCalculationPage = () => {
     const params = useParams();
     const idCalculation = params.id;
 
+    const [isValid, setIsValid] = useState(true)
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
 
@@ -20,8 +22,12 @@ export const MyCalculationPage = () => {
     }
 
     const onFinish = (response) => {
-        setCalculation(response)
-        setIsLoading(false)
+        if(response){
+            setCalculation(response)
+            setIsLoading(false)
+        } else {
+            setIsValid(false)
+        }
     }
 
     useEffect(() => {
@@ -30,7 +36,9 @@ export const MyCalculationPage = () => {
 
     return (
         <Flex flexDirection="column" width="100%">
-            { isLoading ? <SpinnerSearchBox/> :
+            {
+                isValid ? (
+                    isLoading ? <SpinnerSearchBox/> :
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
                             <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
@@ -40,6 +48,7 @@ export const MyCalculationPage = () => {
                         </Flex>
                         <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
                     </>
+                ) : <NotFound/>
             }
 
         </Flex>
