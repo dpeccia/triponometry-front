@@ -1,7 +1,9 @@
-import {Box, Flex, Image, Link, Text} from "@chakra-ui/react";
+import {Box, Button, Flex, Image, Link, Text} from "@chakra-ui/react";
 import {Link as ReachLink} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 export const LandingPage = () => {
+    const navigate = useNavigate()
     return (
         <>
             <Flex direction='column' grow='2' alignItems='flex-end'>
@@ -14,18 +16,14 @@ export const LandingPage = () => {
                             <br />
                             tus tiempos y tu presupuesto con tan solo unos clicks
                         </Text>
-                        <Box as='button' borderRadius='md' bg='#F0A7B4' fontWeight='bold' color='white' w='150px' h={9} mt={5} px={4}>
-                            <Link as={ReachLink} to="/sign-up" >
-                                Registrarme
-                            </Link>
-                        </Box>
+                        <Button mt={4} w='150px' bg='#F0A7B4' fontWeight='bold' color='white'  onClick={() => navigate("/sign-up")}>
+                            Registrarme
+                        </Button>
                     </Flex>
                     <Flex direction='column' justifyContent='space-between' alignItems='flex-end' grow='2'>
-                        <Box as='button' borderRadius='md' bg='gray.400' fontWeight='bold' color='white' w='150px' h={9} mb={5} px={4}>
-                            <Link as={ReachLink} to="/sign-in" >
-                                Iniciar sesión
-                            </Link>
-                        </Box>
+                        <Button mb={4} bg='gray.400' fontWeight='bold' color='white'  onClick={() => navigate("/sign-in")}>
+                            Iniciar sesión
+                        </Button>
                         <Image minW='512px' boxSize='lg' src={'../landing.png'} />
                     </Flex>
                 </Flex>
