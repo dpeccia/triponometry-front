@@ -33,7 +33,7 @@ export const EditCalculationModal = (props) => {
                             onOpen()
                         }}
                     >
-                        Editar calculo
+                        Editar cálculo
                     </Button>
                 ) : (
                     <IconButton as={FaEdit} size='sm' m={1} p={2}

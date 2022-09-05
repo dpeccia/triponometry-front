@@ -1,7 +1,6 @@
 import {
     Button,
     Divider,
-    IconButton,
     Modal,
     ModalBody,
     ModalCloseButton, ModalContent, ModalFooter,
@@ -9,12 +8,13 @@ import {
     ModalOverlay, Text,
     useDisclosure
 } from "@chakra-ui/react";
-import { useState } from "react"
-import { archiveTrip } from "../../../BackendService";
+import {useState} from "react"
 import {useToast} from "@chakra-ui/toast";
-import {RiInboxArchiveFill} from "react-icons/ri";
+import {unarchivedTrip} from "../../../BackendService";
+import {RiInboxUnarchiveFill} from "react-icons/ri";
+import {useNavigate} from "react-router";
 
-export const ArchiveCalculationModal = (props) => {
+export const UnarchiveCalculationModal = (props) => {
     const OverlayOne = () => (
         <ModalOverlay
             bg='blackAlpha.300'
@@ -23,25 +23,27 @@ export const ArchiveCalculationModal = (props) => {
     )
 
     const toast = useToast()
+    const navigate = useNavigate()
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
-    const archiveCalculation = async () => {
-        const response = await archiveTrip(props.calculationId)
+    const unarchivedCalculation = async () => {
+        const response = await unarchivedTrip(props.calculationId)
         if(response) {
             toast({
-                title: 'Viaje archivado!',
-                description: `Su viaje a ${props.calculationName} fue archivado correctamente`,
+                title: 'Viaje desarchivado!',
+                description: `Su viaje a ${props.calculationName} fue desarchivado correctamente`,
                 variant: 'top-accent',
                 status: 'success',
                 isClosable: true,
             })
-            props.fetchCalculations()
             onClose()
+            navigate("/mis-calculos")
         } else {
             toast({
                 title: 'Ocurrio un error',
-                description: 'No se pudo archivar su viaje',
+                description: 'No se pudo desarchivar su viaje',
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,
@@ -51,30 +53,28 @@ export const ArchiveCalculationModal = (props) => {
 
     return (
         <>
-            <IconButton
-                as={RiInboxArchiveFill}
-                size='sm'
-                m={1}
-                p={2}
-                onClick={() => {
-                    setOverlay(<OverlayOne />)
-                    onOpen()
-                }}
-            />
+            <Button rightIcon={<RiInboxUnarchiveFill />} bg='#94A1AA' variant='solid' alignSelf='flex-end'
+                    onClick={() => {
+                        setOverlay(<OverlayOne />)
+                        onOpen()
+                    }}
+            >
+                Desarchivar cálculo
+            </Button>
             <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 {overlay}
                 <ModalContent>
-                    <ModalHeader> Archivar cálculo </ModalHeader>
+                    <ModalHeader> Desarchivar cálculo </ModalHeader>
                     <Divider />
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text>
-                            ¿Estas seguro que deseas archivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                            ¿Estas seguro que deseas desarchivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
                         </Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Si, archivar </Button>
+                        <Button variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

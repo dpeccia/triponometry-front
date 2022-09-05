@@ -14,8 +14,8 @@ const TabSaved = (props) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => navigate(`/mis-calculos/${calculation.id}`)} background='white' onHover={onHover}>
                 <ShareCalculationModal icon={FaShareSquare}/>
-                <EditCalculationModal icon={FaEdit} calculationName={calculation.name}/>
-                <ArchiveCalculationModal icon={FaArchive} fetchCalculations={props.fetchCalculations} calculationId={calculation.id} calculationName={calculation.name}/>
+                <EditCalculationModal calculationName={calculation.name}/>
+                <ArchiveCalculationModal fetchCalculations={props.fetchCalculations} calculationId={calculation.id} calculationName={calculation.name}/>
             </CalculationCard>
         );
     });

@@ -3,11 +3,11 @@ import {useEffect, useState} from "react";
 import {getMyTrip} from "../../BackendService";
 import {SpinnerSearchBox} from "../utils/SpinnerSearchBox";
 import {ResultTrip} from "../result/ResultTrip";
-import {Box, Button, Flex} from "@chakra-ui/react";
-import {FaEdit} from "react-icons/fa";
+import {Flex} from "@chakra-ui/react";
 import {EditCalculationModal} from "../utils/modals/EditCalculationModal";
 import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
-import { NotFound } from "./NotFoundPage";
+import {NotFound} from "./NotFoundPage";
+import {UnarchiveCalculationModal} from "../utils/modals/UnarchiveCalculationModal";
 
 export const MyCalculationPage = () => {
     const params = useParams();
@@ -16,6 +16,13 @@ export const MyCalculationPage = () => {
     const [isValid, setIsValid] = useState(true)
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+
+    const getCustomeButton = (calculation) => {
+        if(calculation.status === 'ACTIVE')
+            return <EditCalculationModal calculationName={calculation.name} hasText={true}/>
+        else
+            return <UnarchiveCalculationModal calculationId={calculation.id} calculationName={calculation.name}/>
+    }
 
     const fetchCalculation = async () => {
         return await getMyTrip(idCalculation)
@@ -42,12 +49,9 @@ export const MyCalculationPage = () => {
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
                             <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
-                            {
-                                calculation.status === 'ACTIVE' ?
-                                    <Flex mt={2} justifyContent='flex-end'>
-                                        <EditCalculationModal icon={FaEdit} calculationName={calculation.name} hasText={true}/>
-                                    </Flex> : <Button> Desarchivar </Button>
-                            }
+                            <Flex mt={2} justifyContent='flex-end'>
+                                {getCustomeButton(calculation)}
+                            </Flex>
                         </Flex>
                         <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
                     </>
