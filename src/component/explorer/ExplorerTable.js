@@ -3,10 +3,17 @@ import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import {FilterInput} from "../explorer/FilterInput";
+import {FilterInput} from "./FilterInput";
 import { useMemo } from 'react';
+import {useNavigate} from "react-router";
 
 export const ExplorerTable = ({ data }) => {
+
+    const navigate = useNavigate()
+    const handleRowClick = (id) => {
+        navigate(`/explorar/${id}`)
+    }
+
     const columns = useMemo(
         () => [
             {
@@ -41,7 +48,7 @@ export const ExplorerTable = ({ data }) => {
         page, prepareRow, canPreviousPage, canNextPage, pageOptions, pageCount, gotoPage, nextPage, previousPage,
         // Filtering
         setGlobalFilter, state: { pageIndex, globalFilter }
-    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 5 } }, useGlobalFilter, useSortBy, usePagination)
+    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 8 } }, useGlobalFilter, useSortBy, usePagination)
     
     return (
         <>
@@ -74,7 +81,7 @@ export const ExplorerTable = ({ data }) => {
                     {page.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <Tr {...row.getRowProps()}>
+                            <Tr {...row.getRowProps()} onClick={()=> handleRowClick(row.original.id)}>
                                 {row.cells.map((cell) => (
                                     <Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
                                         {cell.render('Cell')}

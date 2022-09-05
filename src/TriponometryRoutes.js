@@ -11,6 +11,7 @@ import {SignUpPage} from "./component/pages/SignUpPage";
 import {useState, useEffect} from "react";
 import {checkLogin, logout} from "./BackendService";
 import {NotFound} from "./component/pages/NotFoundPage";
+import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage";
 
 export function TriponometryRoutes() {
     const [username , setUsername] = useState("")
@@ -48,6 +49,7 @@ export function TriponometryRoutes() {
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="nuevo" exact element={<NewCalculationPage/>}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
+                    <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage />))}/>
                     <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage />))}/>
                     <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<NotFound/>) : (<MyCalculationPage />))}/>
                     <Route path={'*'} element={<NotFound/>}/>

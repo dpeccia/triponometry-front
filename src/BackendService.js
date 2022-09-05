@@ -140,6 +140,17 @@ export const getAllTrips = async () => {
     return backendResponse?.data
 }
 
+export const getATrip = async (id) => {
+    const backendResponse = await backend.get(
+        `/trip/explorar/${id}`,
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+
+    return backendResponse?.data
+}
+
 export const logout = async () => {
     const response = await backend.delete('/user/tokens',{ headers: {"Access-Control-Allow-Origin": "*"} , withCredentials: true})
         .catch((error) => {
