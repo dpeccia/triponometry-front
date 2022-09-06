@@ -8,9 +8,9 @@ export const CalculatorScreen = (props) => {
             <>
                 <ItemCard>{calculatorInputs.city.name}</ItemCard>
                 <ItemCard>{calculatorInputs.accommodation.name}</ItemCard>
-                { calculatorInputs.activities.map( (activity) => {
+                { calculatorInputs.activities.map((activity) => {
                     return (
-                        <ItemCard>{activity.name}</ItemCard>
+                        <ItemCard key={activity.id}>{activity.name}</ItemCard>
                     )
                 })}
                 <MealCard meal={calculatorInputs.horarios.desayuno} mealType='desayunar'/>

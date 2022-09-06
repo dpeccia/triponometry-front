@@ -1,15 +1,9 @@
-import { Tag, TagLabel, TagCloseButton } from "@chakra-ui/react";
+import { Tag, TagLabel } from "@chakra-ui/react";
 
 export const ItemCard = (props) => {
     if(props.children) return (
-        <Tag
-            borderRadius='full'
-            m={1}
-            bg='white'
-            size='lg'
-            boxShadow='lg'>
+        <Tag borderRadius='full' m={1} bg='white' size='lg' boxShadow='lg'>
             <TagLabel>{props.children}</TagLabel>
-            <TagCloseButton />
         </Tag>
     )
 }

@@ -1,8 +1,8 @@
 import { NumberInput, NumberInputField, NumberInputStepper, NumberDecrementStepper, NumberIncrementStepper } from "@chakra-ui/react"
 
-export const IncrementDecrementInputComponent = ({handleChange}) => {
+export const IncrementDecrementInputComponent = ({value, handleChange}) => {
     return(
-        <NumberInput w='80px' min={0} marginRight={2} marginLeft={2} onChange={(event) => {handleChange(event)}}>
+        <NumberInput w='80px' min={0} marginRight={2} marginLeft={2} defaultValue={value} onChange={(event) => {handleChange(event)}}>
             <NumberInputField size={2} />
             <NumberInputStepper>
             <NumberIncrementStepper

@@ -4,23 +4,30 @@ import {MealInput} from "./MealInput";
 import {BedInput} from "./BedInput";
 import {FreeDaysInput} from "./FreeDaysInput";
 import {NextButton} from "../../../utils/NextButton";
-import {MobilityInput} from "../mobility/MobilityInput";
+import { isEmpty } from "lodash";
 
 export const HorariosInput = (props) => {
+    const defaultTime = () => {
+        if(isEmpty(props.calculatorInputs.horarios)) {
+            return {
+                desayuno: null,
+                merienda: null,
+                almuerzo: null,
+                cena: null,
+                despertarse: null,
+                dormirse: null,
+                libres: null
+            }
+        } else {
+            return props.calculatorInputs.horarios
+        }
+    }
 
-    const [selectedHorarios, setSelectedHorarios] = useState({
-        desayuno: null,
-        merienda: null,
-        almuerzo: null,
-        cena: null,
-        despertarse: null,
-        dormirse: null,
-        libres: null
-    })
+    const [selectedHorarios, setSelectedHorarios] = useState(defaultTime())
 
     const onClick = () => {
         props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
-        props.nextStep(<MobilityInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>)
+        props.nextStep('MOBILITY')
     }
 
     return(
@@ -28,9 +35,9 @@ export const HorariosInput = (props) => {
                 <Heading textAlign='center' marginBottom={3}>
                     Horarios
                 </Heading>
-                <MealInput setSelectedHorarios={setSelectedHorarios}/>
-                <BedInput setSelectedHorarios={setSelectedHorarios}/>
-                <FreeDaysInput setSelectedHorarios={setSelectedHorarios}/>
+                <MealInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
+                <BedInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
+                <FreeDaysInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
                 <NextButton
                     stepFinished={true} //TODO: cambiar cuando valido que haya cargado algo
                     onClick={onClick}

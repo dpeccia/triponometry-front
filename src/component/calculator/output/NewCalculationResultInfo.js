@@ -2,7 +2,7 @@ import { Flex, Avatar, Box, Heading } from "@chakra-ui/react";
 
 export const NewCalculationResultInfo = ({ calculatorInputs, calculatorOutputs }) => {
     return (
-        <Flex ml={55} mb={3}>
+        <Flex ml={25} mb={3}>
             <Box>
                 <Flex>
                     <Avatar size='xl' src={calculatorInputs.city.imageUrl}/>

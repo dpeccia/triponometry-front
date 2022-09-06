@@ -1,6 +1,5 @@
 import {Flex, Heading} from "@chakra-ui/react";
 import {useState} from "react";
-import {ActivitiesInputs} from "../activities/ActivitiesInput";
 import {AccommodationSearchBar} from "./AccommodationSearchBar";
 import {AccommodationList} from "./AccommodationList";
 import {NextButton} from "../../../utils/NextButton";
@@ -12,24 +11,19 @@ export const AccommodationInput = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
 
-    const accommodations = accommodationsResponse.map((accommodations) => {
+    const accommodations = accommodationsResponse.map((accommodation) => {
         return {
-            name: accommodations.name,
-            latitude: accommodations.point.lat,
-            longitude: accommodations.point.lon,
-            rate: accommodations.rate,
+            id: accommodation.xid,
+            name: accommodation.name,
+            latitude: accommodation.point.lat,
+            longitude: accommodation.point.lon,
+            rate: accommodation.rate,
         }
     })
 
     const onClick = () => {
         props.setCalculatorInputs(prevState => ({...prevState, accommodation: selectedAccommodation}))
-        props.nextStep(
-            <ActivitiesInputs
-                selectedAccommodation={selectedAccommodation}
-                nextStep={props.nextStep}
-                setCalculatorInputs={props.setCalculatorInputs}
-            />
-        )
+        props.nextStep('ACTIVITIES')
     }
 
     return(
@@ -41,8 +35,8 @@ export const AccommodationInput = (props) => {
                 setAccommodationsResponse={setAccommodationsResponse}
                 setIsLoading={setIsLoading}
                 setIsEmpty={setIsEmpty}
-                cityLat={props.selectedCity.latitude}
-                cityLon={props.selectedCity.longitude}/>
+                cityLat={props.calculatorInputs.city.latitude}
+                cityLon={props.calculatorInputs.city.longitude}/>
             <AccommodationList
                 accommodations={accommodations}
                 setSelectedAccommodation={setSelectedAccommodation}

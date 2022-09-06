@@ -31,13 +31,7 @@ export const CityInput = (props) =>{
 
     const onClick = () => {
         props.setCalculatorInputs(prevState => ({...prevState, city: selectedCity}))
-        props.nextStep(
-            <AccommodationInput
-                selectedCity={selectedCity}
-                nextStep={props.nextStep}
-                setCalculatorInputs={props.setCalculatorInputs}
-            />
-        )
+        props.nextStep('ACCOMMODATION')
     }
 
     return(

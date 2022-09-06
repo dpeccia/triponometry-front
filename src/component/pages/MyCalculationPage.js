@@ -8,6 +8,7 @@ import {EditCalculationModal} from "../utils/modals/EditCalculationModal";
 import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
 import {NotFound} from "./NotFoundPage";
 import {UnarchiveCalculationModal} from "../utils/modals/UnarchiveCalculationModal";
+import { FaEdit } from "react-icons/fa";
 
 export const MyCalculationPage = () => {
     const params = useParams();
@@ -19,7 +20,7 @@ export const MyCalculationPage = () => {
 
     const getCustomeButton = (calculation) => {
         if(calculation.status === 'ACTIVE')
-            return <EditCalculationModal calculationName={calculation.name} hasText={true}/>
+            return <EditCalculationModal calculationId={calculation.id} calculationName={calculation.name} hasText={true}/>
         else
             return <UnarchiveCalculationModal calculationId={calculation.id} calculationName={calculation.name}/>
     }

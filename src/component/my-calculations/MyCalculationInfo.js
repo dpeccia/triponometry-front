@@ -1,8 +1,8 @@
 import { Flex, Avatar, Box, Heading } from "@chakra-ui/react";
 
-export const MyCalculationInfo = ({calculatorName, calculatorInputs, calculatorOutputs }) => {
+export const MyCalculationInfo = ({ml, calculatorName, calculatorInputs, calculatorOutputs }) => {
     return (
-        <Flex ml={55} mb={3}>
+        <Flex ml={ml} mb={3}>
             <Box>
                 <Flex alignItems='center'>
                     <Avatar size='xl' src={calculatorInputs.city.imageUrl}/>

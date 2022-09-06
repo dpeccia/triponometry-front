@@ -9,7 +9,7 @@ export const FreeDaysInput = (props) => {
             </Heading>
             <Divider borderColor={"black"} marginBottom={2}/>
             <Flex alignItems='center'>
-                Quiero tener {<IncrementDecrementInputComponent handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, libres: value}))}}/>} dias sin actividades predefinidas
+                Quiero tener {<IncrementDecrementInputComponent value={props.selectedHorarios.libres} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, libres: value}))}}/>} dias sin actividades predefinidas
             </Flex>
         </Box>
     )

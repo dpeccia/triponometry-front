@@ -1,12 +1,11 @@
 import { Checkbox, HStack, NumberInput, NumberInputField, Select } from "@chakra-ui/react"
+import { isNull, isUndefined } from "lodash"
 import { useState } from "react"
 
-export const MealItem = ({label, handleChange}) => {
-
-    const [isDisabled, setIsDisabled] = useState(true)
-    const [time, setTime] = useState('h')
-    const [number, setNumber] = useState()
-
+export const MealItem = ({label, meal, handleChange}) => {
+    const [isDisabled, setIsDisabled] = useState((isNull(meal?.number) || isUndefined(meal?.number)))
+    const [time, setTime] = useState((isNull(meal?.time) || isUndefined(meal?.time)) ? 'h' : meal?.time)
+    const [number, setNumber] = useState(meal?.number)
 
     const change = (event) => {
         switch(event.target.id){
@@ -19,14 +18,23 @@ export const MealItem = ({label, handleChange}) => {
         }
     }
 
+    const onCheckboxChange = () => {
+        if(isDisabled) {
+            handleChange({time: time, number: number})
+        } else {
+            handleChange(null)
+        }
+        setIsDisabled(!isDisabled)
+    }
+
     return(
         <HStack>
-            <Checkbox onChange={()=>{setIsDisabled(!isDisabled)}}>{label}</Checkbox>
+            <Checkbox isChecked={!isDisabled} onChange={onCheckboxChange}>{label}</Checkbox>
             <HStack marginLeft='auto' onChange={(event) => {change(event)}}>
-                <NumberInput isDisabled={isDisabled} id='number' onChange={(event) => {setNumber(event)}}>
+                <NumberInput isDisabled={isDisabled} id='number' value={number} onChange={(event) => {setNumber(event)}}>
                     <NumberInputField size='3'/>
                 </NumberInput>
-                <Select w='fit-content' size='sm' isDisabled={isDisabled} id='time' onChange={(event) => {setTime(event.target.value)}}>
+                <Select w='fit-content' size='sm' isDisabled={isDisabled} id='time' value={time} onChange={(event) => {setTime(event.target.value)}}>
                     <option value='h'>Horas</option>
                     <option value='min'>Minutos</option>
                 </Select>

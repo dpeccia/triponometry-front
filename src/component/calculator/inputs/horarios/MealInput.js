@@ -9,10 +9,10 @@ export const MealInput = (props) => {
             </Heading>
             <Divider borderColor={"black"} marginBottom={2}/>
             <SimpleGrid columns={2} spacing={2}>
-                <MealItem label={"Desayuno"} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, desayuno: value}))}}/>
-                <MealItem label={"Merienda"} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, merienda: value}))}}/>
-                <MealItem label={"Almuerzo"} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, almuerzo: value}))}}/>
-                <MealItem label={"Cena"} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, cena: value}))}}/>
+                <MealItem label={"Desayuno"} meal={props.selectedHorarios.desayuno} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, desayuno: value}))}}/>
+                <MealItem label={"Merienda"} meal={props.selectedHorarios.merienda} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, merienda: value}))}}/>
+                <MealItem label={"Almuerzo"} meal={props.selectedHorarios.almuerzo} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, almuerzo: value}))}}/>
+                <MealItem label={"Cena"} meal={props.selectedHorarios.cena} handleChange={(value) => {props.setSelectedHorarios(prevState => ({...prevState, cena: value}))}}/>
             </SimpleGrid>
         </Box>
     )

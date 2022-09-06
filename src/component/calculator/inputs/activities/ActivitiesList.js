@@ -8,13 +8,14 @@ export const ActivitiesList = (props) => {
     if(isNull(props.activities)) return <ProgressSearchBox/>
     if(isEmpty(props.activities)) return <EmptySearchBox/>
 
-    const activities = props.activities.map( (activity) => {
+    const activities = props.activities.map((activity) => {
         return (
             <ActivitiesCard
+                key={activity.id}
                 activity={activity} mt={2}
-                selectedActivities={props.selectedActivities}
-                setSelectedActivities={props.setSelectedActivities}
-                setStepFinished={props.setStepFinished}/>
+                addActivity={props.addActivity}
+                removeActivity={props.removeActivity}
+                activityWasAlreadySelected={props.activityWasAlreadySelected}/>
         )
     })
 

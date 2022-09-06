@@ -8,7 +8,6 @@ import { Highlight } from '@chakra-ui/react'
 import {isEmpty} from "lodash";
 
 export const MobilityInput = (props) => {
-
     const config = {
         angle: 180,
         spread: 360,
@@ -23,7 +22,7 @@ export const MobilityInput = (props) => {
         colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
     };
 
-    const [selectedTransportation, setSelectedTransportation] = useState("")
+    const [selectedTransportation, setSelectedTransportation] = useState(props.calculatorInputs.mobility)
 
     useEffect(() => {
         props.setCalculatorInputs(prevState => ({...prevState, mobility: selectedTransportation}))

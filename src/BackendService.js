@@ -59,12 +59,33 @@ export const calculateNewTrip = async (calculatorInputs) => {
 export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs) => {
     const request = {
         "name": tripName,
-        "calculatorInputs": _.omit(calculatorInputs, ['days', 'money']),
+        "calculatorInputs": calculatorInputs,
         "calculatorOutputs": calculatorOutputs
     }
 
     const backendResponse = await backend.post(
         '/trip', 
+        request, 
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
+    return backendResponse?.data
+}
+
+export const saveNewEdition = async (tripId, tripName, calculatorInputs, calculatorOutputs) => {
+    const request = {
+        "id": tripId,
+        "trip": {
+            "name": tripName,
+            "calculatorInputs": calculatorInputs,
+            "calculatorOutputs": calculatorOutputs
+        }
+    }
+
+    const backendResponse = await backend.put(
+        '/trip/update', 
         request, 
         { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
     ).catch((error) => {

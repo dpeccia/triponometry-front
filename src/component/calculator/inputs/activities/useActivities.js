@@ -97,6 +97,7 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
             .sortBy((activity) => activity.dist)
             .map((activity) => {
                 return {
+                    id: activity.xid,
                     name: activity.name,
                     latitude: activity.point.lat,
                     longitude: activity.point.lon,

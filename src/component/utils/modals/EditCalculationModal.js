@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react"
 import {FaEdit} from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 export const EditCalculationModal = (props) => {
     const OverlayOne = () => (
@@ -20,8 +21,14 @@ export const EditCalculationModal = (props) => {
         />
     )
 
+    const navigate = useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+
+    const goToEdit = () => {
+        onClose()
+        navigate(`/mis-calculos/${props.calculationId}/edicion`)
+    }
 
     return (
         <>
@@ -58,7 +65,7 @@ export const EditCalculationModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF'> Si, editar </Button>
+                        <Button variant='solid' bg='#EFB4BF' onClick={goToEdit}> Si, editar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

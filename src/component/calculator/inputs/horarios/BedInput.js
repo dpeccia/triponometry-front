@@ -10,11 +10,11 @@ export const BedInput = (props) => {
             <VStack columns={2} spacing={2} alignItems='flex-start'>
                 <Box>
                     Quiero levantarme no antes de las:
-                    {<Input type="time" marginLeft={1} w='auto' onChange={(event) => {props.setSelectedHorarios(prevState => ({...prevState, despertarse: event.target.value}))}}/>}
+                    {<Input type="time" marginLeft={1} w='auto' value={props.selectedHorarios.despertarse} onChange={(event) => {props.setSelectedHorarios(prevState => ({...prevState, despertarse: event.target.value}))}}/>}
                 </Box>
                 <Box>
                     Quiero dormirme no despues de las:
-                    {<Input type="time" marginLeft={1} w='auto' onChange={(event) => {props.setSelectedHorarios(prevState => ({...prevState, dormirse: event.target.value}))}}/>}
+                    {<Input type="time" marginLeft={1} w='auto' value={props.selectedHorarios.dormirse} onChange={(event) => {props.setSelectedHorarios(prevState => ({...prevState, dormirse: event.target.value}))}}/>}
                 </Box>
             </VStack>
         </Box>

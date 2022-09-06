@@ -8,9 +8,10 @@ export const AccommodationList = (props) => {
     if(props.isLoading) return <ProgressSearchBox/>
     if(props.isEmpty) return <EmptySearchBox/>
     
-    const accommodations = props.accommodations.map( (accommodation) => {
+    const accommodations = props.accommodations.map((accommodation) => {
         return (
             <AccommodationCard
+                key={accommodation.id}
                 accommodation={accommodation}
                 setSelectedAccommodation={props.setSelectedAccommodation}
                 setStepFinished={props.setStepFinished}/>

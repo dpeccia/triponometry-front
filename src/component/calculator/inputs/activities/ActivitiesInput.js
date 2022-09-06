@@ -1,24 +1,54 @@
 import {Flex, Heading} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
-import {HorariosInput} from "../horarios/HorariosInput";
 import { ActivitiesSearchBar } from "./ActivitiesSearchBar";
 import { ActivitiesList } from "./ActivitiesList";
 import { useActivities } from "./useActivities";
 import {NextButton} from "../../../utils/NextButton";
+import { useToast } from "@chakra-ui/toast";
+import { filter, includes, lowerCase, size } from "lodash";
 
 export const ActivitiesInputs = (props) => {
-    const [selectedActivities, setSelectedActivities] = useState([]);
+    const toast = useToast()
+    const [selectedActivities, setSelectedActivities] = useState(props.calculatorInputs.activities);
     const [stepFinished, setStepFinished] = useState(false);
-    const [activities, searchActivities] = useActivities('', props.selectedAccommodation);
+    const [activities, searchActivities] = useActivities('', props.calculatorInputs.accommodation);
 
     useEffect(() => {
         props.setCalculatorInputs(prevState => ({...prevState, activities: selectedActivities}))
     }, [selectedActivities]);
 
     const onClick = () => {
-        props.nextStep(
-            <HorariosInput nextStep={props.nextStep} setCalculatorInputs={props.setCalculatorInputs}/>
-        )
+        props.nextStep('TIME')
+    }
+
+    const activityWasAlreadySelected = (activityFromList) => {
+        const activityName = lowerCase(activityFromList.name)
+        const selectedActivitiesNames = selectedActivities.map((activity) => lowerCase(activity.name))
+        return includes(selectedActivitiesNames, activityName)
+    }
+
+    const removeActivity = (activity) => {
+        if(size(selectedActivities) <= 1) {
+            setStepFinished(false)
+        }
+        setSelectedActivities(filter(selectedActivities, (selectedActivity) => lowerCase(selectedActivity.name) !== lowerCase(activity.name)))
+        toast({
+            title: 'Actividad eliminada!',
+            description: `Eliminaste ${activity.name}`,
+            status: 'success',
+            duration: 1800,
+        })
+    }
+    
+    const addActivity = (activity) => {
+        setSelectedActivities([...selectedActivities, activity])
+        setStepFinished(true)
+        toast({
+            title: 'Actividad seleccionada!',
+            description: `Elegiste ${activity.name}`,
+            status: 'success',
+            duration: 1800,
+        })
     }
 
     return (
@@ -29,9 +59,9 @@ export const ActivitiesInputs = (props) => {
             <ActivitiesSearchBar searchActivities={searchActivities}/>
             <ActivitiesList
                 activities={activities}
-                selectedActivities={selectedActivities}
-                setSelectedActivities={setSelectedActivities}
-                setStepFinished={setStepFinished}/>
+                addActivity={addActivity}
+                removeActivity={removeActivity}
+                activityWasAlreadySelected={activityWasAlreadySelected}/>
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}

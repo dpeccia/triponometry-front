@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/toast";
 import { AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/accordion";
 import { Box, Flex } from "@chakra-ui/layout";
 import { Icon } from "@chakra-ui/icons";
@@ -7,22 +6,9 @@ import { Image } from "@chakra-ui/image";
 import { Link } from "@chakra-ui/layout";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { IconButton, Text } from "@chakra-ui/react";
-import { FaPlus } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 export const ActivitiesCard = (props) => {
-    const toast = useToast()
-    
-    const selectActivity = () => {
-        props.setSelectedActivities([...props.selectedActivities, props.activity])
-        props.setStepFinished(true)
-        toast({
-            title: 'Actividad seleccionada!',
-            description: `Elegiste ${props.activity.name}`,
-            status: 'success',
-            duration: 1800,
-        })
-    }
-
     const wikipediaLink = (link, language) => {
         if(link) {
             return (
@@ -30,6 +16,14 @@ export const ActivitiesCard = (props) => {
                     Wikipedia ({language}) <ExternalLinkIcon mx='2px' />
                 </Link>
             );
+        }
+    }
+
+    const addActivityButton = () => {
+        if (props.activityWasAlreadySelected(props.activity)) {
+            return <IconButton icon={<FaMinus w='80%' h='80%' />} onClick={() => props.removeActivity(props.activity)} colorScheme='red' size='sm' isRound/>
+        } else {
+            return <IconButton icon={<FaPlus w='80%' h='80%' />} onClick={() => props.addActivity(props.activity)} colorScheme='whatsapp' size='sm' isRound/>
         }
     }
 
@@ -54,7 +48,7 @@ export const ActivitiesCard = (props) => {
                                 <Text as='u' color='blue.600' fontSize='xs'>{wikipediaLink(props.activity.wikipediaEnglishLink, 'EN')}</Text>
                                 <Text as='u' color='blue.600' fontSize='xs'>{wikipediaLink(props.activity.wikipediaSpanishLink, 'ES')}</Text>
                             </Flex>
-                            <IconButton icon={<FaPlus w='80%' h='80%' />} onClick={selectActivity} colorScheme='whatsapp' size='sm' isRound/>
+                            {addActivityButton()}
                         </Flex>
                     </Flex>
                 </Flex>
