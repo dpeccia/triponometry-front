@@ -10,7 +10,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import { useState } from "react"
-import {useLocation} from "react-router";
+import {FaShareSquare} from "react-icons/fa";
 
 export const ShareCalculationModal = (props) => {
     const OverlayOne = () => (
@@ -23,23 +23,18 @@ export const ShareCalculationModal = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
-    const location = useLocation();
-    const [value, setValue] = useState(`http://localhost:3000${location.pathname}`)
+    const [value, setValue] = useState(`http://localhost:3000/explorar/${props.calculationId}`)
     const { hasCopied, onCopy } = useClipboard(value)
 
     return (
         <>
-            <IconButton
-                as={props.icon}
-                size='sm'
-                m={1}
-                p={2}
+            <IconButton as={FaShareSquare} size='sm' m={1} p={2}
                 onClick={() => {
                     setOverlay(<OverlayOne />)
                     onOpen()
                 }}
             />
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <Modal isCentered size='xl' isOpen={isOpen} onClose={onClose}>
                 {overlay}
                 <ModalContent>
                     <ModalHeader> Compartir cálculo </ModalHeader>

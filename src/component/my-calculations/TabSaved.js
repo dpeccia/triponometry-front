@@ -13,7 +13,7 @@ const TabSaved = (props) => {
     const calculationCards = props.savedCalculations.map((calculation) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => navigate(`/mis-calculos/${calculation.id}`)} background='white' onHover={onHover}>
-                <ShareCalculationModal icon={FaShareSquare}/>
+                <ShareCalculationModal calculationId={calculation.id}/>
                 <EditCalculationModal calculationName={calculation.name}/>
                 <ArchiveCalculationModal fetchCalculations={props.fetchCalculations} calculationId={calculation.id} calculationName={calculation.name}/>
             </CalculationCard>
