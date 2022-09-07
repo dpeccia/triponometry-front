@@ -1,4 +1,4 @@
-import { Box, VStack, Heading, Flex, Image, Center, Input, Button, Link , Text, HStack, useToast} from "@chakra-ui/react"
+import { Box, VStack, Heading, Flex, Image, Center, Input, Button, Link , Text, HStack, useToast, Tooltip} from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import { PasswordInput } from "../login/PasswordInput"
 import { FcGoogle } from "react-icons/fc";
@@ -7,6 +7,7 @@ import validator from 'validator'
 import { ErrorBadge} from "../login/ErrorBadge";
 import { SuccessBadge } from "../login/SuccessBadge";
 import { logIn, singUp } from "../../BackendService";
+import { isEmpty } from "lodash";
 
 export const SignUpPage = (props) => {
 
@@ -100,6 +101,44 @@ export const SignUpPage = (props) => {
         return (/\S+@\S+\.\S+/.test(value));
     }
 
+    const emailErrorBadge = () => {
+        if(!isEmailValid && !isEmpty(email)){
+            return(
+                <ErrorBadge msg="Inserte un Email valido"/>
+            )
+        }
+    }
+
+    const passwordBagde = () => {
+        if(!isEmpty(password)){
+            if(!isPasswordValid ){
+                return(
+                    <ErrorBadge msg="Contraseña Insegura" 
+                            message={["8 Caracteres mínimos", "Un número", "Una mayúscula", "Una minúscula"]}/>
+                )
+            } else {
+                return (
+                    <SuccessBadge msg="Contraseña Segura" />
+                )
+            }
+        }
+        
+    }
+
+    const confirmPasswordBagde = () => {
+        if(!isEmpty(confirmPassword)) {
+            if(arePassEquals) {
+                return (
+                    <SuccessBadge msg="Las contraseñas coinciden"/>
+                )
+            } else {
+                return (
+                    <ErrorBadge msg="Las contraseñas no coinciden"/>
+                )
+            }
+        }
+    }
+
     return(
         <Box borderWidth='2px' borderRadius='lg' overflow='hidden' margin='auto'>
             <Center>
@@ -108,12 +147,12 @@ export const SignUpPage = (props) => {
                         <Image w='30vh' src={'../nombre-triponometry.png'} />
                     </Flex>      
                     <Heading fontSize='2xl' mb={2}> Crear cuenta </Heading>
-                    <Input  mb={1} onChange={handleEmailChange} placeholder="Email" isInvalid={!isEmailValid & email !== ""} type='email'/>
-                    {(isEmailValid) ? (<></>) : email !== "" ? (<ErrorBadge msg="Inserte un Email valido"/>) : (<></>)}
+                    <Input  mb={1} onChange={handleEmailChange} placeholder="Email" isInvalid={!isEmailValid && !isEmpty(email)} type='email'/>
+                    {emailErrorBadge()}
                     <PasswordInput handleChange={handlePasswordChange} isInvalid={!isPasswordValid && password !== ""}/>
-                    {(isPasswordValid) ? (<SuccessBadge msg="Contraseña Segura" />) : (password !== "") ? (<ErrorBadge msg="Contraseña Insegura"/>) : (<></>)}
+                    {passwordBagde()}
                     <PasswordInput handleChange={handleConfirmPasswordChange} placeholder='Confirmar Contraseña'/>
-                    {(arePassEquals && confirmPassword !== "") ? (<SuccessBadge msg="Las contraseñas coinciden"/>) : (confirmPassword !== "") ?  (<ErrorBadge msg="Las contraseñas no coinciden"/>) : (<></>)}
+                    {confirmPasswordBagde()}
                     <Button size='sm' bg='red.400' color='white' shadow='lg' w='full' mb={2} type='submit' isDisabled={!isPasswordValid || !arePassEquals || !isEmailValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
                     <Button mr={1} size='sm' leftIcon={<FcGoogle/>} fontWeight='normal' shadow='md' w='full'> Registrarme con Google </Button>
                     <HStack>   
@@ -127,4 +166,3 @@ export const SignUpPage = (props) => {
         </Box>
     )
 }
-

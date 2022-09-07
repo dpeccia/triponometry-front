@@ -2,7 +2,7 @@ import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuIte
 import { useState } from "react";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
 import { logout } from "../../BackendService";
-
+import { isEmpty } from "lodash";
 
 const Logo = () =>
     <Flex minW='500px' ml='15px' p={1} justifyContent='flex-start' alignItems='center'>
@@ -31,7 +31,7 @@ const NavBar = (props) =>{
     const navigate = useNavigate()
 
     const handleLogClick = () => {
-        if (props.username !== ""){
+        if (!isEmpty(props.username)){
             props.logout()
         } else {
             navigate("/")
@@ -40,7 +40,7 @@ const NavBar = (props) =>{
 
     return(
         <Flex bg='#F0A7B4' grow='1' minW='700px' justifyContent='flex-end' alignItems='center'>
-            {props.username !== "" ? (<NavigationMenu/>) : (<></>)}
+            {!isEmpty(props.username) ? (<NavigationMenu/>) : (<></>)}
             <Menu>
                 <MenuButton>
                     <WrapItem>
@@ -49,7 +49,7 @@ const NavBar = (props) =>{
                 </MenuButton>
                 <MenuList>
                     <MenuItem onClick={handleLogClick}>
-                        {props.username === "" ? "Iniciar Sesion" : "Cerrar sesión" }
+                        {isEmpty(props.username) ? "Iniciar Sesion" : "Cerrar sesión" }
                     </MenuItem>
                 </MenuList>
             </Menu>

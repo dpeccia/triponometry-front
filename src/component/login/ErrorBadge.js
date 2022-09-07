@@ -1,7 +1,27 @@
-import { Badge } from "@chakra-ui/react"
+import { Badge, ListItem, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, UnorderedList, VStack } from "@chakra-ui/react"
+import { useState } from "react"
 
 export const ErrorBadge = (props) => {
-    return( 
-        <Badge  colorScheme='red' variant='solid' mb={1}> {props.msg} </Badge>
+
+    const [openPop, setOpenPop] = useState(true)
+    const listItems = props.message ? props.message.map((element) => <ListItem size="sm">{element}</ListItem>) : null
+    return(
+        <VStack>
+            <Popover isOpen={props.message && openPop} autoFocus={false}>
+                <PopoverTrigger>
+                    <Badge  colorScheme='red' variant='solid' mb={1}> {props.msg} </Badge>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverCloseButton onClick={() => {setOpenPop(false)}}/>
+                    <PopoverArrow/>
+                    <PopoverBody>                       
+                        <UnorderedList>    
+                            {listItems}
+                        </UnorderedList>
+                    </PopoverBody>
+                </PopoverContent>               
+            </Popover>
+        </VStack>
+
     )
 }
