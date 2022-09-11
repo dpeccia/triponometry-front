@@ -63,6 +63,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name }) =
         }
     }
 
+
     if(showResults) {
         if(isNull(calculatorOutputs)) {
             return (

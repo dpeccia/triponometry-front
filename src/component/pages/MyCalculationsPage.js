@@ -6,8 +6,11 @@ import { useEffect, useState } from 'react';
 import { getMyTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { take } from 'lodash';
+import { useLocation } from 'react-router';
 
 export const MyCalculationsPage = () => {
+    const {state} = useLocation()
+    const defaultIndex = state ? state.defaultIndex : 0
     const [calculations, setCalculations] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -49,7 +52,7 @@ export const MyCalculationsPage = () => {
     }, []);
 
     return (
-        <Tabs colorScheme='red'>
+        <Tabs colorScheme='red' defaultIndex={defaultIndex}>
             <TabList>
                 <Tab>Guardados</Tab>
                 <Tab>Borradores</Tab>
@@ -61,7 +64,7 @@ export const MyCalculationsPage = () => {
                     { isLoading ? <SpinnerSearchBox/> : <TabSaved savedCalculations={calculations.saved} fetchCalculations={fetchCalculations}/> }
                 </TabPanel>
                 <TabPanel>
-                    { isLoading ? <SpinnerSearchBox/> : <TabDrafts draftsCalculations={calculations.drafts} /> }
+                    { isLoading ? <SpinnerSearchBox/> : <TabDrafts draftsCalculations={calculations.drafts} fetchCalculations={fetchCalculations} /> }
                 </TabPanel>
                 <TabPanel>
                     { isLoading ? <SpinnerSearchBox/> : <TabArchive archivedCalculations={calculations.archive} /> }

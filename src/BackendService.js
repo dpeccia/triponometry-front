@@ -6,8 +6,12 @@ const backend = axios.create({
 });
 
 const getMinutes = (mealTime) => {
-    if (mealTime.time === 'h') return mealTime.number * 60
-    return mealTime.number
+    if (mealTime) {       
+        if (mealTime.time === 'h') return mealTime.number * 60
+        return mealTime.number
+    } else {
+        return null
+    }
 }
 
 export const calculateNewTrip = async (calculatorInputs) => {
@@ -48,6 +52,60 @@ export const calculateNewTrip = async (calculatorInputs) => {
     const backendResponse = await backend.post(
         '/trip/optimal-route', 
         backendCalculatorInputs, 
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
+    return backendResponse?.data
+}
+
+export const createDraft = async (calculatorInputs) => {
+    const accomodation = calculatorInputs.accommodation ? {
+        name: calculatorInputs.accommodation.name,
+        coordinates: {
+            latitude: calculatorInputs.accommodation.latitude,
+            longitude: calculatorInputs.accommodation.longitude
+        },
+        timeSpent: null
+    } : null
+    const activities = calculatorInputs.activities ? calculatorInputs.activities.map((activity) => {
+        return ({
+            name: activity.name,
+            coordinates: {
+                latitude: activity.latitude,
+                longitude: activity.longitude
+            },
+            timeSpent: 120 // 2 hours hardcoded for now
+        })
+    }) : null
+    const places = [accomodation].concat(activities)
+
+    const backendCalculatorInputs = {
+        "places": places,
+        "travelMode": calculatorInputs.mobility ? calculatorInputs.mobility : null,
+        "time": calculatorInputs.horarios ? {
+            "startHour": calculatorInputs.horarios.despertarse,
+            "finishHour": calculatorInputs.horarios.dormirse,
+            "breakfast": getMinutes(calculatorInputs.horarios.desayuno),
+            "lunch": getMinutes(calculatorInputs.horarios.almuerzo),
+            "snack": getMinutes(calculatorInputs.horarios.merienda),
+            "dinner": getMinutes(calculatorInputs.horarios.cena),
+            "freeDays": calculatorInputs.horarios.libres
+        } : {
+            "startHour": null,
+            "finishHour": null,
+            "breakfast": null,
+            "lunch": null,
+            "snack": null,
+            "dinner": null,
+            "freeDays": null
+        }
+    }
+
+    const backendResponse = await backend.post(
+        '/trip', 
+        {"name": "aaa", "calculatorInputs" : backendCalculatorInputs}, 
         { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
     ).catch((error) => {
         return null
@@ -248,4 +306,12 @@ export const checkLogin = async () => {
             return null
         })
     return response?.data
+}
+
+export const deleteDraft = async (draftId) => {
+    const response = await backend.delete( `trip/delete/${draftId}`, {headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true})
+        .catch((error) => {
+            return null
+        })
+    return response
 }

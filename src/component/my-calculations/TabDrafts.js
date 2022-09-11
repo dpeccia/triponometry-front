@@ -1,19 +1,22 @@
 import CalculationCard from "./CalculationCard";
 import { Flex } from '@chakra-ui/react'
 import { FaTrashAlt } from 'react-icons/fa'; 
-import {DeleteCalculationModal} from "../utils/modals/DeleteCalculationModal";
+import {DeleteDraftModal} from "../utils/modals/DeleteDraftModal";
 import {useNavigate} from "react-router";
 
-const TabDrafts = ({ draftsCalculations }) => {
+const TabDrafts = ({ draftsCalculations, fetchCalculations }) => {
     const navigate = useNavigate()
     const onHover = { shadow: 'xl', filter: 'auto'}
 
     const calculationCards = draftsCalculations.map((calculation) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => {}} background='gray.300' onHover={onHover}>
-                <DeleteCalculationModal
+                <DeleteDraftModal
                     icon={FaTrashAlt}
-                    calculationName={calculation.name}/>
+                    calculationName={calculation.name}
+                    draftId={calculation.id}
+                    fetchCalculations={fetchCalculations}
+                    />
             </CalculationCard>
         );
     });

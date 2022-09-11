@@ -6,7 +6,7 @@ const CalculationCard = (props) => {
 
     const getCalculationImage = () => {
         if (isUndefined(calculation.imageUrl))
-            return <Image w='18em' h='15em' objectFit='contain' src='../logo-triponometry.png' filter='grayscale(100%)'/>
+            return <Image w='22em' h='15em' objectFit='contain' src='../logo-triponometry.png' filter='grayscale(100%)'/>
         return (
             <Image w='22em' h='15em' objectFit='cover' src={calculation.imageUrl} />
         );
@@ -34,7 +34,7 @@ const CalculationCard = (props) => {
             <Box display='flex' justifyContent='space-between'>
                 <Box p='5'>
                     {getCalculationLabel()}
-                    <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' noOfLines={1}>
+                    <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' maxW='250px' noOfLines={1}>
                         {calculation.name}
                     </Box>
                     <Box>
