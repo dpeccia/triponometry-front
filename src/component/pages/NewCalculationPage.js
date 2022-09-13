@@ -7,19 +7,19 @@ import { ActivitiesInputs } from "../calculator/inputs/activities/ActivitiesInpu
 import { HorariosInput } from "../calculator/inputs/horarios/HorariosInput";
 import { MobilityInput } from "../calculator/inputs/mobility/MobilityInput";
 import { NewCalculationResult } from "../calculator/output/NewCalculationResult";
-import { calculateNewTrip } from "../../BackendService";
-import { isNull } from "lodash";
+import { calculateNewTrip} from "../../BackendService";
+import { isNull, isEqual } from "lodash";
 import { Heading } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import { EditCalculationResult } from "../calculator/output/EditCalculationResult";
 import { EditBadge } from "../utils/EditBadge";
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name }) => {
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status }) => {
     const toast = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
 
     const setInitialState = () => {
-        if (edit) {
+        if (edit || status === 'DRAFT') {
             return inputs
         } else {
             return { city: {}, accommodation: {}, activities: [], horarios: {}, mobility: "" }
@@ -75,9 +75,9 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name }) =
         }
 
         if(edit) {
-            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
         } else {
-            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name}/>
         }
     }
 
@@ -88,7 +88,9 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name }) =
 
     return (
         <>
-            <CalculatorComponent handleClick={changeInputType} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs} calculateTrip={calculateTrip} />
+            <CalculatorComponent handleClick={changeInputType} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs} calculateTrip={calculateTrip} 
+                                 name={name} tripId={tripId} status={status}/>
+
             <Flex direction='column' marginLeft={3} grow='1' alignItems='center'>
                 {addEditBadge()}
                 {inputSpecificComponent}

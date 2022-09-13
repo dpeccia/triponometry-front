@@ -6,6 +6,7 @@ import { FaEquals } from "react-icons/fa";
 import {BedIcon,BusIcon,CalendarIcon,DestinationIcon,DollarIcon,HourglassIcon} from "./CalculatorIcons";
 import { isEmpty } from "lodash";
 import { SaveDraftModal } from "../utils/modals/SaveDraftModal";
+import { SaveDraftEditionModal } from "../utils/modals/SaveDraftEditionModal";
 
 export const CalculatorComponent = (props) => {
     const checkInputs = () => {
@@ -21,6 +22,18 @@ export const CalculatorComponent = (props) => {
                 filter: 'none',
                 backgroundColor: '#EFB4BF'
             });
+    }
+
+    const draftModal = () => {
+        if(!props.tripId) {
+            return (
+                <SaveDraftModal calculatorInputs={props.calculatorInputs} calculatorOutputs={null} isDisabled={!props.calculatorInputs.city.name}/>
+            )
+        } else {
+            return (
+                <SaveDraftEditionModal tripId={props.tripId} calculatorName={props.name} calculatorInputs={props.calculatorInputs} calculatorOutputs={null} isDisabled={props.status === 'ACTIVE'}/>
+            )
+        }
     }
 
     const { isDisabled, filter, backgroundColor } = checkInputs()
@@ -41,7 +54,7 @@ export const CalculatorComponent = (props) => {
                         <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<MinusIcon w='40%' h='40%'/>} onClick={() => props.handleClick("Eliminar")} />
                     </GridItem>
                     <GridItem gridColumnStart='4' gridRowStart='1' w='100%' h='70px'>
-                        <SaveDraftModal calculatorInputs={props.calculatorInputs} isDisabled={!props.calculatorInputs.city.name}/>
+                        {draftModal()}
                     </GridItem>
                     <GridItem gridColumnStart='3' gridRowStart='2' w='100%' h='100%' rowSpan='2'>
                         <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<AddIcon w='35%' h='35%' />} onClick={() => props.handleClick("Agregar")}/>

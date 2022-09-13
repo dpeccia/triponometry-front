@@ -18,8 +18,12 @@ export const MyCalculationPage = () => {
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
 
+    const isDraft = () => {
+        return calculation.status === 'DRAFT'
+    } 
+
     const getCustomeButton = (calculation) => {
-        if(calculation.status === 'ACTIVE')
+        if(calculation.status === 'ACTIVE' || calculation.status === 'DRAFT')
             return <EditCalculationModal calculationId={calculation.id} calculationName={calculation.name} hasText={true}/>
         else
             return <UnarchiveCalculationModal calculationId={calculation.id} calculationName={calculation.name}/>
@@ -49,12 +53,12 @@ export const MyCalculationPage = () => {
                     isLoading ? <SpinnerSearchBox/> :
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
                             <Flex mt={2} justifyContent='flex-end'>
                                 {getCustomeButton(calculation)}
                             </Flex>
                         </Flex>
-                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
                     </>
                 ) : <NotFound/>
             }

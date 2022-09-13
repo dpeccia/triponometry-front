@@ -4,8 +4,22 @@ import { SaveCalculationModal } from "../../utils/modals/SaveCalculationModal";
 import {ResultTrip} from "../../result/ResultTrip";
 import { IconButton } from "@chakra-ui/button";
 import { MdArrowBackIosNew } from "react-icons/md";
+import { SaveDraftAsTripModal } from "../../utils/modals/SaveDraftAsTripModal";
 
-export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs }) => {
+export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, status, id, name}) => {
+
+    const saveModal = () => {
+        if (id){
+            return(
+                <SaveDraftAsTripModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+            )
+        } else {
+            return(
+                <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+            )
+        }
+    }
+
     return (
         <Flex flexDirection="column" width="100%">
             <Flex width="100%">
@@ -13,7 +27,7 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                 <NewCalculationResultInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
-            <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+            {saveModal()}
         </Flex>
     );
 }

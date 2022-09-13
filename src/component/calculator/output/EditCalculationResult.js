@@ -6,7 +6,9 @@ import { EditBadge } from "../../utils/EditBadge";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { IconButton } from "@chakra-ui/button";
 
-export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs }) => {
+export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status }) => {
+
+
     return (
         <Flex flexDirection="column" width="100%">
             <Flex width="100%">
@@ -17,7 +19,7 @@ export const EditCalculationResult = ({ setShowResults, id, name, calculatorInpu
                 </Flex>
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
-            <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+            <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
         </Flex>
     );
 }

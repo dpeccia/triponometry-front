@@ -10,7 +10,7 @@ const TabDrafts = ({ draftsCalculations, fetchCalculations }) => {
 
     const calculationCards = draftsCalculations.map((calculation) => {
         return (
-            <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => {}} background='gray.300' onHover={onHover}>
+            <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => {navigate(`/mis-calculos/${calculation.id}/edicion`)}} background='gray.300' onHover={onHover}>
                 <DeleteDraftModal
                     icon={FaTrashAlt}
                     calculationName={calculation.name}

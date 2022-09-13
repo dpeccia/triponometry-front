@@ -1,7 +1,5 @@
-import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuItem, IconButton} from "@chakra-ui/react";
-import { useState } from "react";
+import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
-import { logout } from "../../BackendService";
 import { isEmpty } from "lodash";
 
 const Logo = () =>

@@ -5,17 +5,26 @@ import {LoadScript} from "@react-google-maps/api";
 import {ResultCalendar} from "./ResultCalendar";
 import {ExportButton} from "./export/ExportButton";
 
-export const ResultTrip = ({ calculatorInputs, calculatorOutputs }) => {
+export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft }) => {
 
     const showMap = () => {
-        if(window.google) {
-            return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
+        if(!isDraft){
+            if(window.google) {
+                return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
+            }
+            return (
+                <LoadScript googleMapsApiKey="AIzaSyAIQZSE4hWZYz9YcyNuTCSjjs6j3jObME0">
+                    <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
+                </LoadScript>
+            );
         }
+    }
+    
+    const showResult = () => {
+        if(!isDraft)
         return (
-            <LoadScript googleMapsApiKey="AIzaSyAIQZSE4hWZYz9YcyNuTCSjjs6j3jObME0">
-                <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
-            </LoadScript>
-        );
+            <ResultCalendar events={calculatorOutputs.events}/>
+        )
     }
 
     return (
@@ -26,7 +35,7 @@ export const ResultTrip = ({ calculatorInputs, calculatorOutputs }) => {
                 </Box>
                 {showMap()}
             </Flex>
-            <ResultCalendar events={calculatorOutputs.events}/>
+            {showResult()}
         </Flex>
     )
 }

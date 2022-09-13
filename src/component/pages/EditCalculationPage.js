@@ -4,6 +4,7 @@ import { NotFound } from "./NotFoundPage"
 import { getMyTrip } from "../../BackendService"
 import { useParams } from "react-router"
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox"
+import { isEmpty } from "lodash"
 
 export const EditCalculationPage = () => {
     const params = useParams()
@@ -20,10 +21,27 @@ export const EditCalculationPage = () => {
     const onFinish = (response) => {
         if(response){
             setCalculation(response)
+            console.log(response);
             setIsLoading(false)
         } else {
             setIsValid(false)
         }
+    }
+
+    const getFirstMissing = () => {
+        if (isEmpty(calculation.calculatorInputs.accommodation.name)){
+            return 'ACCOMMODATION'
+        }
+        if (isEmpty(calculation.calculatorInputs.activities)){
+            return 'ACTIVITIES'
+        }
+        if (isEmpty(calculation.calculatorInputs.horarios.despertarse || calculation.calculatorInputs.horarios.dormirse)){
+            return 'TIME'
+        }
+        if (isEmpty(calculation.calculatorInputs.mobility)){
+            return 'MOBILITY'
+        }
+        return 'ACCOMMODATION'
     }
 
     useEffect(() => {
@@ -31,6 +49,6 @@ export const EditCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={true} beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} name={calculation.name} />) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status}/>) : <NotFound/>
     )
 }
