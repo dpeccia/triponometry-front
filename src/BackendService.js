@@ -315,3 +315,21 @@ export const deleteDraft = async (draftId) => {
         })
     return response
 }
+
+export const saveNewRating = async (id, score, hasDone, review) => {
+    const request = {
+        "description": review,
+        "done": hasDone,
+        "stars": score
+    }
+
+    const backendResponse = await backend.post(
+        `/trip/review/${id}`,
+        request,
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+
+    return backendResponse?.data
+}

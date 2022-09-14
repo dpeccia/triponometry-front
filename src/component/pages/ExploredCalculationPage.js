@@ -1,10 +1,12 @@
 import {SpinnerSearchBox} from "../utils/SpinnerSearchBox";
-import {Button, Flex} from "@chakra-ui/react";
+import {Box, Button, Flex} from "@chakra-ui/react";
 import {MyCalculationInfo} from "../my-calculations/MyCalculationInfo";
 import {ResultTrip} from "../result/ResultTrip";
 import {useParams} from "react-router";
 import {getATrip} from "../../BackendService";
 import {useEffect, useState} from "react";
+import {SaveRatingModal} from "../utils/modals/SaveRatingModal";
+import {FaRegLightbulb} from "react-icons/fa";
 
 export const ExploredCalculationPage = () => {
     const params = useParams();
@@ -36,7 +38,10 @@ export const ExploredCalculationPage = () => {
                         <Flex alignItems='center' justifyContent='space-between'>
                             <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
                             <Flex mt={2} justifyContent='flex-end'>
-                                <Button> Usar como plantilla </Button>
+                                <Button rightIcon={<FaRegLightbulb />}> Usar como plantilla </Button>
+                                <Box>
+                                    <SaveRatingModal calculationId={idCalculation} calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                                </Box>
                             </Flex>
                         </Flex>
                         <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
