@@ -13,13 +13,14 @@ import { Heading } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import { EditCalculationResult } from "../calculator/output/EditCalculationResult";
 import { EditBadge } from "../utils/EditBadge";
+import { PlantillaBadge } from "../utils/PlantillaBadge";
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status }) => {
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original }) => {
     const toast = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
 
     const setInitialState = () => {
-        if (edit || status === 'DRAFT') {
+        if (edit || status === 'DRAFT' || original) {
             return inputs
         } else {
             return { city: {}, accommodation: {}, activities: [], horarios: {}, mobility: "" }
@@ -77,13 +78,16 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         if(edit) {
             return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
         } else {
-            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name}/>
+            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
         }
     }
 
     const addEditBadge = () => {
         if(edit)
             return <EditBadge justify='start' align='end' />
+        if(original){
+            return <PlantillaBadge justify='start' align='end' original={original}/>
+        }
     }
 
     return (
