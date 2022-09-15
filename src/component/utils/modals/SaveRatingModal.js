@@ -12,12 +12,10 @@ import { useState } from "react"
 import { BiCommentAdd } from "react-icons/bi";
 import {saveNewRating} from "../../../BackendService";
 import { useToast } from "@chakra-ui/toast";
-import { useNavigate } from "react-router";
 import {RatingButtons} from "../RatingButtons";
 
 export const SaveRatingModal = (props) => {
     const toast = useToast()
-    const navigate = useNavigate()
 
     const OverlayOne = () => (
         <ModalOverlay
@@ -36,7 +34,7 @@ export const SaveRatingModal = (props) => {
     const saveRating = async () => {
 
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
-        
+
         if (response) {
             toast({
                 title: 'Opinión guardada!',
@@ -64,7 +62,7 @@ export const SaveRatingModal = (props) => {
                         setOverlay(<OverlayOne />)
                         onOpen()
                     }}>
-                Dejar tu opinion
+                Opinar
             </Button>
             <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
                 {overlay}

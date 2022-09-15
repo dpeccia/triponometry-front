@@ -31,12 +31,10 @@ export const ExplorerTable = ({ data }) => {
             {
                 Header: 'Dias',
                 accessor: 'days',
-                isNumeric: true,
             },
             {
-                Header: 'Costo',
-                accessor: 'price',
-                isNumeric: true,
+                Header: 'Estrellas',
+                accessor: 'rating',
             },
         ],
         [],

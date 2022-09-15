@@ -7,6 +7,7 @@ import {getATrip} from "../../BackendService";
 import {useEffect, useState} from "react";
 import {SaveRatingModal} from "../utils/modals/SaveRatingModal";
 import {FaRegLightbulb} from "react-icons/fa";
+import {RatingDrawer} from "../explorer/RatingDrawer";
 
 export const ExploredCalculationPage = () => {
     const params = useParams();
@@ -41,6 +42,7 @@ export const ExploredCalculationPage = () => {
                                 <Button rightIcon={<FaRegLightbulb />}> Usar como plantilla </Button>
                                 <Box>
                                     <SaveRatingModal calculationId={idCalculation} calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                                    <RatingDrawer reviews={calculation.reviews} averageRating={calculation.rating}/>
                                 </Box>
                             </Flex>
                         </Flex>
