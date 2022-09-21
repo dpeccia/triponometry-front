@@ -4,7 +4,6 @@ import {useEffect, useState} from "react"
 import {MdDirectionsBike, MdDirectionsWalk} from "react-icons/md"
 import {AiFillCar} from "react-icons/ai";
 import {BsArrowLeftSquare} from "react-icons/bs";
-import { Highlight } from '@chakra-ui/react'
 import {isEmpty} from "lodash";
 
 export const MobilityInput = (props) => {
@@ -101,12 +100,7 @@ export const MobilityInput = (props) => {
                                 Completaste todos los inputs necesarios.
                             </Text>
                             <Text fontSize='lg'>
-                                <Highlight
-                                    query='igual'
-                                    styles={{ px: '2', py: '1', rounded: 'full', bg: 'red.100' }}
-                                >
                                     Clickea el igual para obtener tu calculo de viaje
-                                </Highlight>
                             </Text>
                         </Flex>
                     </Flex>

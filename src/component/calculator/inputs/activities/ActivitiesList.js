@@ -12,6 +12,7 @@ export const ActivitiesList = (props) => {
         return (
             <ActivitiesCard
                 key={activity.id}
+                city={props.city}
                 activity={activity} mt={2}
                 addActivity={props.addActivity}
                 removeActivity={props.removeActivity}

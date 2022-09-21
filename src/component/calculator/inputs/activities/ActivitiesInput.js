@@ -58,6 +58,7 @@ export const ActivitiesInputs = (props) => {
             </Heading>
             <ActivitiesSearchBar searchActivities={searchActivities}/>
             <ActivitiesList
+                city={props.calculatorInputs.city}
                 activities={activities}
                 addActivity={addActivity}
                 removeActivity={removeActivity}

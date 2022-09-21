@@ -7,6 +7,7 @@ import { Link } from "@chakra-ui/layout";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { IconButton, Text } from "@chakra-ui/react";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { AddActivityModal } from "../../../utils/modals/AddActivityModal";
 
 export const ActivitiesCard = (props) => {
     const wikipediaLink = (link, language) => {
@@ -23,7 +24,7 @@ export const ActivitiesCard = (props) => {
         if (props.activityWasAlreadySelected(props.activity)) {
             return <IconButton icon={<FaMinus w='80%' h='80%' />} onClick={() => props.removeActivity(props.activity)} colorScheme='red' size='sm' isRound/>
         } else {
-            return <IconButton icon={<FaPlus w='80%' h='80%' />} onClick={() => props.addActivity(props.activity)} colorScheme='whatsapp' size='sm' isRound/>
+            return <AddActivityModal city={props.city} activity={props.activity} addActivity={props.addActivity}/>
         }
     }
 

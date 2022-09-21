@@ -30,7 +30,7 @@ export const calculateNewTrip = async (calculatorInputs) => {
                 latitude: activity.latitude,
                 longitude: activity.longitude
             },
-            timeSpent: 120 // 2 hours hardcoded for now
+            timeSpent: activity.timeSpent
         })
     })
     const places = [accomodation].concat(activities)
@@ -76,7 +76,7 @@ export const createDraft = async (calculatorInputs) => {
                 latitude: activity.latitude,
                 longitude: activity.longitude
             },
-            timeSpent: 120 // 2 hours hardcoded for now
+            timeSpent: activity.timeSpent
         })
     }) : null
     const places = [accomodation].concat(activities)
@@ -331,5 +331,22 @@ export const saveNewRating = async (id, score, hasDone, review) => {
         return null
     });
 
+    return backendResponse?.data
+}
+
+export const getActivityInfo = async (cityName, activityName) => {
+    const request = {
+        "cityName": cityName,
+        "activityName": activityName
+    }
+
+    const backendResponse = await backend.post(
+        '/trip/info/activity', 
+        request, 
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+    
     return backendResponse?.data
 }
