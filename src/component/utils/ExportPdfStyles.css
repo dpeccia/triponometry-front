@@ -1,0 +1,21 @@
+@media all {
+	.page-break {
+	  display: block;
+	}
+  }
+
+@media screen {
+	.pdfExport {
+		visibility: hidden;
+		display: none;
+	}
+}
+
+@media print {
+	.page-break {
+        break-after: always !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+    }
+}
+

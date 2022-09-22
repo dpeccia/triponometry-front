@@ -14,7 +14,7 @@ import {Box, Flex} from "@chakra-ui/react";
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
-export var ResultCalendar = ({events}) => {
+export var ResultCalendar = ({events,daysAmount}) => {
 
   const eventPropGetter = useCallback(
     (event, start, end, isSelected) => ({
@@ -37,13 +37,6 @@ export var ResultCalendar = ({events}) => {
     return new CalendarEvent(event.name,event.start,event.end);
   });
 
-  const tripLengthInDays = (date1,date2) =>{
-    let difference = date1.getDate() - date2.getDate();
-    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-    return TotalDays+1;
-  }
-;
-
   return (
       <Flex direction='column' minW='735px'>
           <Box h='606px'>
@@ -55,7 +48,7 @@ export var ResultCalendar = ({events}) => {
                   events={myEvents}
                   defaultDate={myEvents[0].start}
                   onDoubleClickEvent={onDoubleClickEvent}
-                  length={tripLengthInDays(myEvents[0].start,myEvents[myEvents.length-1].end) }
+                  length={daysAmount}
                   min={myEvents[0].start}
               />
           </Box>

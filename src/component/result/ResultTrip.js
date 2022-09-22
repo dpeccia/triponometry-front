@@ -3,7 +3,6 @@ import {CalculatorScreen} from "../calculator/CalculatorScreen";
 import {ResultMap} from "./ResultMap";
 import {LoadScript} from "@react-google-maps/api";
 import {ResultCalendar} from "./ResultCalendar";
-import {ExportButton} from "./export/ExportButton";
 
 export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft }) => {
 
@@ -23,7 +22,7 @@ export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft }) => 
     const showResult = () => {
         if(!isDraft)
         return (
-            <ResultCalendar events={calculatorOutputs.events}/>
+            <ResultCalendar events={calculatorOutputs.events} daysAmount={calculatorOutputs.daysAmount}/>
         )
     }
 
