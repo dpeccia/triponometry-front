@@ -1,5 +1,5 @@
-import {Heading,Flex, useToast} from "@chakra-ui/react"
-import {useEffect, useState} from "react"
+import {Heading,Flex, FormControl, FormErrorMessage} from "@chakra-ui/react"
+import {useState} from "react"
 import {MealInput} from "./MealInput";
 import {BedInput} from "./BedInput";
 import {FreeDaysInput} from "./FreeDaysInput";
@@ -24,21 +24,15 @@ export const HorariosInput = (props) => {
     }
 
     const [selectedHorarios, setSelectedHorarios] = useState(defaultTime())
-    const toast = useToast()
-
     const onClick = () => {
-        if(selectedHorarios.dormirse > selectedHorarios.despertarse){
+        if(!isInvalid()){
             props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
             props.nextStep('MOBILITY')
-        } else {
-            toast({
-                title: 'Corregir datos',
-                description: `La hora de dormir debe ser mayor a la hora de despertarse`,
-                status: 'error',
-                duration: 1800,
-                isClosable: true
-            })
         }
+    }
+
+    const isInvalid = () => {
+        return selectedHorarios.dormirse <= selectedHorarios.despertarse && !isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse)
     }
 
     return(
@@ -47,10 +41,13 @@ export const HorariosInput = (props) => {
                     Horarios
                 </Heading>
                 <MealInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
-                <BedInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
+                <FormControl isInvalid={isInvalid()} marginBottom={8}>
+                    <BedInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
+                    <FormErrorMessage>Debes ingresar una hora para levantarse y dormirse valida</FormErrorMessage>
+                </FormControl>
                 <FreeDaysInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
                 <NextButton
-                    stepFinished={!isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse)}
+                    stepFinished={!isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse) && !isInvalid()}
                     onClick={onClick}
                     description='Continua con Transporte'/>
             </Flex>

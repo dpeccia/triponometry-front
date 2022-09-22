@@ -2,7 +2,7 @@ import {Box, Divider, Heading, Input, VStack} from "@chakra-ui/react";
 
 export const BedInput = (props) => {
     return (
-        <Box marginBottom={8}>
+        <Box>
             <Heading textAlign='left' fontSize='xl'>
                 Levantarse Dormirse
             </Heading>

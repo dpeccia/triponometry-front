@@ -1,13 +1,14 @@
 import { Badge, ListItem, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, UnorderedList, VStack } from "@chakra-ui/react"
+import { isEmpty } from "lodash"
 import { useState } from "react"
 
 export const ErrorBadge = (props) => {
 
     const [openPop, setOpenPop] = useState(true)
-    const listItems = props.message ? props.message.map((element) => <ListItem size="sm">{element}</ListItem>) : null
+    const listItems = !isEmpty(props.message) ? props.message.map((element) => <ListItem size="sm">{element}</ListItem>) : null
     return(
         <VStack>
-            <Popover isOpen={props.message && openPop} autoFocus={false}>
+            <Popover isOpen={!isEmpty(props.message) && openPop} autoFocus={false}>
                 <PopoverTrigger>
                     <Badge  colorScheme='red' variant='solid' mb={1}> {props.msg} </Badge>
                 </PopoverTrigger>
