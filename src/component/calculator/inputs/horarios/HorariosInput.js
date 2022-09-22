@@ -1,5 +1,5 @@
-import {Heading,Flex} from "@chakra-ui/react"
-import {useState} from "react"
+import {Heading,Flex, useToast} from "@chakra-ui/react"
+import {useEffect, useState} from "react"
 import {MealInput} from "./MealInput";
 import {BedInput} from "./BedInput";
 import {FreeDaysInput} from "./FreeDaysInput";
@@ -24,10 +24,21 @@ export const HorariosInput = (props) => {
     }
 
     const [selectedHorarios, setSelectedHorarios] = useState(defaultTime())
+    const toast = useToast()
 
     const onClick = () => {
-        props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
-        props.nextStep('MOBILITY')
+        if(selectedHorarios.dormirse > selectedHorarios.despertarse){
+            props.setCalculatorInputs(prevState => ({...prevState, horarios: selectedHorarios}))
+            props.nextStep('MOBILITY')
+        } else {
+            toast({
+                title: 'Corregir datos',
+                description: `La hora de dormir debe ser mayor a la hora de despertarse`,
+                status: 'error',
+                duration: 1800,
+                isClosable: true
+            })
+        }
     }
 
     return(
@@ -39,7 +50,7 @@ export const HorariosInput = (props) => {
                 <BedInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
                 <FreeDaysInput selectedHorarios={selectedHorarios} setSelectedHorarios={setSelectedHorarios}/>
                 <NextButton
-                    stepFinished={true} //TODO: cambiar cuando valido que haya cargado algo
+                    stepFinished={!isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse)}
                     onClick={onClick}
                     description='Continua con Transporte'/>
             </Flex>

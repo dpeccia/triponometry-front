@@ -28,9 +28,10 @@ export function TriponometryRoutes() {
             })
     }, []);
 
-    const handleLogout = () => {
-        logout()
-        changeAvatar("", "")
+    const handleLogout = async () => {
+        const response = await logout()
+        if(response)
+            changeAvatar("", "")
     }
     
     const changeAvatar = (username, pfp) => {

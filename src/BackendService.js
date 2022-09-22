@@ -236,9 +236,7 @@ export const logout = async () => {
             return null
         })
 
-        if(response){
-            window.location = '/'
-        }
+        return response
 }
 
 export const logIn = async (email, password) => {
