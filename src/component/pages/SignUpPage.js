@@ -6,8 +6,9 @@ import {Link as ReachLink, useNavigate} from "react-router-dom";
 import validator from 'validator'
 import { ErrorBadge} from "../login/ErrorBadge";
 import { SuccessBadge } from "../login/SuccessBadge";
-import { logIn, singUp } from "../../BackendService";
-import { isEmpty } from "lodash";
+import { logIn, singUp, googleLogIn } from "../../BackendService";
+import { isEmpty } from "lodash"
+import { GoogleLoginInput } from "../login/GoogleLogin/GoogleLogin";
 
 export const SignUpPage = (props) => {
 
@@ -81,6 +82,16 @@ export const SignUpPage = (props) => {
         }
     }
 
+    const handleGoogleLogInClick = async (gmail,gpassword, avatar) => {
+        const response = await googleLogIn(gmail,gpassword)
+        console.log(response)
+        if(!response) {
+            console.log("No ha sido posible iniciar sesión con Google.")
+        } else {
+            props.changeAvatar(gmail, avatar)
+            navigate("/mis-calculos")
+        }
+    }
     const passwordStrength = (value) => {
  
         if (validator.isStrongPassword(value, {
@@ -154,7 +165,7 @@ export const SignUpPage = (props) => {
                     <PasswordInput handleChange={handleConfirmPasswordChange} placeholder='Confirmar Contraseña'/>
                     {confirmPasswordBagde()}
                     <Button size='sm' bg='red.400' color='white' shadow='lg' w='full' mb={2} type='submit' isDisabled={!isPasswordValid || !arePassEquals || !isEmailValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
-                    <Button mr={1} size='sm' leftIcon={<FcGoogle/>} fontWeight='normal' shadow='md' w='full'> Registrarme con Google </Button>
+                    <GoogleLoginInput action="signUp" actionTitle="Registrarme con Google" logInAction={handleGoogleLogInClick}/>
                     <HStack>   
                         <Text fontSize='xs'>Ya tenés cuenta?</Text> 
                         <Link as={ReachLink} to="/" fontSize='xs' fontWeight='bold'>

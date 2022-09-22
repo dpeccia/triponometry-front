@@ -250,6 +250,14 @@ export const logIn = async (email, password) => {
     
 }
 
+export const googleLogIn = async (gmail, gpassword) => {
+    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword}, {withCredentials: true})
+        .catch(function (error) { 
+            return null
+        })
+    return response?.data
+}
+
 export const singUp = async (email, password) => {
     const response = await backend.post('/user', {mail: email, password: password})
         .catch((error) => {

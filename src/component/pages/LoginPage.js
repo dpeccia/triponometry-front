@@ -2,9 +2,10 @@ import { Box, Flex, HStack, Image, Link, Divider, VStack, Heading, Text, Input, 
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import {Link as ReachLink, useNavigate} from "react-router-dom";
-import { logIn } from "../../BackendService";
+import { logIn,googleLogIn } from "../../BackendService";
 import { ErrorBadge } from "../login/ErrorBadge";
 import { PasswordInput } from "../login/PasswordInput";
+import { GoogleLoginInput } from "../login/GoogleLogin/GoogleLogin";
 
 export const LoginPage = (props) => {
 
@@ -29,7 +30,16 @@ export const LoginPage = (props) => {
             props.changeAvatar(email, "")
             navigate("/mis-calculos")
         }
-        
+    }
+
+    const handleGoogleLogInClick = async (gmail,gpassword, avatar) => {
+        const response = await googleLogIn(gmail,gpassword)
+        if(!response) {
+            setError("No ha sido posible iniciar sesión con Google.")
+        } else {
+            props.changeAvatar(gmail, avatar)
+            navigate("/mis-calculos")
+        }
     }
 
     return(
@@ -68,9 +78,7 @@ export const LoginPage = (props) => {
                         </Link>
                         
                         <HStack mt={2}>
-                            <Button mr={1} size='sm' leftIcon={<FcGoogle/>} fontWeight='normal' shadow='md'>
-                                Iniciar sesión con Google
-                            </Button>
+                            <GoogleLoginInput action="logIn" actionTitle="Iniciar sesión con Google" logInAction={handleGoogleLogInClick}/>
                             <Button size='sm' bg='red.400' color='white' onClick={handleLogInClick}>
                                 Iniciar Sesión
                             </Button>
