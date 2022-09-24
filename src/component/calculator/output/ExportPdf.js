@@ -30,7 +30,7 @@ export const PdfButtonExport1 = (props) => {
   return (
     <>
       <ReactToPrint
-        trigger={() => {return <Img src={'../exportPdf.png'}></Img>;}}
+        trigger={() => {return <Img src={'../../exportPdf.png'}></Img>;}}
         content={() => componentRef.current}
       />
       {map ? <Showprint refPropWithAnotherName={componentRef} inputs={props.calculatorInputs} outputs={props.calculatorOutputs}/> : <h1></h1>}

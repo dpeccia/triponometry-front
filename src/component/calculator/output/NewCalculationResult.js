@@ -34,7 +34,7 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                 <Flex alignItems='center' width="100%" justifyContent='space-between'>
                     <NewCalculationResultInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
                     {plantillaBadge()}
-                    <Box boxSize='90px' marginLeft={1000}>
+                    <Box boxSize='90px'>
                         <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}></PdfButtonExport1>
                     </Box>
                 </Flex>

@@ -1,7 +1,7 @@
 import { NewCalculationPage } from "./NewCalculationPage"
 import { useState, useEffect } from "react"
 import { NotFound } from "./NotFoundPage"
-import { getMyTrip } from "../../BackendService"
+import { getATrip } from "../../BackendService"
 import { useParams } from "react-router"
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox"
 
@@ -14,7 +14,7 @@ export const PlantillaCalculationPage = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const fetchCalculation = async () => {
-        return await getMyTrip(idCalculation)
+        return await getATrip(idCalculation)
     }
 
     const onFinish = (response) => {
