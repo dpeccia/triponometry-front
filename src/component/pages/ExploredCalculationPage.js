@@ -16,6 +16,7 @@ export const ExploredCalculationPage = () => {
 
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+    const [hasNewRating, setNewRating] = useState(false);
 
     const handlePlantillaClick = () => {
         navigate(`/explorar/${idCalculation}/edicion`)
@@ -34,7 +35,7 @@ export const ExploredCalculationPage = () => {
 
     useEffect(() => {
         fetchCalculation().then(onFinish);
-    }, []);
+    }, [hasNewRating]);
 
     return (
         <Flex flexDirection="column" width="100%">
@@ -46,7 +47,12 @@ export const ExploredCalculationPage = () => {
                             <Flex mt={2} justifyContent='flex-end'>
                                 <Button rightIcon={<FaRegLightbulb />} onClick={handlePlantillaClick}> Usar como plantilla </Button>
                                 <Box>
-                                    <SaveRatingModal calculationId={idCalculation} calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                                    <SaveRatingModal
+                                        calculationId={idCalculation}
+                                        calculatorName={calculation.name}
+                                        calculatorInputs={calculation.calculatorInputs}
+                                        calculatorOutputs={calculation.calculatorOutputs}
+                                        setNewRating={setNewRating}/>
                                     <RatingDrawer reviews={calculation.reviews} averageRating={calculation.rating}/>
                                 </Box>
                             </Flex>

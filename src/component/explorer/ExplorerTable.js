@@ -1,11 +1,15 @@
-import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton} from '@chakra-ui/react'
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
-import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
+import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton, Box, Avatar} from '@chakra-ui/react'
+import {StarIcon, TriangleDownIcon, TriangleUpIcon} from '@chakra-ui/icons'
+import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters } from 'react-table'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import {FilterInput} from "./FilterInput";
-import { useMemo } from 'react';
+import {GlobalFilter} from "./GlobalFilter";
+import {ColumnFilter} from "./ColumnFilter";
+import {useMemo} from 'react';
 import {useNavigate} from "react-router";
+import Flag from 'react-world-flags'
+import {countryToAlpha3} from "country-to-iso";
+
 
 export const ExplorerTable = ({ data }) => {
 
@@ -19,22 +23,33 @@ export const ExplorerTable = ({ data }) => {
             {
                 Header: 'Nombre',
                 accessor: 'name',
+                Filter: ColumnFilter,
+                Cell: (tableProps) => { return styleName(tableProps.row.original.name, tableProps.row.original.imageUrl)}
             },
             {
                 Header: 'Ciudad',
                 accessor: 'city',
+                Filter: ColumnFilter
+
             },
             {
                 Header: 'Pais',
                 accessor: 'country',
+                Filter: ColumnFilter,
+                Cell: (tableProps) => { return styleCountry(countryToAlpha3(tableProps.row.original.country))}
+
             },
             {
                 Header: 'Dias',
                 accessor: 'days',
+                Filter: ColumnFilter
+
             },
             {
                 Header: 'Estrellas',
                 accessor: 'rating',
+                Filter: ColumnFilter,
+                Cell: (tableProps) => { return styleRating(tableProps.row.original.rating)}
             },
         ],
         [],
@@ -45,31 +60,29 @@ export const ExplorerTable = ({ data }) => {
         // Pagination
         page, prepareRow, canPreviousPage, canNextPage, pageOptions, pageCount, gotoPage, nextPage, previousPage,
         // Filtering
-        setGlobalFilter, state: { pageIndex, globalFilter }
-    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 8 } }, useGlobalFilter, useSortBy, usePagination)
+        setGlobalFilter,
+        state: { pageIndex, globalFilter }
+    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 8 } },
+        useFilters, useGlobalFilter, useSortBy, usePagination)
     
     return (
         <>
-            <FilterInput filter={globalFilter} setFilter={setGlobalFilter}/>
+            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
             <Table {...getTableProps()}>
                 <Thead>
                     {headerGroups.map((headerGroup) => (
                         <Tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
-                                <Th
-                                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                                    isNumeric={column.isNumeric}
-                                >
-                                    {column.render('Header')}
-                                    <chakra.span pl='4'>
-                                        {column.isSorted ? (
-                                            column.isSortedDesc ? (
-                                                <TriangleDownIcon aria-label='sorted descending' />
-                                            ) : (
-                                                <TriangleUpIcon aria-label='sorted ascending' />
-                                            )
-                                        ) : null}
-                                    </chakra.span>
+                                <Th {...column.getHeaderProps(column.getSortByToggleProps())} isNumeric={column.isNumeric}>
+                                        {column.render('Header')}
+                                        <chakra.span pl='4'>
+                                            {column.isSorted ? (
+                                                column.isSortedDesc ? <TriangleDownIcon/> : <TriangleUpIcon/>
+                                            ) : null }
+                                        </chakra.span>
+                                        <Box pt={2}>
+                                            {column.canFilter ? column.render('Filter') : null}
+                                        </Box>
                                 </Th>
                             ))}
                         </Tr>
@@ -104,3 +117,50 @@ export const ExplorerTable = ({ data }) => {
         </>
     );
 }
+
+const styleName = (name, imageUrl) => {
+    return (
+        <Flex alignItems='center'>
+            <Avatar size='md' src={imageUrl}/>
+            <Text ml={4}> {name} </Text>
+        </Flex>
+    )
+}
+
+const styleCountry = (code) => {
+    return (
+        <Flex h={5} w='30px' justifyContent='start' >
+            <Flag code={code}/>
+            <Text ml={2}> {code} </Text>
+        </Flex>
+    )
+}
+
+const colour = (rating) => {
+    switch(rating){
+        case 1:
+            return 'red.500';
+        case 2:
+            return 'red.300';
+        case 3:
+            return 'orange.300';
+        case 4:
+            return 'green.300';
+        case 5:
+            return 'green.500';
+        default:
+            return 'gray.400'
+    }
+}
+
+const styleRating = (rating) => {
+    return (
+        <Flex h={5} w='30px' justifyContent='space-between' alignItems='center' >
+            <Text as='b' fontSize='md' color={colour(rating)}> {rating}</Text>
+            <Flex alignItems='center'>
+                <StarIcon color={colour(rating)}/>
+            </Flex>
+        </Flex>
+    )
+}
+

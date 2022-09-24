@@ -44,6 +44,7 @@ export const SaveRatingModal = (props) => {
                 isClosable: true,
             })
             onClose()
+            props.setNewRating(true)
         } else {
             toast({
                 title: 'Ocurrio un error',
