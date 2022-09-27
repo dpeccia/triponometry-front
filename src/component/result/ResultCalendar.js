@@ -27,6 +27,7 @@ export var ResultCalendar = ({events,daysAmount}) => {
     []
   )
 
+  
   const onDoubleClickEvent = useCallback((calEvent) => {
      window.setTimeout(() => {
       window.alert(calEvent.title)
