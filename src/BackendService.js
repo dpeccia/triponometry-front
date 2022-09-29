@@ -240,7 +240,7 @@ export const logout = async () => {
 }
 
 export const logIn = async (email, password) => {
-    const response = await backend.post('/user/tokens', {mail: email, password: password}, {withCredentials: true})
+    const response = await backend.post('/user/tokens', {mail: email, password: password}, { headers: {"Access-Control-Allow-Origin": "*"}}, {withCredentials: true})
         .catch(function (error) { 
             return null
         })
@@ -249,7 +249,7 @@ export const logIn = async (email, password) => {
 }
 
 export const googleLogIn = async (gmail, gpassword) => {
-    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword}, {withCredentials: true})
+    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword}, { headers: {"Access-Control-Allow-Origin": "*"}},{withCredentials: true})
         .catch(function (error) { 
             return null
         })
@@ -257,7 +257,7 @@ export const googleLogIn = async (gmail, gpassword) => {
 }
 
 export const singUp = async (email, password) => {
-    const response = await backend.post('/user', {mail: email, password: password})
+    const response = await backend.post('/user', {mail: email, password: password}, { headers: {"Access-Control-Allow-Origin": "*"}})
         .catch((error) => {
             if(error.response){
                 return {status: "Error", msg: error.response.data.error}
