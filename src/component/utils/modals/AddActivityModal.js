@@ -85,7 +85,7 @@ export const AddActivityModal = (props) => {
 
     return (
         <>
-            <IconButton isLoading={isLoading} icon={<FaPlus w='80%' h='80%' />} onClick={openModal} colorScheme='whatsapp' size='sm' isRound />
+            <IconButton isLoading={isLoading} icon={<FaPlus w='80%' h='80%' />} onClick={openModal} colorScheme='whatsapp' size='sm' isRound isDisabled={props.isDisabled}/>
             <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
                 {overlay}
                 <ModalContent>

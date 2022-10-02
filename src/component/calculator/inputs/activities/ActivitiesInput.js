@@ -1,4 +1,4 @@
-import {Flex, Heading} from "@chakra-ui/react";
+import {Flex, Heading, Alert, AlertTitle, AlertIcon, AlertDescription, Box} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import { ActivitiesSearchBar } from "./ActivitiesSearchBar";
 import { ActivitiesList } from "./ActivitiesList";
@@ -39,16 +39,62 @@ export const ActivitiesInputs = (props) => {
             duration: 1800,
         })
     }
+
+    const alert = (count) =>{
+        if(count < 10 && count >= 7)
+        {
+            return(
+                <Alert status='warning' mb={2}>
+                    <AlertIcon />
+                    <Box>
+                        <AlertTitle>Llegando al limite de actividades</AlertTitle>
+                        <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
+                    </Box>
+                </Alert>
+            )
+        }
+        if(count == 10)
+        {
+            return (
+                <Alert status='error' mb={2}>
+                    <AlertIcon />
+                    <Box>
+                        <AlertTitle>¡Llegaste al límite de actividades!</AlertTitle>
+                        <AlertDescription>Por favor, continua con el siguiente paso</AlertDescription>
+                    </Box>
+                </Alert>
+            )
+        }
+        return(
+            <Alert status='info' mb={2}>
+                <AlertIcon />
+                <Box>
+                    <AlertTitle>Actividades restantes</AlertTitle>
+                    <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
+                </Box>
+            </Alert>
+        )
+    }
     
     const addActivity = (activity) => {
-        setSelectedActivities([...selectedActivities, activity])
-        setStepFinished(true)
-        toast({
-            title: 'Actividad seleccionada!',
-            description: `Elegiste ${activity.name}`,
-            status: 'success',
-            duration: 1800,
-        })
+        if(size(selectedActivities) < 10)
+        {
+            setSelectedActivities([...selectedActivities, activity])
+            setStepFinished(true)
+            toast({
+                title: 'Actividad seleccionada!',
+                description: `Elegiste ${activity.name}`,
+                status: 'success',
+                duration: 1800,
+            })
+        } else {
+            toast({
+                title: 'Estas en el límite!',
+                description: `Si querés realizar esta actividad es necesario eliminar otra`,
+                status: 'error',
+                duration: 1800,
+            })
+        }
     }
 
     return (
@@ -62,7 +108,10 @@ export const ActivitiesInputs = (props) => {
                 activities={activities}
                 addActivity={addActivity}
                 removeActivity={removeActivity}
-                activityWasAlreadySelected={activityWasAlreadySelected}/>
+                activityWasAlreadySelected={activityWasAlreadySelected}
+                disableAdd={size(selectedActivities) == 10}
+                />
+            {alert(size(selectedActivities))}
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}
