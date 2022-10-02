@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 const backend = axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL: 'https://triponometry-back.herokuapp.com/'
 });
 
 const getMinutes = (mealTime) => {
