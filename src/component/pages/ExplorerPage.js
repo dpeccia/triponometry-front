@@ -15,7 +15,9 @@ export const ExplorerPage = () => {
 
     const onFinish = (response) => {
         const tripsMapped = response.map( (trip) => {
+            console.log(trip)
             return({
+                userInfo: trip.user,
                 id: trip.id,
                 name: trip.name,
                 imageUrl: trip.calculatorInputs.city.imageUrl,

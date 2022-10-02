@@ -43,7 +43,7 @@ export const ExploredCalculationPage = () => {
                 isLoading ? <SpinnerSearchBox/> :
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} userInfo={calculation.user}/>
                             <Flex mt={2} justifyContent='flex-end'>
                                 <Button rightIcon={<FaRegLightbulb />} onClick={handlePlantillaClick}> Usar como plantilla </Button>
                                 <Box>

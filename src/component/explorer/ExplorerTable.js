@@ -1,4 +1,4 @@
-import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton, Box, Avatar} from '@chakra-ui/react'
+import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton, Box, Avatar, Tooltip, Icon} from '@chakra-ui/react'
 import {StarIcon, TriangleDownIcon, TriangleUpIcon} from '@chakra-ui/icons'
 import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters } from 'react-table'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
@@ -9,6 +9,7 @@ import {useMemo} from 'react';
 import {useNavigate} from "react-router";
 import Flag from 'react-world-flags'
 import {countryToAlpha3} from "country-to-iso";
+import { BsFillCheckCircleFill } from 'react-icons/bs';
 
 
 export const ExplorerTable = ({ data }) => {
@@ -24,7 +25,7 @@ export const ExplorerTable = ({ data }) => {
                 Header: 'Nombre',
                 accessor: 'name',
                 Filter: ColumnFilter,
-                Cell: (tableProps) => { return styleName(tableProps.row.original.name, tableProps.row.original.imageUrl)}
+                Cell: (tableProps) => { return styleName(tableProps.row.original.name, tableProps.row.original.imageUrl, tableProps.row.original.userInfo)}
             },
             {
                 Header: 'Ciudad',
@@ -118,11 +119,22 @@ export const ExplorerTable = ({ data }) => {
     );
 }
 
-const styleName = (name, imageUrl) => {
+const verifiedBadge = (userInfo) => {
+    if (userInfo.verified) {
+        return (
+            <Tooltip label={userInfo.username} bg='blue.400' placement='bottom'>
+                <span><Icon as={BsFillCheckCircleFill} color='blue.400'/></span>   
+            </Tooltip>
+        )
+    }
+}
+
+const styleName = (name, imageUrl, userInfo) => {
     return (
         <Flex alignItems='center'>
             <Avatar size='md' src={imageUrl}/>
             <Text ml={4}> {name} </Text>
+            {verifiedBadge(userInfo)}
         </Flex>
     )
 }

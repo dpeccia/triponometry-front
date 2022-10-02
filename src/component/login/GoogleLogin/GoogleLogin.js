@@ -24,7 +24,7 @@ export const GoogleLoginInput = (props) => {
     const onSuccess = (res) => {
         const googleProfile = res.profileObj
         const password = googleProfile.givenName[0].toUpperCase() + googleProfile.googleId + googleProfile.familyName.substr(-1).toLowerCase()
-        props.logInAction(googleProfile.email,password,googleProfile.imageUrl)
+        props.logInAction(googleProfile.email,password,googleProfile.imageUrl, googleProfile.name)
         console.log(res)
     };
 

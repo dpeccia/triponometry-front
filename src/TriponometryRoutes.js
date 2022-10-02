@@ -28,6 +28,7 @@ export function TriponometryRoutes() {
             })
     }, []);
 
+    
     const handleLogout = async () => {
         const response = await logout()
         if(response)
@@ -52,11 +53,11 @@ export function TriponometryRoutes() {
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="nuevo" exact element={<NewCalculationPage edit={false} beginInput='CITY' />}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
-                    <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<NotFound/>) : (<ExploredCalculationPage />))}/>
-                    <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<NotFound/>) : (<PlantillaCalculationPage />))}/>
+                    <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage />))}/>
+                    <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<PlantillaCalculationPage />))}/>
                     <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage />))}/>
-                    <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<NotFound/>) : (<MyCalculationPage />))}/>
-                    <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<NotFound/>) : (<EditCalculationPage />))}/>
+                    <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage />))}/>
+                    <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<EditCalculationPage />))}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>

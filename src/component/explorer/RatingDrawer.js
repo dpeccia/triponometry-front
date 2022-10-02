@@ -30,6 +30,7 @@ export const RatingDrawer = (props) => {
                 score={review.stars}
                 hasDone={review.done}
                 review={review.description}
+                userId={review.user}
             />
         )
     })

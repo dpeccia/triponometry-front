@@ -27,17 +27,17 @@ export const LoginPage = (props) => {
         if(!response) {
             setError("Usuario y/o contraseña incorrectos")
         } else {
-            props.changeAvatar(email, "")
+            props.changeAvatar(response.username, "")
             navigate("/mis-calculos")
         }
     }
 
-    const handleGoogleLogInClick = async (gmail,gpassword, avatar) => {
-        const response = await googleLogIn(gmail,gpassword)
+    const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
+        const response = await googleLogIn(gmail,gpassword, gusername)
         if(!response) {
             setError("No ha sido posible iniciar sesión con Google.")
         } else {
-            props.changeAvatar(gmail, avatar)
+            props.changeAvatar(gusername, avatar)
             navigate("/mis-calculos")
         }
     }

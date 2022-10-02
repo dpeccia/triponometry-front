@@ -16,6 +16,7 @@ export const SignUpPage = (props) => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [isEmailValid, setIsEmailValid] = useState(false)
     const [isPasswordValid, setIsPasswordValid] = useState(false)
     const [arePassEquals, setArePassEquals] = useState(false)
@@ -40,6 +41,10 @@ export const SignUpPage = (props) => {
         setIsEmailValid(checkEmail(event.target.value))
     }
 
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value)
+    }
+
     const handleRegistrarmeClick = async () => {
         const params = {}
         params.email = email
@@ -54,7 +59,7 @@ export const SignUpPage = (props) => {
                 isClosable: true,
               })
         } else {
-            const response = await singUp(email, password)
+            const response = await singUp(email, password, username)
 
             if(response.status !== "Error"){
                 const response = await logIn(email, password)
@@ -67,7 +72,7 @@ export const SignUpPage = (props) => {
                         isClosable: true,
                       })
                 } else {
-                    props.changeAvatar(email, "")
+                    props.changeAvatar(username, "")
                     navigate("/mis-calculos")
                 }
             } else {
@@ -82,13 +87,13 @@ export const SignUpPage = (props) => {
         }
     }
 
-    const handleGoogleLogInClick = async (gmail,gpassword, avatar) => {
-        const response = await googleLogIn(gmail,gpassword)
+    const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
+        const response = await googleLogIn(gmail,gpassword, gusername)
         console.log(response)
         if(!response) {
             console.log("No ha sido posible iniciar sesión con Google.")
         } else {
-            props.changeAvatar(gmail, avatar)
+            props.changeAvatar(gusername, avatar)
             navigate("/mis-calculos")
         }
     }
@@ -160,6 +165,7 @@ export const SignUpPage = (props) => {
                     <Heading fontSize='2xl' mb={2}> Crear cuenta </Heading>
                     <Input  mb={1} onChange={handleEmailChange} placeholder="Email" isInvalid={!isEmailValid && !isEmpty(email)} type='email'/>
                     {emailErrorBadge()}
+                    <Input  mb={1} onChange={handleUsernameChange} placeholder="Username"/>
                     <PasswordInput handleChange={handlePasswordChange} isInvalid={!isPasswordValid && password !== ""}/>
                     {passwordBagde()}
                     <PasswordInput handleChange={handleConfirmPasswordChange} placeholder='Confirmar Contraseña'/>

@@ -248,16 +248,16 @@ export const logIn = async (email, password) => {
     
 }
 
-export const googleLogIn = async (gmail, gpassword) => {
-    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword}, {withCredentials: true})
+export const googleLogIn = async (gmail, gpassword, gusername) => {
+    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword, username:gusername}, {withCredentials: true})
         .catch(function (error) { 
             return null
         })
     return response?.data
 }
 
-export const singUp = async (email, password) => {
-    const response = await backend.post('/user', {mail: email, password: password})
+export const singUp = async (email, password, username) => {
+    const response = await backend.post('/user', {mail: email, password: password, username: username}, {withCredentials: true})
         .catch((error) => {
             if(error.response){
                 return {status: "Error", msg: error.response.data.error}
@@ -355,4 +355,14 @@ export const getActivityInfo = async (cityName, activityName) => {
     });
     
     return backendResponse?.data
+}
+
+export const getUserInfo = async (userId) => {
+    const response = await backend.get(`/user/${userId}`, {headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true})
+        .catch((error) => {
+            return null
+        });
+
+        console.log(userId)
+        return response?.data
 }
