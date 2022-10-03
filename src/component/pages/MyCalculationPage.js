@@ -53,7 +53,7 @@ export const MyCalculationPage = () => {
                     isLoading ? <SpinnerSearchBox/> :
                         <>
                             <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
+                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} userInfo={calculation.user} isDraft={isDraft()}/>
                                 <Flex mt={2} justifyContent='flex-end'>
                                     {getCustomeButton(calculation)}
                                 </Flex>
