@@ -39,45 +39,9 @@ export const ActivitiesInputs = (props) => {
             duration: 1800,
         })
     }
-
-    const alert = (count) =>{
-        if(count < 10 && count >= 7)
-        {
-            return(
-                <Alert status='warning' mb={2}>
-                    <AlertIcon />
-                    <Box>
-                        <AlertTitle>Llegando al limite de actividades</AlertTitle>
-                        <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
-                    </Box>
-                </Alert>
-            )
-        }
-        if(count == 10)
-        {
-            return (
-                <Alert status='error' mb={2}>
-                    <AlertIcon />
-                    <Box>
-                        <AlertTitle>¡Llegaste al límite de actividades!</AlertTitle>
-                        <AlertDescription>Por favor, continua con el siguiente paso</AlertDescription>
-                    </Box>
-                </Alert>
-            )
-        }
-        return(
-            <Alert status='info' mb={2}>
-                <AlertIcon />
-                <Box>
-                    <AlertTitle>Actividades restantes</AlertTitle>
-                    <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
-                </Box>
-            </Alert>
-        )
-    }
     
     const addActivity = (activity) => {
-        if(size(selectedActivities) < 10)
+        if(size(selectedActivities) < 9)
         {
             setSelectedActivities([...selectedActivities, activity])
             setStepFinished(true)
@@ -109,9 +73,8 @@ export const ActivitiesInputs = (props) => {
                 addActivity={addActivity}
                 removeActivity={removeActivity}
                 activityWasAlreadySelected={activityWasAlreadySelected}
-                disableAdd={size(selectedActivities) == 10}
+                disableAdd={size(selectedActivities) == 9}
                 />
-            {alert(size(selectedActivities))}
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}
