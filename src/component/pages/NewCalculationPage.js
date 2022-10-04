@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original }) => {
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo }) => {
     const toast = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
     const [image, setImage] = useState(getRandomImage())
@@ -116,7 +116,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         }
 
         if(edit) {
-            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
+            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo}/>
         } else {
             return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
         }
