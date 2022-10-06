@@ -12,6 +12,7 @@ import { PdfButtonExport1 } from "../calculator/output/ExportPdf";
 import {HamburgerIcon} from "@chakra-ui/icons";
 import {RiInboxUnarchiveFill} from "react-icons/ri";
 import {FaEdit} from "react-icons/fa";
+import {EditAvatarImageModal} from "../utils/modals/EditAvatarImageModal";
 
 export const MyCalculationPage = () => {
     const params = useParams();
@@ -26,11 +27,13 @@ export const MyCalculationPage = () => {
 
     const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit } = useDisclosure()
     const { isOpen: isOpenUnarchive, onOpen: onOpenUnarchive, onClose: onCloseUnarchive } = useDisclosure()
+    const { isOpen: isOpenEditAvatar, onOpen: onOpenEditAvatar, onClose: onCloseEditAvatar } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
     const [isValid, setIsValid] = useState(true)
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+    const [hasNewImage, setHasNewImage] = useState(false)
 
     const handleEditClick = () => {
         setOverlay(<OverlayOne />)
@@ -40,6 +43,12 @@ export const MyCalculationPage = () => {
     const handleUnarchiveClick = () => {
         setOverlay(<OverlayOne />)
         onOpenUnarchive()
+    }
+
+    const handleEditAvatarClick = () => {
+        setHasNewImage(false)
+        setOverlay(<OverlayOne />)
+        onOpenEditAvatar()
     }
 
     const isDraft = () => {
@@ -65,7 +74,7 @@ export const MyCalculationPage = () => {
 
     useEffect(() => {
         fetchCalculation().then(onFinish);
-    }, []);
+    }, [hasNewImage]);
 
     return (
         <Flex flexDirection="column" width="100%">
@@ -74,7 +83,15 @@ export const MyCalculationPage = () => {
                     isLoading ? <SpinnerSearchBox/> :
                         <>
                             <Flex alignItems='center' justifyContent='space-between'>
-                                <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} userInfo={calculation.user} isDraft={isDraft()}/>
+                                <MyCalculationInfo
+                                    calculationId={calculation.id}
+                                    calculatorName={calculation.name}
+                                    calculatorInputs={calculation.calculatorInputs}
+                                    calculatorOutputs={calculation.calculatorOutputs}
+                                    userInfo={calculation.user}
+                                    isDraft={isDraft()}
+                                    handleEditAvatarClick={handleEditAvatarClick}
+                                    setNewImage={setHasNewImage}/>
                                 <Flex mt={2} justifyContent='flex-end'>
                                     <Menu>
                                         <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
@@ -100,11 +117,10 @@ export const MyCalculationPage = () => {
                             <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
                             <UnarchiveCalculationModal isOpen={isOpenUnarchive} onOpen={onOpenUnarchive} onClose={onCloseUnarchive} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
                             <EditCalculationModal isOpen={isOpenEdit} onOpen={onOpenEdit} onClose={onCloseEdit} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
+                            <EditAvatarImageModal isOpen={isOpenEditAvatar} onOpen={onOpenEditAvatar} onClose={onCloseEditAvatar} overlay={overlay} calculationId={calculation.id} setHasNewImage={setHasNewImage}/>
                         </>
                 ) : <NotFound />
             }
-
         </Flex>
-
     )
 }

@@ -366,3 +366,20 @@ export const getUserInfo = async (userId) => {
         console.log(userId)
         return response?.data
 }
+
+export const updateTripAvatar = async (tripId, imageUrl) => {
+    const request = {
+        "id": tripId,
+        "image": imageUrl
+    }
+
+    const backendResponse = await backend.post(
+        '/trip/image',
+        request,
+        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
+    ).catch((error) => {
+        return null
+    });
+
+    return backendResponse?.data
+}
