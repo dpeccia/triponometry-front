@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import {Flex, Box, MenuButton, MenuItem, Menu, MenuList} from "@chakra-ui/react";
 import { NewCalculationResultInfo } from "./NewCalculationResultInfo";
 import { PdfButtonExport1 } from "./ExportPdf";
 import { SaveCalculationModal } from "../../utils/modals/SaveCalculationModal";
@@ -7,6 +7,7 @@ import { IconButton } from "@chakra-ui/button";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { SaveDraftAsTripModal } from "../../utils/modals/SaveDraftAsTripModal";
 import { PlantillaBadge } from "../../utils/PlantillaBadge";
+import {HamburgerIcon} from "@chakra-ui/icons";
 
 export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original }) => {
 
@@ -34,9 +35,16 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                 <Flex alignItems='center' width="100%" justifyContent='space-between'>
                     <NewCalculationResultInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
                     {plantillaBadge()}
-                    <Box boxSize='90px'>
-                        <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}></PdfButtonExport1>
-                    </Box>
+                    <Flex mt={2} justifyContent='flex-end'>
+                        <Menu>
+                            <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
+                            <MenuList>
+                                <MenuItem>
+                                    <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
+                    </Flex>
                 </Flex>
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
