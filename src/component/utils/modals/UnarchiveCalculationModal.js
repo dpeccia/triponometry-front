@@ -18,7 +18,7 @@ export const UnarchiveCalculationModal = (props) => {
 
     const unarchivedCalculation = async () => {
         const response = await unarchivedTrip(props.calculationId)
-        if(response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Viaje desarchivado!',
                 description: `Su viaje a ${props.calculationName} fue desarchivado correctamente`,
@@ -30,8 +30,8 @@ export const UnarchiveCalculationModal = (props) => {
             navigate("/mis-calculos")
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo desarchivar su viaje',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

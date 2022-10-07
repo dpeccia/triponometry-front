@@ -50,7 +50,7 @@ export const ExploredCalculationPage = () => {
     }
 
     const onFinish = (response) => {
-        if(response){
+        if (response?.status !== "Error") {
             setCalculation(response)
             setIsLoading(false)
         }

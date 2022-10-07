@@ -30,7 +30,7 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
     const saveEdition = async () => {
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Editado!',
                 description: `Su borrador ${calculatorName} fue editado correctamente`,
@@ -43,8 +43,8 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
             navigate("/mis-calculos", {state: {defaultIndex: 1}})
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo editar su borrador',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

@@ -19,7 +19,7 @@ export const EditCalculationPage = () => {
     }
 
     const onFinish = (response) => {
-        if(response){
+        if (response?.status !== "Error") {
             setCalculation(response)
             setIsLoading(false)
         } else {

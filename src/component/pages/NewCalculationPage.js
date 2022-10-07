@@ -65,13 +65,13 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
 
         const response = await calculateNewTrip(calculatorInputs)
         
-        if (response) {
+        if (response?.status !== "Error") {
             setTimeout(() => setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount }), 3000)
         } else {
             setShowResults(false)
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo calcular su nuevo viaje',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

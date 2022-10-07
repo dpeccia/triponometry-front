@@ -28,7 +28,7 @@ export const ArchiveCalculationModal = (props) => {
 
     const archiveCalculation = async () => {
         const response = await archiveTrip(props.calculationId)
-        if(response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Viaje archivado!',
                 description: `Su viaje a ${props.calculationName} fue archivado correctamente`,
@@ -40,8 +40,8 @@ export const ArchiveCalculationModal = (props) => {
             onClose()
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo archivar su viaje',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

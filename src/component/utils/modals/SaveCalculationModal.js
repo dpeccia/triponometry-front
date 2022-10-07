@@ -49,7 +49,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
 
         const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
         
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Viaje guardado!',
                 description: `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`,
@@ -62,8 +62,8 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
             navigate("/mis-calculos")
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar su viaje',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

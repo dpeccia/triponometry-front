@@ -20,9 +20,9 @@ export function TriponometryRoutes() {
     const [pfp, setPfp] = useState("")
 
     useEffect(() => {
-        const response = checkLogin()
+        checkLogin()
             .then((response) => {
-                if(response){         
+                if (response?.status !== "Error") {         
                     changeAvatar(response.mail, "")
                 }
             })
@@ -31,7 +31,7 @@ export function TriponometryRoutes() {
     
     const handleLogout = async () => {
         const response = await logout()
-        if(response)
+        if (response?.status !== "Error")
             changeAvatar("", "")
     }
     

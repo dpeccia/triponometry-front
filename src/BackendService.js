@@ -1,9 +1,41 @@
 import axios from 'axios';
-import _ from 'lodash';
+import _, { isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
     baseURL: 'http://localhost:8080/',
+    headers: { "Access-Control-Allow-Origin": "*" }, 
+    withCredentials: true
 });
+
+const handleSuccess = (response) => {
+    return response?.data
+}
+
+const handleError = (error) => {
+    if(isNull(error?.response?.data) || isUndefined(error?.response?.data)) {
+        return { status: "Error", msg: "Error de conexión con el servidor" }
+    }
+    if(error.response.data.error === "Internal Server Error") {
+        return { status: "Error", msg: "Ocurrió un error inesperado" }
+    }
+    return { status: "Error", msg: error.response.data.error }
+}
+
+const get = async (endpoint) => {
+    return await backend.get(endpoint).then(handleSuccess).catch(handleError);
+}
+
+const erase = async (endpoint) => {
+    return await backend.delete(endpoint).then(handleSuccess).catch(handleError);
+}
+
+const post = async (endpoint, body) => {
+    return await backend.post(endpoint, body).then(handleSuccess).catch(handleError);
+}
+
+const put = async (endpoint, body) => {
+    return await backend.put(endpoint, body).then(handleSuccess).catch(handleError);
+}
 
 const getMinutes = (mealTime) => {
     if (mealTime) {       
@@ -49,69 +81,7 @@ export const calculateNewTrip = async (calculatorInputs) => {
         }
     }
 
-    const backendResponse = await backend.post(
-        '/trip/optimal-route', 
-        backendCalculatorInputs, 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
-}
-
-export const createDraft = async (calculatorInputs) => {
-    const accomodation = calculatorInputs.accommodation ? {
-        name: calculatorInputs.accommodation.name,
-        coordinates: {
-            latitude: calculatorInputs.accommodation.latitude,
-            longitude: calculatorInputs.accommodation.longitude
-        },
-        timeSpent: null
-    } : null
-    const activities = calculatorInputs.activities ? calculatorInputs.activities.map((activity) => {
-        return ({
-            name: activity.name,
-            coordinates: {
-                latitude: activity.latitude,
-                longitude: activity.longitude
-            },
-            timeSpent: activity.timeSpent
-        })
-    }) : null
-    const places = [accomodation].concat(activities)
-
-    const backendCalculatorInputs = {
-        "places": places,
-        "travelMode": calculatorInputs.mobility ? calculatorInputs.mobility : null,
-        "time": calculatorInputs.horarios ? {
-            "startHour": calculatorInputs.horarios.despertarse,
-            "finishHour": calculatorInputs.horarios.dormirse,
-            "breakfast": getMinutes(calculatorInputs.horarios.desayuno),
-            "lunch": getMinutes(calculatorInputs.horarios.almuerzo),
-            "snack": getMinutes(calculatorInputs.horarios.merienda),
-            "dinner": getMinutes(calculatorInputs.horarios.cena),
-            "freeDays": calculatorInputs.horarios.libres
-        } : {
-            "startHour": null,
-            "finishHour": null,
-            "breakfast": null,
-            "lunch": null,
-            "snack": null,
-            "dinner": null,
-            "freeDays": null
-        }
-    }
-
-    const backendResponse = await backend.post(
-        '/trip', 
-        {"name": "aaa", "calculatorInputs" : backendCalculatorInputs}, 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await post('/trip/optimal-route', backendCalculatorInputs)
 }
 
 export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs) => {
@@ -121,15 +91,7 @@ export const saveNewTrip = async (tripName, calculatorInputs, calculatorOutputs)
         "calculatorOutputs": calculatorOutputs
     }
 
-    const backendResponse = await backend.post(
-        '/trip', 
-        request, 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await post('/trip', request)
 }
 
 export const saveNewEdition = async (tripId, tripName, calculatorInputs, calculatorOutputs) => {
@@ -142,15 +104,7 @@ export const saveNewEdition = async (tripId, tripName, calculatorInputs, calcula
         }
     }
 
-    const backendResponse = await backend.put(
-        '/trip/update', 
-        request, 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await put('/trip/update', request)
 }
 
 export const archiveTrip = async (tripId) => {
@@ -159,15 +113,7 @@ export const archiveTrip = async (tripId) => {
         "newStatus": "ARCHIVED"
     }
 
-    const backendResponse = await backend.put(
-        `/trip`,
-        request ,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await put(`/trip`, request)
 }
 
 export const unarchivedTrip = async (tripId) => {
@@ -176,97 +122,42 @@ export const unarchivedTrip = async (tripId) => {
         "newStatus": "ACTIVE"
     }
 
-    const backendResponse = await backend.put(
-        `/trip`,
-        request ,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-
-    return backendResponse?.data
+    return await put(`/trip`, request)
 }
 
 export const getMyTrips = async () => {
-    const backendResponse = await backend.get(
-        '/trip', 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await get('/trip')
 }
 
 export const getMyTrip = async (id) => {
-    const backendResponse = await backend.get(
-        `/trip/info/${id}`,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-
-    return backendResponse?.data
+    return await get(`/trip/info/${id}`)
 }
 
 export const getAllTrips = async () => {
-    const backendResponse = await backend.get(
-        '/trip/all',
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    return backendResponse?.data
+    return await get('/trip/all')
 }
 
 export const getATrip = async (id) => {
-    const backendResponse = await backend.get(
-        `/trip/explorar/${id}`,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-
-    return backendResponse?.data
+    return await get(`/trip/explorar/${id}`)
 }
 
 export const logout = async () => {
-    const response = await backend.delete('/user/tokens',{ headers: {"Access-Control-Allow-Origin": "*"} , withCredentials: true})
-        .catch((error) => {
-            return null
-        })
-
-        return response
+    return await erase('/user/tokens')
 }
 
 export const logIn = async (email, password) => {
-    const response = await backend.post('/user/tokens', {mail: email, password: password}, {withCredentials: true})
-        .catch(function (error) { 
-            return null
-        })
-    return response?.data
-    
+    const request = { mail: email, password: password }
+    return await post('/user/tokens', request)
 }
 
 export const googleLogIn = async (gmail, gpassword, gusername) => {
-    const response = await backend.post('/user/gtokens', {mail: gmail, password: gpassword, username:gusername}, {withCredentials: true})
-        .catch(function (error) { 
-            return null
-        })
-    return response?.data
+    const request = { mail: gmail, password: gpassword, username: gusername }
+    return await post('/user/gtokens', request)
 }
 
-export const singUp = async (email, password, username) => {
-    const response = await backend.post('/user', {mail: email, password: password, username: username}, {withCredentials: true})
-        .catch((error) => {
-            if(error.response){
-                return {status: "Error", msg: error.response.data.error}
-            } else {
-                return {status: "Error", msg: error.message}
-            }
-        })
-
-        return response
+export const signUp = async (email, password, username) => {
+    const request = { mail: email, password: password, username: username }
+    return await post('/user', request)
 }
 
 export const loadCalendarEvents = async (eventsList) => {
@@ -281,45 +172,19 @@ export const loadCalendarEvents = async (eventsList) => {
         }
     };
 
-    const response = await backend.post(
-      'calendar/rawContent', 
-      calendarRequest, 
-      { headers: {"Access-Control-Allow-Origin": "*"}}
-    ).catch((error) => {
-      return null
-    }).then((response) => {
-        return response?.data;
-    });
-
-    return response
+    return await post('calendar/rawContent', calendarRequest)
 }
 
 export const loadMapKml = async (kmlId) => {
-    const response = await backend.get(`trip/kml/${kmlId}`,
-    {headers: {"Access-Control-Allow-Origin": "*"}})
-    .catch((error) => {
-      return null
-    }).then((response) => {
-        return response?.data;
-    });
-
-    return response
+    return await get(`trip/kml/${kmlId}`)
 }
 
 export const checkLogin = async () => {
-    const response = await backend.get('/user', {withCredentials: true})
-        .catch((error) => {
-            return null
-        })
-    return response?.data
+    return await get('/user')
 }
 
 export const deleteDraft = async (draftId) => {
-    const response = await backend.delete( `trip/delete/${draftId}`, {headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true})
-        .catch((error) => {
-            return null
-        })
-    return response
+    return await erase(`trip/delete/${draftId}`)
 }
 
 export const saveNewRating = async (id, score, hasDone, review) => {
@@ -329,15 +194,7 @@ export const saveNewRating = async (id, score, hasDone, review) => {
         "stars": score
     }
 
-    const backendResponse = await backend.post(
-        `/trip/review/${id}`,
-        request,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-
-    return backendResponse?.data
+    return await post(`/trip/review/${id}`, request)
 }
 
 export const getActivityInfo = async (cityName, activityName) => {
@@ -346,25 +203,11 @@ export const getActivityInfo = async (cityName, activityName) => {
         "activityName": activityName
     }
 
-    const backendResponse = await backend.post(
-        '/trip/info/activity', 
-        request, 
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-    
-    return backendResponse?.data
+    return await post('/trip/info/activity', request)
 }
 
 export const getUserInfo = async (userId) => {
-    const response = await backend.get(`/user/${userId}`, {headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true})
-        .catch((error) => {
-            return null
-        });
-
-        console.log(userId)
-        return response?.data
+    return await get(`/user/${userId}`)
 }
 
 export const updateTripAvatar = async (tripId, imageUrl) => {
@@ -373,13 +216,5 @@ export const updateTripAvatar = async (tripId, imageUrl) => {
         "image": imageUrl
     }
 
-    const backendResponse = await backend.post(
-        '/trip/image',
-        request,
-        { headers: {"Access-Control-Allow-Origin": "*"}, withCredentials: true }
-    ).catch((error) => {
-        return null
-    });
-
-    return backendResponse?.data
+    return await post('/trip/image', request)
 }

@@ -1,13 +1,8 @@
 import { loadCalendarEvents, loadMapKml } from "../../../BackendService";
 
 export default class ExportInformationLoader {
-    
     constructor(requestData){
       this.requestData = requestData;
-      // this.exports = {
-      //   'calendar' : async () => {await loadCalendarEvents(this.requestData)},
-      //   'map' : async () => {await loadMapKml(this.requestData)}
-      // }
     }
 
     getInformationToExport = async (exportType) => {

@@ -6,7 +6,7 @@ import {Link as ReachLink, useNavigate} from "react-router-dom";
 import validator from 'validator'
 import { ErrorBadge} from "../login/ErrorBadge";
 import { SuccessBadge } from "../login/SuccessBadge";
-import { logIn, singUp, googleLogIn } from "../../BackendService";
+import { logIn, signUp, googleLogIn } from "../../BackendService";
 import { isEmpty } from "lodash"
 import { GoogleLoginInput } from "../login/GoogleLogin/GoogleLogin";
 
@@ -59,21 +59,21 @@ export const SignUpPage = (props) => {
                 isClosable: true,
               })
         } else {
-            const response = await singUp(email, password, username)
+            const response = await signUp(email, password, username)
 
             if(response.status !== "Error"){
-                const response = await logIn(email, password)
-                if(!response) {
+                const logInResponse = await logIn(email, password)
+                if (logInResponse?.status !== "Error") {
+                    props.changeAvatar(username, "")
+                    navigate("/mis-calculos")
+                } else {
                     toast({
                         title: 'Error',
-                        description: "Se completo el registro pero no se puedo ingresar, intente ingresar mediante el login",
+                        description: logInResponse.msg,
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
                       })
-                } else {
-                    props.changeAvatar(username, "")
-                    navigate("/mis-calculos")
                 }
             } else {
                 toast({
@@ -89,12 +89,17 @@ export const SignUpPage = (props) => {
 
     const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
         const response = await googleLogIn(gmail,gpassword, gusername)
-        console.log(response)
-        if(!response) {
-            console.log("No ha sido posible iniciar sesión con Google.")
-        } else {
+        if (response?.status !== "Error") {
             props.changeAvatar(gusername, avatar)
             navigate("/mis-calculos")
+        } else {
+            toast({
+                title: 'Error',
+                description: response.msg,
+                status: 'error',
+                duration: 5000,
+                isClosable: true
+            })
         }
     }
     const passwordStrength = (value) => {

@@ -50,7 +50,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
 
         const response = await saveNewTrip(tripName, calculatorInputs, null)
         
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Borrador guardado!',
                 description: `Su borrador a ${calculatorInputs.city.name} fue guardado correctamente`,
@@ -63,8 +63,8 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
             navigate("/mis-calculos",{state: {defaultIndex: 1}})
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar el borrador',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

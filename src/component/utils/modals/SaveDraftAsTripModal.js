@@ -30,9 +30,9 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
     const saveEdition = async () => {
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
-                title: 'Guardao!',
+                title: 'Guardado!',
                 description: `Su viaje ${calculatorName} fue generado correctamente`,
                 variant: 'top-accent',
                 status: 'success',
@@ -43,8 +43,8 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
             navigate("/mis-calculos")
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo generar su viaje',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

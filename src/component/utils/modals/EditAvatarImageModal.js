@@ -34,7 +34,7 @@ export const EditAvatarImageModal = (props) => {
 
         const response = await updateTripAvatar(props.calculationId, imageUrl)
 
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Imagen guardada!',
                 description: `Tu nueva imagen fue guardado correctamente`,
@@ -46,8 +46,8 @@ export const EditAvatarImageModal = (props) => {
             props.setHasNewImage(true)
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar tu nueva imagen',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

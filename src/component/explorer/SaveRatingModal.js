@@ -23,7 +23,7 @@ export const SaveRatingModal = (props) => {
 
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
-        if (response) {
+        if (response?.status !== "Error") {
             toast({
                 title: 'Opinión guardada!',
                 description: `Su opinión a ${props.calculatorName} fue guardado correctamente`,
@@ -35,8 +35,8 @@ export const SaveRatingModal = (props) => {
             props.setNewRating(true)
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar su opinión',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,

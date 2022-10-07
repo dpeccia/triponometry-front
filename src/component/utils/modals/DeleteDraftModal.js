@@ -30,7 +30,7 @@ export const DeleteDraftModal = (props) => {
 
     const handleConfirmClick = async () => {
         const response = await deleteDraft(props.draftId)
-        if(!isNull(response)){
+        if (response?.status !== "Error") {
             toast({
                 title: 'Borrador eliminado con exito!',
                 description: `Su borrador ${props.calculationName} fue eliminado correctamente`,
@@ -43,8 +43,8 @@ export const DeleteDraftModal = (props) => {
             props.fetchCalculations()
         } else {
             toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo eliminar el borrador',
+                title: 'Error',
+                description: response.msg,
                 variant: 'top-accent',
                 status: 'error',
                 isClosable: true,
