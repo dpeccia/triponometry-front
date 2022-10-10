@@ -23,17 +23,9 @@ const NavigationMenu = () =>
         </Link>
     </>
 
-
 const NavBar = (props) =>{
-
-    const navigate = useNavigate()
-
     const handleLogClick = () => {
-        if (!isEmpty(props.username)){
-            props.logout()
-        } else {
-            navigate("/")
-        }
+        props.logout()
     }
 
     return(
@@ -47,7 +39,7 @@ const NavBar = (props) =>{
                 </MenuButton>
                 <MenuList>
                     <MenuItem onClick={handleLogClick}>
-                        {isEmpty(props.username) ? "Iniciar Sesion" : "Cerrar sesión" }
+                        Cerrar sesión
                     </MenuItem>
                 </MenuList>
             </Menu>

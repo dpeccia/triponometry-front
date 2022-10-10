@@ -1,56 +1,41 @@
-import { Box, VStack, Heading, Flex, Image, Center, Input, Button, Link , Text, HStack, useToast, Tooltip} from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
-import { PasswordInput } from "../login/PasswordInput"
-import { FcGoogle } from "react-icons/fc";
+import {Flex, Button, Link, Text, HStack, useToast, Divider, Image} from "@chakra-ui/react"
+import {useEffect, useState} from "react"
 import {Link as ReachLink, useNavigate} from "react-router-dom";
-import validator from 'validator'
-import { ErrorBadge} from "../login/ErrorBadge";
-import { SuccessBadge } from "../login/SuccessBadge";
 import { logIn, signUp, googleLogIn } from "../../BackendService";
-import { isEmpty } from "lodash"
 import { GoogleLoginInput } from "../login/GoogleLogin/GoogleLogin";
+import {EmailInput} from "../login/EmailInput";
+import {PasswordInput} from "../login/PasswordInput";
+import {ConfirmPassInput} from "../login/ConfirmPassInput";
+import {UsernameInput} from "../login/UsernameInput";
+
+
 
 export const SignUpPage = (props) => {
-
-    const navigate = useNavigate()
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [email, setEmail] = useState("")
-    const [username, setUsername] = useState("")
-    const [isEmailValid, setIsEmailValid] = useState(false)
-    const [isPasswordValid, setIsPasswordValid] = useState(false)
-    const [arePassEquals, setArePassEquals] = useState(false)
     const toast = useToast()
+    const navigate = useNavigate()
+
+    const [username, setUsername] = useState("")
+    const [usernameValid, setUsernameValid] = useState(false)
+
+    const [email, setEmail] = useState("")
+    const [emailValid, setEmailValid] = useState(false)
+
+    const [password, setPassword] = useState("")
+    const [passwordValid, setPasswordValid] = useState(false)
+
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [confirmPasswordValid, setConfirmPasswordValid] = useState(false)
 
     useEffect(() => {
-        setArePassEquals(checkEquals(confirmPassword))
+        setConfirmPasswordValid(false)
     }, [password])
-
-    const handlePasswordChange = (value) => {
-        setPassword(value)
-        passwordStrength(value)
-    }
-
-    const handleConfirmPasswordChange = (value) => {
-        setConfirmPassword(value)
-        setArePassEquals(checkEquals(value))
-    }
-
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value)
-        setIsEmailValid(checkEmail(event.target.value))
-    }
-
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value)
-    }
 
     const handleRegistrarmeClick = async () => {
         const params = {}
         params.email = email
         params.password = password
 
-        if (!isPasswordValid || !arePassEquals || !isEmailValid){
+        if (!passwordValid || !confirmPasswordValid || !emailValid || !usernameValid){
             toast({
                 title: 'Error',
                 description: "Corrija los campos en rojo y vuelva intentar",
@@ -102,89 +87,36 @@ export const SignUpPage = (props) => {
             })
         }
     }
-    const passwordStrength = (value) => {
- 
-        if (validator.isStrongPassword(value, {
-          minLength: 8, minLowercase: 1,
-          minUppercase: 1, minNumbers: 1, minSymbols: 0
-        })) {
-          setIsPasswordValid(true)
-        } else {
-            setIsPasswordValid(false)
-        }
-    }
-
-    const checkEquals = (value) => {
-        return password === value
-    }
-
-    const checkEmail = (value) => {
-        return (/\S+@\S+\.\S+/.test(value));
-    }
-
-    const emailErrorBadge = () => {
-        if(!isEmailValid && !isEmpty(email)){
-            return(
-                <ErrorBadge msg="Inserte un Email valido"/>
-            )
-        }
-    }
-
-    const passwordBagde = () => {
-        if(!isEmpty(password)){
-            if(!isPasswordValid ){
-                return(
-                    <ErrorBadge msg="Contraseña Insegura" 
-                            message={["8 Caracteres mínimos", "Un número", "Una mayúscula", "Una minúscula"]}/>
-                )
-            } else {
-                return (
-                    <SuccessBadge msg="Contraseña Segura" />
-                )
-            }
-        }
-        
-    }
-
-    const confirmPasswordBagde = () => {
-        if(!isEmpty(confirmPassword)) {
-            if(arePassEquals) {
-                return (
-                    <SuccessBadge msg="Las contraseñas coinciden"/>
-                )
-            } else {
-                return (
-                    <ErrorBadge msg="Las contraseñas no coinciden"/>
-                )
-            }
-        }
-    }
 
     return(
-        <Box borderWidth='2px' borderRadius='lg' overflow='hidden' margin='auto'>
-            <Center>
-                <VStack ml={3} mr={3} mb={3}>
-                    <Flex m={2} mr={8} justifyContent='flex-start' alignContent='center'>
-                        <Image w='30vh' src={'../nombre-triponometry.png'} />
-                    </Flex>      
-                    <Heading fontSize='2xl' mb={2}> Crear cuenta </Heading>
-                    <Input  mb={1} onChange={handleEmailChange} placeholder="Email" isInvalid={!isEmailValid && !isEmpty(email)} type='email'/>
-                    {emailErrorBadge()}
-                    <Input  mb={1} onChange={handleUsernameChange} placeholder="Username"/>
-                    <PasswordInput handleChange={handlePasswordChange} isInvalid={!isPasswordValid && password !== ""}/>
-                    {passwordBagde()}
-                    <PasswordInput handleChange={handleConfirmPasswordChange} placeholder='Confirmar Contraseña'/>
-                    {confirmPasswordBagde()}
-                    <Button size='sm' bg='red.400' color='white' shadow='lg' w='full' mb={2} type='submit' isDisabled={!isPasswordValid || !arePassEquals || !isEmailValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
-                    <GoogleLoginInput action="signUp" actionTitle="Registrarme con Google" logInAction={handleGoogleLogInClick}/>
-                    <HStack>   
-                        <Text fontSize='xs'>Ya tenés cuenta?</Text> 
-                        <Link as={ReachLink} to="/" fontSize='xs' fontWeight='bold'>
-                            Inicia sesión
-                        </Link>
-                    </HStack>
-                </VStack>
-            </Center>
-        </Box>
+        <>
+            <Image src={'../esquina-derecha.png'} h='300px' position='absolute' zIndex='-1' right='0' top='0'/>
+            <Image src={'../esquina-izquierda.png'} h='300px' position='absolute' zIndex='-1' left='0' bottom='4'/>
+            <Flex direction='column' grow={2} justifyContent='center' alignItems='center'>
+                <Flex direction='column' minW='440px' h='550px' borderWidth='1px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
+                    <Flex justifyContent='center'>
+                        <Image w='300px' mb={3} src={'../nombre-triponometry.png'} />
+                    </Flex>
+                    <Divider borderColor='blackAlpha.300' marginBottom={2}/>
+                    <Flex direction='column' grow={2}>
+                        <Text as='b' align='center' my={2} fontSize='3xl' color='#E87288'> Crear cuenta </Text>
+                        <UsernameInput setUsername={setUsername} setUsernameValid={setUsernameValid}/>
+                        <EmailInput email={email} setEmail={setEmail} setEmailValid={setEmailValid}/>
+                        <PasswordInput password={password} setPassword={setPassword} passwordValid={passwordValid} setPasswordValid={setPasswordValid}/>
+                        <ConfirmPassInput password={password} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} confirmPasswordValid={confirmPasswordValid} setConfirmPasswordValid={setConfirmPasswordValid}/>
+                    </Flex>
+                    <Flex direction='column' alignItems='center'>
+                        <Button size='sm' variant='solid' bg='#EFB4BF' shadow='md' w='full' mt={3} mb={2} type='submit' isDisabled={!passwordValid || !confirmPasswordValid || !emailValid || !usernameValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
+                        <GoogleLoginInput action="signUp" actionTitle="Registrarme con Google" logInAction={handleGoogleLogInClick}/>
+                        <HStack mt={2}>
+                            <Text fontSize='xs'>¿Ya tenés cuenta?</Text>
+                            <Link as={ReachLink} to="/sign-in" fontSize='xs' fontWeight='bold'>
+                                Inicia sesión
+                            </Link>
+                        </HStack>
+                    </Flex>
+                </Flex>
+            </Flex>
+        </>
     )
 }

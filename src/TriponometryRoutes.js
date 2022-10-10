@@ -14,10 +14,17 @@ import {NotFound} from "./component/pages/NotFoundPage";
 import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage";
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
+import {isEqual} from "lodash";
 
 export function TriponometryRoutes() {
     const [username , setUsername] = useState("")
     const [pfp, setPfp] = useState("")
+    const [showHeader, setShowHeader] = useState(false)
+
+    useEffect(() => {
+        const path = window.location.pathname
+        setShowHeader(!(isEqual(path, '/') || isEqual(path,'/sign-in') || isEqual(path,'/sign-up')))
+    })
 
     useEffect(() => {
         checkLogin()
@@ -47,11 +54,11 @@ export function TriponometryRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout}/>}>
+                <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout} showHeader={showHeader}/>}>
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
-                    <Route path="nuevo" exact element={<NewCalculationPage edit={false} beginInput='CITY' />}/>
+                    <Route path="nuevo" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<NewCalculationPage edit={false} beginInput='CITY' />))}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
                     <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage />))}/>
                     <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<PlantillaCalculationPage />))}/>
