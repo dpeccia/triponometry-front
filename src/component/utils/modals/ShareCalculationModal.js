@@ -23,7 +23,7 @@ export const ShareCalculationModal = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
-    const [value, setValue] = useState(`http://localhost:3000/explorar/${props.calculationId}`)
+    const [value, setValue] = useState(window.location.origin + `/explorar/${props.calculationId}`)
     const { hasCopied, onCopy } = useClipboard(value)
 
     return (

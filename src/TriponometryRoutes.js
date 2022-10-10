@@ -14,6 +14,7 @@ import {NotFound} from "./component/pages/NotFoundPage";
 import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage";
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
+import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
 import {isEqual} from "lodash";
 
 export function TriponometryRoutes() {
@@ -25,6 +26,7 @@ export function TriponometryRoutes() {
         const path = window.location.pathname
         setShowHeader(!(isEqual(path, '/') || isEqual(path,'/sign-in') || isEqual(path,'/sign-up')))
     })
+    const [isBusy, setIsBusy] = useState(true)
 
     useEffect(() => {
         checkLogin()
@@ -32,6 +34,7 @@ export function TriponometryRoutes() {
                 if (response?.status !== "Error") {         
                     changeAvatar(response.mail, "")
                 }
+                setIsBusy(false)
             })
     }, []);
 
@@ -51,6 +54,9 @@ export function TriponometryRoutes() {
         return username !== ""
     }
 
+    if (isBusy){
+        return <SpinnerSearchBox/>
+    }
     return (
         <BrowserRouter>
             <Routes>
