@@ -4,10 +4,10 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react"
 import {updateTripAvatar} from "../../../BackendService";
-import {useToast} from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 
 export const EditAvatarImageModal = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
 
     const [imageUrl, setImageUrl] = useState("")
     const [error, setError] = useState(false)
@@ -37,23 +37,11 @@ export const EditAvatarImageModal = (props) => {
         const response = await updateTripAvatar(props.calculationId, imageUrl)
 
         if (response?.status !== "Error") {
-            toast({
-                title: 'Imagen guardada!',
-                description: `Tu nueva imagen fue guardado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
+            showSuccessToast('Imagen guardada!', `Tu nueva imagen fue guardado correctamente`)
             props.onClose()
             props.setHasNewImage(true)
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

@@ -7,13 +7,13 @@ import {
     ModalHeader,
     Text,
 } from "@chakra-ui/react";
-import {useToast} from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import {unarchivedTrip} from "../../../BackendService";
 import {useNavigate} from "react-router";
 import { useState } from "react";
 
 export const UnarchiveCalculationModal = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -21,23 +21,11 @@ export const UnarchiveCalculationModal = (props) => {
         setIsLoading(true)
         const response = await unarchivedTrip(props.calculationId)
         if (response?.status !== "Error") {
-            toast({
-                title: 'Viaje desarchivado!',
-                description: `Su viaje a ${props.calculationName} fue desarchivado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
+            showSuccessToast('Viaje desarchivado!', `Su viaje a ${props.calculationName} fue desarchivado correctamente`)
             props.onClose()
             navigate("/mis-calculos")
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

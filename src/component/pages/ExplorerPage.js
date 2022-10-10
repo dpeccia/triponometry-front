@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react';
 import { getAllTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { ExplorerTable } from '../explorer/ExplorerTable';
-import { useToast } from '@chakra-ui/toast';
-
+import { useToast } from '../utils/useToast';
 
 export const ExplorerPage = () => {
-    const toast = useToast()
+    const [_, showErrorToast] = useToast()
     const [trips, setTrips] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
 
@@ -32,13 +31,7 @@ export const ExplorerPage = () => {
             setTrips(tripsMapped)
             setIsLoading(false)
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
     }
 

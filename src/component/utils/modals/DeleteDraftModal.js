@@ -7,11 +7,11 @@ import {
     ModalCloseButton, ModalContent, ModalFooter,
     ModalHeader,
     ModalOverlay, Text,
-    useDisclosure,
-    useToast
+    useDisclosure
 } from "@chakra-ui/react";
 import { useState } from "react"
 import { deleteDraft } from "../../../BackendService";
+import { useToast } from "../useToast";
 
 export const DeleteDraftModal = (props) => {
     const OverlayOne = () => (
@@ -21,7 +21,7 @@ export const DeleteDraftModal = (props) => {
         />
     )
 
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [isLoading, setIsLoading] = useState(false)
@@ -30,24 +30,11 @@ export const DeleteDraftModal = (props) => {
         setIsLoading(true)
         const response = await deleteDraft(props.draftId)
         if (response?.status !== "Error") {
-            toast({
-                title: 'Borrador eliminado con exito!',
-                description: `Su borrador ${props.calculationName} fue eliminado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+            showSuccessToast('Borrador eliminado con exito!', `Su borrador ${props.calculationName} fue eliminado correctamente`)
             onClose()
             props.fetchCalculations()
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

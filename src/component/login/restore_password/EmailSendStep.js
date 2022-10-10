@@ -1,11 +1,11 @@
 import { Button, ModalBody, ModalFooter, Text, Box, FormControl } from "@chakra-ui/react";
 import { useState } from "react";
 import { sendRestorePasswordEmail } from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../../utils/useToast";
 import { EmailInput } from "../EmailInput";
 
 export const EmailSendStep = ({ next, restoreInfo, setRestoreInfo, closeModal }) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [emailValid, setEmailValid] = useState(false)
     
@@ -14,23 +14,10 @@ export const EmailSendStep = ({ next, restoreInfo, setRestoreInfo, closeModal })
         const response = await sendRestorePasswordEmail(restoreInfo.email)
         
         if (response?.status !== "Error") {
-            toast({
-                title: 'Email enviado!',
-                description: `Se ha enviado un email con un codigo de verificacion a: ${restoreInfo.email}`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+            showSuccessToast('Email enviado!', `Se ha enviado un email con un codigo de verificacion a: ${restoreInfo.email}`)
             next('SECOND_STEP')
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

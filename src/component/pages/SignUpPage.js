@@ -1,4 +1,4 @@
-import {Flex, Button, Link, Text, HStack, useToast, Divider, Image} from "@chakra-ui/react"
+import {Flex, Button, Link, Text, HStack, Divider, Image} from "@chakra-ui/react"
 import {useEffect, useState} from "react"
 import {Link as ReachLink, useNavigate} from "react-router-dom";
 import { logIn, signUp, googleLogIn } from "../../BackendService";
@@ -7,11 +7,10 @@ import {EmailInput} from "../login/EmailInput";
 import {PasswordInput} from "../login/PasswordInput";
 import {ConfirmPassInput} from "../login/ConfirmPassInput";
 import {UsernameInput} from "../login/UsernameInput";
-
-
+import { useToast } from "../utils/useToast";
 
 export const SignUpPage = (props) => {
-    const toast = useToast()
+    const [_, showErrorToast] = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
@@ -37,13 +36,7 @@ export const SignUpPage = (props) => {
         params.password = password
 
         if (!passwordValid || !confirmPasswordValid || !emailValid || !usernameValid){
-            toast({
-                title: 'Error',
-                description: "Corrija los campos en rojo y vuelva intentar",
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-              })
+            showErrorToast("Corrija los campos en rojo y vuelva intentar")
         } else {
             setIsLoading(true)
             const response = await signUp(email, password, username)
@@ -54,22 +47,10 @@ export const SignUpPage = (props) => {
                     props.changeAvatar(username, "")
                     navigate("/mis-calculos")
                 } else {
-                    toast({
-                        title: 'Error',
-                        description: logInResponse.msg,
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                      })
+                    showErrorToast(logInResponse.msg)
                 }
             } else {
-                toast({
-                    title: 'Error',
-                    description: response.msg,
-                    status: 'error',
-                    duration: 5000,
-                    isClosable: true
-                })
+                showErrorToast(response.msg)
             }
             setIsLoading(false)
         }
@@ -81,13 +62,7 @@ export const SignUpPage = (props) => {
             props.changeAvatar(gusername, avatar)
             navigate("/mis-calculos")
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                status: 'error',
-                duration: 5000,
-                isClosable: true
-            })
+            showErrorToast(response.msg)
         }
     }
 

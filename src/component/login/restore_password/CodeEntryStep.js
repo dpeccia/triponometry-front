@@ -2,12 +2,12 @@ import { Button, ModalBody, ModalFooter, HStack, Text, Box, FormControl } from "
 import { useState } from "react";
 import { isEmpty, size } from "lodash";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../../utils/useToast";
 import { verifyRestorePasswordCode } from "../../../BackendService";
 
 export const CodeEntryStep = ({ next, restoreInfo, setRestoreInfo, closeModal }) => {
     const [error, setError] = useState(false)
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [isCodeValid, setIsCodeValid] = useState(false)
     
@@ -17,24 +17,11 @@ export const CodeEntryStep = ({ next, restoreInfo, setRestoreInfo, closeModal })
         
         if (response?.status !== "Error") {
             setError(false)
-            toast({
-                title: 'Código verificado',
-                description: `El código que insertaste es válido`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+            showSuccessToast('Código verificado', 'El código que insertaste es válido')
             next('THIRD_STEP')
         } else {
             setError(true)
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

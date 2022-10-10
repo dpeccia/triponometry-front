@@ -1,6 +1,6 @@
 import { Button, ModalBody, ModalFooter, Text, Box, FormControl } from "@chakra-ui/react";
 import { useState } from "react";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../../utils/useToast";
 import { recoverPassword } from "../../../BackendService";
 import { PasswordInput } from "../PasswordInput";
 import { ConfirmPassInput } from "../ConfirmPassInput";
@@ -11,7 +11,7 @@ export const RestorePasswordStep = ({ restoreInfo, closeModal }) => {
     const [passwordValid, setPasswordValid] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState("")
     const [confirmPasswordValid, setConfirmPasswordValid] = useState(false)
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -23,23 +23,10 @@ export const RestorePasswordStep = ({ restoreInfo, closeModal }) => {
         const response = await recoverPassword(restoreInfo, password)
         
         if (response?.status !== "Error") {
-            toast({
-                title: 'Contraseña modificada',
-                description: `Modificaste la contraseña del email ${restoreInfo.email}`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+            showSuccessToast('Contraseña modificada', `Modificaste la contraseña del email ${restoreInfo.email}`)
             closeModal()
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

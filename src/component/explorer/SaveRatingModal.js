@@ -10,11 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react"
 import {saveNewRating} from "../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../utils/useToast";
 import {RatingButtons} from "../utils/RatingButtons";
 
 export const SaveRatingModal = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [score, setScore] = useState(0)
     const [hasDone, setHasDone] = useState('')
     const [review, setReview] = useState('')
@@ -25,23 +25,11 @@ export const SaveRatingModal = (props) => {
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
         if (response?.status !== "Error") {
-            toast({
-                title: 'Opinión guardada!',
-                description: `Su opinión a ${props.calculatorName} fue guardado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
+            showSuccessToast('Opinión guardada!', `Su opinión a ${props.calculatorName} fue guardado correctamente`)
             props.onClose()
             props.setNewRating(true)
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }
@@ -77,7 +65,7 @@ export const SaveRatingModal = (props) => {
                                 <FormLabel>Escribir tu opinión</FormLabel>
                                 <Textarea
                                     onChange={(e) => setReview(e.target.value)}
-                                    placeholder='¿Queres decirnos algo más sobre tu cualificación?'
+                                    placeholder='¿Queres decirnos algo más sobre tu calificación?'
                                     size='sm'
                                 />
                             </FormControl>

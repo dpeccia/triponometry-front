@@ -13,11 +13,11 @@ import { useState } from "react"
 import { FaSave } from "react-icons/fa";
 import { isEmpty } from "lodash";
 import { saveNewTrip } from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 
 export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
 
     const OverlayOne = () => (
@@ -53,24 +53,11 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
         const response = await saveNewTrip(tripName, calculatorInputs, null)
         
         if (response?.status !== "Error") {
-            toast({
-                title: 'Borrador guardado!',
-                description: `Su borrador a ${calculatorInputs.city.name} fue guardado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+            showSuccessToast('Borrador guardado!', `Su borrador a ${calculatorInputs.city.name} fue guardado correctamente`)
             onClose()
             navigate("/mis-calculos",{state: {defaultIndex: 1}})
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }

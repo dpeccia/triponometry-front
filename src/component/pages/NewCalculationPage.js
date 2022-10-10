@@ -10,7 +10,7 @@ import { NewCalculationResult } from "../calculator/output/NewCalculationResult"
 import { calculateNewTrip} from "../../BackendService";
 import { isNull } from "lodash";
 import { Heading } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../utils/useToast";
 import { EditCalculationResult } from "../calculator/output/EditCalculationResult";
 import { EditBadge } from "../utils/EditBadge";
 import { PlantillaBadge } from "../utils/PlantillaBadge";
@@ -18,9 +18,8 @@ import { getRandomImage } from "../utils/AdHandler";
 import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 
-
 export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo }) => {
-    const toast = useToast()
+    const [_, showErrorToast] = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
     const [image, setImage] = useState(getRandomImage())
 
@@ -69,13 +68,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
             setTimeout(() => setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount }), 3000)
         } else {
             setShowResults(false)
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
     }
 

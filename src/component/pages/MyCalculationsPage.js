@@ -7,10 +7,10 @@ import { getMyTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { take } from 'lodash';
 import { useLocation } from 'react-router';
-import { useToast } from '@chakra-ui/toast';
+import { useToast } from '../utils/useToast';
 
 export const MyCalculationsPage = () => {
-    const toast = useToast()
+    const [_, showErrorToast] = useToast()
     const {state} = useLocation()
     const defaultIndex = state ? state.defaultIndex : 0
     const [calculations, setCalculations] = useState(null);
@@ -48,13 +48,7 @@ export const MyCalculationsPage = () => {
             setIsLoading(false)
         } else {
             setIsLoading(false)
-            toast({
-                title: 'Error',
-                description: tripsResponse.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(tripsResponse.msg)
         }
     }
 

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react"
 import { archiveTrip } from "../../../BackendService";
-import {useToast} from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import {RiInboxArchiveFill} from "react-icons/ri";
 
 export const ArchiveCalculationModal = (props) => {
@@ -22,7 +22,7 @@ export const ArchiveCalculationModal = (props) => {
         />
     )
 
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [isLoading, setIsLoading] = useState(false)
@@ -31,23 +31,11 @@ export const ArchiveCalculationModal = (props) => {
         setIsLoading(true)
         const response = await archiveTrip(props.calculationId)
         if (response?.status !== "Error") {
-            toast({
-                title: 'Viaje archivado!',
-                description: `Su viaje a ${props.calculationName} fue archivado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
+            showSuccessToast('Viaje archivado!', `Su viaje a ${props.calculationName} fue archivado correctamente`)
             props.fetchCalculations()
             onClose()
         } else {
-            toast({
-                title: 'Error',
-                description: response.msg,
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
         setIsLoading(false)
     }
