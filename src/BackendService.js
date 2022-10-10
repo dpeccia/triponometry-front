@@ -218,3 +218,21 @@ export const updateTripAvatar = async (tripId, imageUrl) => {
 
     return await post('/trip/image', request)
 }
+
+export const sendRestorePasswordEmail = async (email) => {
+    const request = { "email": email }
+
+    return await post('/user/password/email', request)
+}
+
+export const verifyRestorePasswordCode = async (restoreInfo) => {
+    const request = { "email": restoreInfo.email, "code": restoreInfo.verificationCode }
+
+    return await post('/user/password/verify', request)
+}
+
+export const recoverPassword = async (restoreInfo, newPassword) => {
+    const request = { "email": restoreInfo.email, "code": restoreInfo.verificationCode, "newPassword": newPassword }
+
+    return await post('/user/password/recover', request)
+}

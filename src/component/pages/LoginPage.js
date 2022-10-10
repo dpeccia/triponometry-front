@@ -6,6 +6,9 @@ import { GoogleLoginInput } from "../login/GoogleLogin/GoogleLogin";
 import {EmailInput} from "../login/EmailInput";
 import {PasswordInput} from "../login/PasswordInput";
 import {useNavigate} from "react-router";
+import { RestorePasswordModal } from "../utils/modals/RestorePasswordModal";
+import { ModalOverlay } from "@chakra-ui/modal";
+import { useDisclosure } from "@chakra-ui/hooks";
 
 export const LoginPage = (props) => {
 
@@ -14,6 +17,21 @@ export const LoginPage = (props) => {
     const [email, setEmail] = useState("")
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const OverlayOne = () => (
+        <ModalOverlay
+            bg='blackAlpha.300'
+            backdropFilter='blur(5px)'
+        />
+    )
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [overlay, setOverlay] = useState(<OverlayOne />)
+
+    const handleRestorePasswordClick = () => {
+        setOverlay(<OverlayOne />)
+        onOpen()
+    }
 
     const handleLogInClick = async () => {
         setIsLoading(true)
@@ -59,7 +77,7 @@ export const LoginPage = (props) => {
                         <Flex direction='column' grow={2}>
                             <EmailInput email={email} setEmail={setEmail} setEmailValid={null}/>
                             <PasswordInput setPassword={setPassword} setPasswordValid={null}/>
-                            <Button alignSelf='flex-start' variant='link' size='xs' fontWeight='normal' mt={1} onClick={() => navigate("/help-password")}>
+                            <Button alignSelf='flex-start' variant='link' size='xs' fontWeight='normal' mt={1} onClick={handleRestorePasswordClick}>
                                 ¿Olvidaste tu contraseña?
                             </Button>
                             <Box mt={3}>
@@ -75,6 +93,7 @@ export const LoginPage = (props) => {
                     </Flex>
                 </Flex>
             </Flex>
+            <RestorePasswordModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} overlay={overlay}/>
         </>
     )
 }
