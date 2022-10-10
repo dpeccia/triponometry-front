@@ -25,8 +25,10 @@ export const ArchiveCalculationModal = (props) => {
     const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const archiveCalculation = async () => {
+        setIsLoading(true)
         const response = await archiveTrip(props.calculationId)
         if (response?.status !== "Error") {
             toast({
@@ -47,6 +49,7 @@ export const ArchiveCalculationModal = (props) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -74,7 +77,7 @@ export const ArchiveCalculationModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Si, archivar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Si, archivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

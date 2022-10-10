@@ -12,6 +12,7 @@ import {UsernameInput} from "../login/UsernameInput";
 
 export const SignUpPage = (props) => {
     const toast = useToast()
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -44,6 +45,7 @@ export const SignUpPage = (props) => {
                 isClosable: true,
               })
         } else {
+            setIsLoading(true)
             const response = await signUp(email, password, username)
 
             if(response.status !== "Error"){
@@ -69,6 +71,7 @@ export const SignUpPage = (props) => {
                     isClosable: true
                 })
             }
+            setIsLoading(false)
         }
     }
 
@@ -106,7 +109,7 @@ export const SignUpPage = (props) => {
                         <ConfirmPassInput password={password} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} confirmPasswordValid={confirmPasswordValid} setConfirmPasswordValid={setConfirmPasswordValid}/>
                     </Flex>
                     <Flex direction='column' alignItems='center'>
-                        <Button size='sm' variant='solid' bg='#EFB4BF' shadow='md' w='full' mt={3} mb={2} type='submit' isDisabled={!passwordValid || !confirmPasswordValid || !emailValid || !usernameValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
+                        <Button isLoading={isLoading} size='sm' variant='solid' bg='#EFB4BF' shadow='md' w='full' mt={3} mb={2} type='submit' isDisabled={!passwordValid || !confirmPasswordValid || !emailValid || !usernameValid} onClick={handleRegistrarmeClick}> Registrarme </Button>
                         <GoogleLoginInput action="signUp" actionTitle="Registrarme con Google" logInAction={handleGoogleLogInClick}/>
                         <HStack mt={2}>
                             <Text fontSize='xs'>¿Ya tenés cuenta?</Text>

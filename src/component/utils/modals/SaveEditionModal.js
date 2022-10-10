@@ -33,6 +33,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [tripName, setTripName] = useState("")
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onNameInputChange = (e) => {
         setError(false)
@@ -50,7 +51,8 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 setError(true)
                 return
             } 
-    
+
+            setIsLoading(true)
             const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
@@ -74,6 +76,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 })
             }
         } else {
+            setIsLoading(true)
             const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
@@ -97,6 +100,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 })
             }
         }
+        setIsLoading(false)
     }
 
     const addName = () => {
@@ -145,7 +149,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isDisabled={isNull(radioValue)} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
+                        <Button isLoading={isLoading} isDisabled={isNull(radioValue)} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

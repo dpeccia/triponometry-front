@@ -26,8 +26,10 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const saveEdition = async () => {
+        setIsLoading(true)
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
         if (response?.status !== "Error") {
@@ -50,6 +52,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -76,7 +79,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

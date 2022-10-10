@@ -31,6 +31,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [tripName, setTripName] = useState("")
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onNameInputChange = (e) => {
         setError(false)
@@ -48,6 +49,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
             return
         } 
 
+        setIsLoading(true)
         const response = await saveNewTrip(tripName, calculatorInputs, null)
         
         if (response?.status !== "Error") {
@@ -70,6 +72,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -101,7 +104,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

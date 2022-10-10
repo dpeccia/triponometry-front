@@ -11,6 +11,7 @@ export const EditAvatarImageModal = (props) => {
 
     const [imageUrl, setImageUrl] = useState("")
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onCancel = () => {
         setError(false)
@@ -32,6 +33,7 @@ export const EditAvatarImageModal = (props) => {
             return
         }
 
+        setIsLoading(true)
         const response = await updateTripAvatar(props.calculationId, imageUrl)
 
         if (response?.status !== "Error") {
@@ -53,6 +55,7 @@ export const EditAvatarImageModal = (props) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -82,7 +85,7 @@ export const EditAvatarImageModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onCancel} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveImageUrl}> Si, editar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveImageUrl}> Si, editar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

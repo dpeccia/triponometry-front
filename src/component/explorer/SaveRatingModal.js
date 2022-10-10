@@ -18,9 +18,10 @@ export const SaveRatingModal = (props) => {
     const [score, setScore] = useState(0)
     const [hasDone, setHasDone] = useState('')
     const [review, setReview] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const saveRating = async () => {
-
+        setIsLoading(true)
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
         if (response?.status !== "Error") {
@@ -42,6 +43,7 @@ export const SaveRatingModal = (props) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -83,7 +85,7 @@ export const SaveRatingModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

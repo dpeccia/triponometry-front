@@ -10,13 +10,15 @@ import {
 import {useToast} from "@chakra-ui/toast";
 import {unarchivedTrip} from "../../../BackendService";
 import {useNavigate} from "react-router";
+import { useState } from "react";
 
 export const UnarchiveCalculationModal = (props) => {
     const toast = useToast()
     const navigate = useNavigate()
-
+    const [isLoading, setIsLoading] = useState(false)
 
     const unarchivedCalculation = async () => {
+        setIsLoading(true)
         const response = await unarchivedTrip(props.calculationId)
         if (response?.status !== "Error") {
             toast({
@@ -37,6 +39,7 @@ export const UnarchiveCalculationModal = (props) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -54,7 +57,7 @@ export const UnarchiveCalculationModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

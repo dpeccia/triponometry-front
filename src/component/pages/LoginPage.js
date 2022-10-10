@@ -13,8 +13,10 @@ export const LoginPage = (props) => {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleLogInClick = async () => {
+        setIsLoading(true)
         const response = await logIn(email,password)
         if (response?.status !== "Error") {
             props.changeAvatar(response.username, "")
@@ -22,6 +24,7 @@ export const LoginPage = (props) => {
         } else {
             setError(response.msg)
         }
+        setIsLoading(false)
     }
 
     const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
@@ -65,7 +68,7 @@ export const LoginPage = (props) => {
                         </Flex>
                         <Flex direction='row' my={3}>
                             <GoogleLoginInput action="logIn" actionTitle="Iniciar sesión con Google" logInAction={handleGoogleLogInClick}/>
-                            <Button size='sm' variant='solid' bg='#EFB4BF' shadow='md' ml={3} onClick={handleLogInClick}>
+                            <Button isLoading={isLoading} size='sm' variant='solid' bg='#EFB4BF' shadow='md' ml={3} onClick={handleLogInClick}>
                                 Iniciar Sesión
                             </Button>
                         </Flex>

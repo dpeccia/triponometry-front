@@ -10,9 +10,7 @@ import {
     useDisclosure,
     useToast
 } from "@chakra-ui/react";
-import { isNull } from "lodash";
 import { useState } from "react"
-import { useNavigate } from "react-router";
 import { deleteDraft } from "../../../BackendService";
 
 export const DeleteDraftModal = (props) => {
@@ -24,11 +22,12 @@ export const DeleteDraftModal = (props) => {
     )
 
     const toast = useToast()
-    const navigate = useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleConfirmClick = async () => {
+        setIsLoading(true)
         const response = await deleteDraft(props.draftId)
         if (response?.status !== "Error") {
             toast({
@@ -50,6 +49,7 @@ export const DeleteDraftModal = (props) => {
                 isClosable: true,
             })
         }
+        setIsLoading(false)
     }
 
     return (
@@ -77,7 +77,7 @@ export const DeleteDraftModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Si, eliminar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Si, eliminar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
