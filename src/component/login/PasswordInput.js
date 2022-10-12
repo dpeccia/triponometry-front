@@ -23,7 +23,7 @@ export const PasswordInput = (props) => {
     return(
         <>
             <InputGroup mt={2} mb={1}>
-                <Input placeholder='Contraseña' type={viewPass ? 'text' : 'password'} onChange={handlePasswordChange}/>
+                <Input placeholder={props.placeholder ? props.placeholder : 'Contraseña'} type={viewPass ? 'text' : 'password'} onChange={handlePasswordChange}/>
                 {props.passwordValid &&
                     <InputLeftElement pointerEvents='none' children={<CheckIcon color='green.400'/>}/>}
                 <InputRightElement>

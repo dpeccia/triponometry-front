@@ -5,7 +5,7 @@ import { Header } from "./component/utils/Header";
 function App(props) {
     const showHeader = () => {
         if (props.showHeader)
-            return <Header username={props.username} pfp={props.pfp} logout={props.logout} />
+            return <Header username={props.username} pfp={props.pfp} logout={props.logout} isGoogle={props.isGoogle}/>
     }
 
     return (

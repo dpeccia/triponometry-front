@@ -37,7 +37,7 @@ export const LoginPage = (props) => {
         setIsLoading(true)
         const response = await logIn(email,password)
         if (response?.status !== "Error") {
-            props.changeAvatar(response.username, "")
+            props.changeAvatar(response.username, "", false)
             navigate("/mis-calculos")
         } else {
             setError(response.msg)
@@ -48,7 +48,7 @@ export const LoginPage = (props) => {
     const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
         const response = await googleLogIn(gmail,gpassword, gusername)
         if (response?.status !== "Error") {
-            props.changeAvatar(gusername, avatar)
+            props.changeAvatar(gusername, avatar, true)
             navigate("/mis-calculos")
         } else {
             setError(response.msg)

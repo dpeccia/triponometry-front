@@ -21,6 +21,8 @@ export function TriponometryRoutes() {
     const [username , setUsername] = useState("")
     const [pfp, setPfp] = useState("")
     const [showHeader, setShowHeader] = useState(false)
+    const [isGoogle, setIsGoogle] = useState(false)
+
 
     useEffect(() => {
         const path = window.location.pathname
@@ -32,7 +34,7 @@ export function TriponometryRoutes() {
         checkLogin()
             .then((response) => {
                 if (response?.status !== "Error") {         
-                    changeAvatar(response.mail, "")
+                    changeAvatar(response.username, "", response.googleAccount)
                 }
                 setIsBusy(false)
             })
@@ -42,12 +44,13 @@ export function TriponometryRoutes() {
     const handleLogout = async () => {
         const response = await logout()
         if (response?.status !== "Error")
-            changeAvatar("", "")
+            changeAvatar("", "", false)
     }
     
-    const changeAvatar = (username, pfp) => {
+    const changeAvatar = (username, pfp, isGoogle) => {
         setUsername(username)
         setPfp(pfp)
+        setIsGoogle(isGoogle)
     }
 
     const isLoggedIn = () =>{
@@ -60,7 +63,7 @@ export function TriponometryRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout} showHeader={showHeader}/>}>
+                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout} showHeader={showHeader}/>}>
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>

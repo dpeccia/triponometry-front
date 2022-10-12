@@ -219,6 +219,15 @@ export const updateTripAvatar = async (tripId, imageUrl) => {
     return await post('/trip/image', request)
 }
 
+export const updateUserPassword = async (oldPassword, newPassword) => {
+    const request = {
+       "newPassword": newPassword,
+       "oldPassword": oldPassword
+    }
+
+    return await post('/user/password', request)
+}
+
 export const sendRestorePasswordEmail = async (email) => {
     const request = { "email": email }
 

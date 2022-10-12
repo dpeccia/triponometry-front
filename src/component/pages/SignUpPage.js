@@ -44,7 +44,7 @@ export const SignUpPage = (props) => {
             if(response.status !== "Error"){
                 const logInResponse = await logIn(email, password)
                 if (logInResponse?.status !== "Error") {
-                    props.changeAvatar(username, "")
+                    props.changeAvatar(username, "", response.googleAccount)
                     navigate("/mis-calculos")
                 } else {
                     showErrorToast(logInResponse.msg)
@@ -59,7 +59,7 @@ export const SignUpPage = (props) => {
     const handleGoogleLogInClick = async (gmail,gpassword, avatar, gusername) => {
         const response = await googleLogIn(gmail,gpassword, gusername)
         if (response?.status !== "Error") {
-            props.changeAvatar(gusername, avatar)
+            props.changeAvatar(gusername, avatar, response.googleAccount)
             navigate("/mis-calculos")
         } else {
             showErrorToast(response.msg)
