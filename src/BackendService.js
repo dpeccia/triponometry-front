@@ -160,15 +160,16 @@ export const signUp = async (email, password, username) => {
     return await post('/user', request)
 }
 
-export const loadCalendarEvents = async (eventsList) => {
+export const loadCalendarEvents = async (eventsList, startDate) => {
+
     const calendarRequest = {
         "events": eventsList,
         "startDate": {
-          "day": 29,
+          "day": startDate.getDate(),
           "hour": 0,
           "minute": 0,
-          "month": 7,
-          "year": 2022
+          "month": startDate.getMonth(),
+          "year": startDate.getFullYear()
         }
     };
 

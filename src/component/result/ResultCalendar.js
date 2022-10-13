@@ -11,6 +11,7 @@ import getEventBackgroundColor from './calendar/CalendarDayColorMap';
 import {ExportButton} from "./export/ExportButton";
 import {Box, Flex} from "@chakra-ui/react";
 
+
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
@@ -27,29 +28,41 @@ export var ResultCalendar = ({events,daysAmount}) => {
     []
   )
 
-  const onDoubleClickEvent = useCallback((calEvent) => {
-     window.setTimeout(() => {
-      window.alert(calEvent.title)
-    }, 250)
-  }, [])
-
   const myEvents = events.map(event => {
     return new CalendarEvent(event.name,event.start,event.end);
   });
+
+  const myDates = new Set()
+
+  const loadMyDates = () => {
+    myEvents.map(event => {
+      myDates.add(event.start.toDateString())
+      myDates.add(event.end.toDateString())
+    })
+  }
+
+  loadMyDates()
+  
+  const getDateNumber = (stringDate) => Array.from(myDates).indexOf(stringDate)+1
 
   return (
       <Flex direction='column' minW='735px'>
           <Box h='606px'>
               <Calendar
                   localizer={localizer}
-                  views={[Views.AGENDA,Views.WEEK,Views.DAY,Views.MONTH]}
+                  views={[Views.AGENDA]}
+                  toolbar={false}
                   eventPropGetter={eventPropGetter}
                   defaultView={Views.AGENDA}
                   events={myEvents}
                   defaultDate={myEvents[0].start}
-                  onDoubleClickEvent={onDoubleClickEvent}
+                  formats={
+                    {
+                      agendaDateFormat : (date, culture, localizer) => "DIA " + getDateNumber(date.toDateString())
+                    }
+                  }
                   length={daysAmount}
-                  min={myEvents[0].start}
+                  messages={{date : "DÍA", time: "HORARIO", event: "ACTIVIDAD"}}
               />
           </Box>
           <ExportButton exportType='calendar' requestData={events} fileType='text/plain' fileName='myCalendar.ics' downloadText='Descargar calendario'/>

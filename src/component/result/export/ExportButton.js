@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
 import ExportInformationLoader from "./ExportInformationLoader";
 import {BiDownload} from "react-icons/bi";
+import { SelectStartDateCalendarModal } from "../../utils/modals/SelectStartDateCalendarModal";
 import { useState } from "react";
 
 export const ExportButton = (props) => {
@@ -9,6 +10,12 @@ export const ExportButton = (props) => {
 
   var myFile = '';
   var exportInformationLoader = new ExportInformationLoader(props.requestData);
+
+  const { isOpen: isOpenSelectStartDateCalendar, onOpen: onOpenSelectStartDateCalendar, onClose: onCloseSelectStartDateCalendar } = useDisclosure()
+
+  const handleSelectStartDateCalendarClick = () => {
+    onOpenSelectStartDateCalendar()
+}
 
   const downloadFile = async () => {
     setIsLoading(true)
@@ -27,7 +34,13 @@ export const ExportButton = (props) => {
   };
 
   return (
+    props.exportType === 'map' ?
     <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={downloadFile} mt={3} bg='#EFB4BF'>{props.downloadText}</Button>
+    :
+    <>
+    <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={handleSelectStartDateCalendarClick} mt={3} bg='#EFB4BF'>{props.downloadText}</Button>
+    <SelectStartDateCalendarModal isOpen={isOpenSelectStartDateCalendar} onOpen={onOpenSelectStartDateCalendar} onClose={onCloseSelectStartDateCalendar} exportInfoLoader={exportInformationLoader} onConfirm={downloadFile}></SelectStartDateCalendarModal>
+    </>
   );
   
 }
