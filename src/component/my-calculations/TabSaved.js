@@ -1,10 +1,9 @@
 import CalculationCard from "./CalculationCard";
 import {Flex} from '@chakra-ui/react'
-import { FaEdit, FaArchive, FaShareSquare } from 'react-icons/fa'; 
-import {EditCalculationModal} from "../utils/modals/EditCalculationModal";
 import {ArchiveCalculationModal} from "../utils/modals/ArchiveCalculationModal";
 import {ShareCalculationModal} from "../utils/modals/ShareCalculationModal";
 import {useNavigate} from "react-router";
+import {EditCalculationIconModal} from "../utils/modals/EditCalculationIconModal";
 
 const TabSaved = (props) => {
     const navigate = useNavigate()
@@ -14,7 +13,7 @@ const TabSaved = (props) => {
         return (
             <CalculationCard key={calculation.id} calculation={calculation} navigateTo={() => navigate(`/mis-calculos/${calculation.id}`)} background='white' onHover={onHover}>
                 <ShareCalculationModal calculationId={calculation.id}/>
-                <EditCalculationModal calculationId={calculation.id} calculationName={calculation.name}/>
+                <EditCalculationIconModal calculationId={calculation.id} calculationName={calculation.name}/>
                 <ArchiveCalculationModal fetchCalculations={props.fetchCalculations} calculationId={calculation.id} calculationName={calculation.name}/>
             </CalculationCard>
         );

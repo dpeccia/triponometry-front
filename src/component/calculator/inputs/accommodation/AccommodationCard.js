@@ -1,18 +1,14 @@
-import {Box, Flex, useToast} from "@chakra-ui/react";
+import {Box, Flex} from "@chakra-ui/react";
 import {MdHotel} from "react-icons/md";
+import { useToast } from "../../../utils/useToast";
 
 export const AccommodationCard = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, _] = useToast()
 
-    const onClick =  () => {
+    const onClick = () => {
         props.setSelectedAccommodation(props.accommodation)
         props.setStepFinished(true)
-        toast({
-            title: 'Alojamiento seleccionado!',
-            description: `Elegiste ${props.accommodation.name}`,
-            status: 'success',
-            duration: 1800,
-        })
+        showSuccessToast('Alojamiento seleccionado!', `Elegiste ${props.accommodation.name}`)
     }
     return (
         <Box as='button' m={1} w='95%' borderWidth='1px' borderRadius='lg' overflow='hidden' onClick={onClick}>

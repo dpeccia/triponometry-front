@@ -5,68 +5,39 @@ import {
     ModalBody,
     ModalCloseButton, ModalContent, ModalFooter,
     ModalHeader,
-    ModalOverlay, FormControl, FormLabel, Flex,
-    useDisclosure, RadioGroup, Radio, HStack, Textarea
+    FormControl, FormLabel, Flex,
+    RadioGroup, Radio, HStack, Textarea
 } from "@chakra-ui/react";
 import { useState } from "react"
-import { BiCommentAdd } from "react-icons/bi";
-import {saveNewRating} from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
-import {RatingButtons} from "../RatingButtons";
+import {saveNewRating} from "../../BackendService";
+import { useToast } from "../utils/useToast";
+import {RatingButtons} from "../utils/RatingButtons";
 
 export const SaveRatingModal = (props) => {
-    const toast = useToast()
-
-    const OverlayOne = () => (
-        <ModalOverlay
-            bg='blackAlpha.300'
-            backdropFilter='blur(5px)'
-        />
-    )
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [overlay, setOverlay] = useState(<OverlayOne />)
-
+    const [showSuccessToast, showErrorToast] = useToast()
     const [score, setScore] = useState(0)
     const [hasDone, setHasDone] = useState('')
     const [review, setReview] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const saveRating = async () => {
-
+        setIsLoading(true)
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
-        if (response) {
-            toast({
-                title: 'Opinión guardada!',
-                description: `Su opinión a ${props.calculatorName} fue guardado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-            onClose()
+        if (response?.status !== "Error") {
+            showSuccessToast('Opinión guardada!', `Su opinión a ${props.calculatorName} fue guardado correctamente`)
+            props.onClose()
             props.setNewRating(true)
         } else {
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar su opinión',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
+        setIsLoading(false)
     }
 
     return (
         <>
-            <Button rightIcon={<BiCommentAdd />} variant='solid' alignSelf='flex-end' ml={2}
-                    onClick={() => {
-                        setOverlay(<OverlayOne />)
-                        onOpen()
-                    }}>
-                Opinar
-            </Button>
-            <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
-                {overlay}
+            <Modal isCentered isOpen={props.isOpen} onClose={props.onClose} size='lg'>
+                {props.overlay}
                 <ModalContent>
                     <ModalHeader> Opinar sobre {props.calculatorName}  </ModalHeader>
                     <Divider />
@@ -94,15 +65,15 @@ export const SaveRatingModal = (props) => {
                                 <FormLabel>Escribir tu opinión</FormLabel>
                                 <Textarea
                                     onChange={(e) => setReview(e.target.value)}
-                                    placeholder='¿Queres decirnos algo más sobre tu cualificación?'
+                                    placeholder='¿Queres decirnos algo más sobre tu calificación?'
                                     size='sm'
                                 />
                             </FormControl>
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
+                        <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

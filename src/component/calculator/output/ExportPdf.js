@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactToPrint from 'react-to-print';
 import '../../utils/ExportPdfStyles.css';
-import {  Img } from "@chakra-ui/react";
+import {Flex, Text} from "@chakra-ui/react";
 import { Showprint } from './Showprint';
+import {GrDocumentPdf} from "react-icons/gr";
+import {Icon} from "@chakra-ui/icons";
 
 export const PdfButtonExport1 = (props) => {
 
@@ -30,7 +32,13 @@ export const PdfButtonExport1 = (props) => {
   return (
     <>
       <ReactToPrint
-        trigger={() => {return <Img src={'../../exportPdf.png'}></Img>;}}
+        trigger={() => {
+            return (
+                <Flex alignItems='center'>
+                    <Icon as={GrDocumentPdf} boxSize={3} mr={3}/>
+                    <Text>Descargar cálculo</Text>
+                </Flex>
+            );}}
         content={() => componentRef.current}
       />
       {map ? <Showprint refPropWithAnotherName={componentRef} inputs={props.calculatorInputs} outputs={props.calculatorOutputs}/> : <h1></h1>}

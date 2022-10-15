@@ -1,14 +1,14 @@
-import {Flex, Heading, Alert, AlertTitle, AlertIcon, AlertDescription, Box} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import { ActivitiesSearchBar } from "./ActivitiesSearchBar";
 import { ActivitiesList } from "./ActivitiesList";
 import { useActivities } from "./useActivities";
 import {NextButton} from "../../../utils/NextButton";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../../../utils/useToast";
 import { filter, includes, lowerCase, size } from "lodash";
 
 export const ActivitiesInputs = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [selectedActivities, setSelectedActivities] = useState(props.calculatorInputs.activities);
     const [stepFinished, setStepFinished] = useState(false);
     const [activities, searchActivities] = useActivities('', props.calculatorInputs.accommodation);
@@ -32,68 +32,17 @@ export const ActivitiesInputs = (props) => {
             setStepFinished(false)
         }
         setSelectedActivities(filter(selectedActivities, (selectedActivity) => lowerCase(selectedActivity.name) !== lowerCase(activity.name)))
-        toast({
-            title: 'Actividad eliminada!',
-            description: `Eliminaste ${activity.name}`,
-            status: 'success',
-            duration: 1800,
-        })
-    }
-
-    const alert = (count) =>{
-        if(count < 10 && count >= 7)
-        {
-            return(
-                <Alert status='warning' mb={2}>
-                    <AlertIcon />
-                    <Box>
-                        <AlertTitle>Llegando al limite de actividades</AlertTitle>
-                        <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
-                    </Box>
-                </Alert>
-            )
-        }
-        if(count == 10)
-        {
-            return (
-                <Alert status='error' mb={2}>
-                    <AlertIcon />
-                    <Box>
-                        <AlertTitle>¡Llegaste al límite de actividades!</AlertTitle>
-                        <AlertDescription>Por favor, continua con el siguiente paso</AlertDescription>
-                    </Box>
-                </Alert>
-            )
-        }
-        return(
-            <Alert status='info' mb={2}>
-                <AlertIcon />
-                <Box>
-                    <AlertTitle>Actividades restantes</AlertTitle>
-                    <AlertDescription>Te quedan {10 - count} actividades por elegir!</AlertDescription>
-                </Box>
-            </Alert>
-        )
+        showSuccessToast('Actividad eliminada!', `Eliminaste ${activity.name}`)
     }
     
     const addActivity = (activity) => {
-        if(size(selectedActivities) < 10)
+        if(size(selectedActivities) < 9)
         {
             setSelectedActivities([...selectedActivities, activity])
             setStepFinished(true)
-            toast({
-                title: 'Actividad seleccionada!',
-                description: `Elegiste ${activity.name}`,
-                status: 'success',
-                duration: 1800,
-            })
+            showSuccessToast('Actividad seleccionada!', `Elegiste ${activity.name}`)
         } else {
-            toast({
-                title: 'Estas en el límite!',
-                description: `Si querés realizar esta actividad es necesario eliminar otra`,
-                status: 'error',
-                duration: 1800,
-            })
+            showErrorToast('Estas en el límite!', `Si querés realizar esta actividad es necesario eliminar otra`)
         }
     }
 
@@ -109,9 +58,8 @@ export const ActivitiesInputs = (props) => {
                 addActivity={addActivity}
                 removeActivity={removeActivity}
                 activityWasAlreadySelected={activityWasAlreadySelected}
-                disableAdd={size(selectedActivities) == 10}
+                disableAdd={size(selectedActivities) == 9}
                 />
-            {alert(size(selectedActivities))}
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}

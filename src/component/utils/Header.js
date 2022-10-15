@@ -1,6 +1,7 @@
 import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
-import {Link as ReachLink, useNavigate} from "react-router-dom";
+import {Link as ReachLink} from "react-router-dom";
 import { isEmpty } from "lodash";
+import { ChangePasswordModal } from "./modals/ChangePasswordModal";
 
 const Logo = () =>
     <Flex minW='500px' ml='15px' p={1} justifyContent='flex-start' alignItems='center'>
@@ -23,16 +24,16 @@ const NavigationMenu = () =>
         </Link>
     </>
 
-
 const NavBar = (props) =>{
 
-    const navigate = useNavigate()
-
     const handleLogClick = () => {
-        if (!isEmpty(props.username)){
-            props.logout()
-        } else {
-            navigate("/")
+        props.logout()
+    }
+
+    const changePassItem = () =>
+    {
+        if(!isEmpty(props.username) && !props.isGoogle){
+            return <ChangePasswordModal/>
         }
     }
 
@@ -46,8 +47,9 @@ const NavBar = (props) =>{
                     </WrapItem>
                 </MenuButton>
                 <MenuList>
+                    {changePassItem()}
                     <MenuItem onClick={handleLogClick}>
-                        {isEmpty(props.username) ? "Iniciar Sesion" : "Cerrar sesión" }
+                        Cerrar sesión
                     </MenuItem>
                 </MenuList>
             </Menu>
@@ -59,5 +61,5 @@ export const Header = (props) =>
     <Flex direction='row' justifyContent='flex-start'>
         <Logo/>
         <Spacer/>
-        <NavBar username={props.username} pfp={props.pfp} logout={props.logout}/>
+        <NavBar username={props.username} pfp={props.pfp} logout={props.logout} isGoogle={props.isGoogle}/>
     </Flex>

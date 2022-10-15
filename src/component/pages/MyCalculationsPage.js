@@ -7,8 +7,10 @@ import { getMyTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { take } from 'lodash';
 import { useLocation } from 'react-router';
+import { useToast } from '../utils/useToast';
 
 export const MyCalculationsPage = () => {
+    const [_, showErrorToast] = useToast()
     const {state} = useLocation()
     const defaultIndex = state ? state.defaultIndex : 0
     const [calculations, setCalculations] = useState(null);
@@ -30,7 +32,7 @@ export const MyCalculationsPage = () => {
         setCalculations(null)
         setIsLoading(true)
         const tripsResponse = await getMyTrips()
-        if(tripsResponse) {
+        if (tripsResponse?.status !== "Error") {
             const myTrips = {
                 saved: tripsResponse.active.map((activeTrip) => toCalculationCardInfo(activeTrip)),
                 drafts: tripsResponse.draft.map((draftTrip) => {
@@ -44,7 +46,10 @@ export const MyCalculationsPage = () => {
             }
             setCalculations(myTrips)
             setIsLoading(false)
-        } 
+        } else {
+            setIsLoading(false)
+            showErrorToast(tripsResponse.msg)
+        }
     }
 
     useEffect(() => {

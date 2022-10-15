@@ -1,11 +1,12 @@
-import {Box, Flex, useToast} from "@chakra-ui/react";
+import {Box, Flex} from "@chakra-ui/react";
 import {FiMapPin} from "react-icons/fi";
 import { getWikidataImage } from "../../../../api/wikidata";
 import { useState } from "react";
 import { Spinner } from "@chakra-ui/spinner";
+import { useToast } from "../../../utils/useToast";
 
 export const CityCard = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, _] = useToast()
     const [showSpinner, setShowSpinner] = useState(false)
 
     const onClick = async () => {
@@ -18,12 +19,7 @@ export const CityCard = (props) => {
         props.setSelectedCity(cityWithImage)
         props.setStepFinished(true)
         setShowSpinner(false)
-        toast({
-            title: 'Ciudad seleccionada!',
-            description: `Elegiste ${props.city.name}`,
-            status: 'success',
-            duration: 1800,
-        })
+        showSuccessToast('Ciudad seleccionada!', `Elegiste ${props.city.name}`)
     }
 
     const showChargingSpinner = () => {

@@ -25,7 +25,6 @@ export const GoogleLoginInput = (props) => {
         const googleProfile = res.profileObj
         const password = googleProfile.givenName[0].toUpperCase() + googleProfile.googleId + googleProfile.familyName.substr(-1).toLowerCase()
         props.logInAction(googleProfile.email,password,googleProfile.imageUrl, googleProfile.name)
-        console.log(res)
     };
 
     const onFailure = (err) => {
@@ -42,7 +41,7 @@ export const GoogleLoginInput = (props) => {
             autoLoad={false}
             isSignedIn={true}
             render={renderProps => (
-                <Button onClick={renderProps.onClick} mr={1} size='sm' leftIcon={<FcGoogle/>} fontWeight='normal' shadow='md' w={action === "signUp" ? 'full' : ''}>{actionTitle}</Button>
+                <Button onClick={renderProps.onClick} size='sm' leftIcon={<FcGoogle/>} fontWeight='normal' colorScheme='gray' shadow='md' w={action === "signUp" ? 'full' : ''}>{actionTitle}</Button>
             )}
         />
         </>

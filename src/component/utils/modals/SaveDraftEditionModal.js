@@ -11,11 +11,11 @@ import {
 import { useState } from "react"
 import { FaSave } from "react-icons/fa";
 import {  saveNewEdition } from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 
 export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs, isDisabled }) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const OverlayOne = () => (
         <ModalOverlay
@@ -26,30 +26,20 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const saveEdition = async () => {
+        setIsLoading(true)
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
-        if (response) {
-            toast({
-                title: 'Editado!',
-                description: `Su borrador ${calculatorName} fue editado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+        if (response?.status !== "Error") {
+            showSuccessToast('Editado!', `Su borrador ${calculatorName} fue editado correctamente`)
             onClose()
             navigate("/mis-calculos", {state: {defaultIndex: 1}})
         } else {
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo editar su borrador',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
+        setIsLoading(false)
     }
 
     return (
@@ -73,7 +63,7 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

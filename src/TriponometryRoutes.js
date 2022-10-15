@@ -14,44 +14,60 @@ import {NotFound} from "./component/pages/NotFoundPage";
 import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage";
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
+import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
+import {isEqual} from "lodash";
 
 export function TriponometryRoutes() {
     const [username , setUsername] = useState("")
     const [pfp, setPfp] = useState("")
+    const [showHeader, setShowHeader] = useState(false)
+    const [isGoogle, setIsGoogle] = useState(false)
+
 
     useEffect(() => {
-        const response = checkLogin()
+        const path = window.location.pathname
+        setShowHeader(!(isEqual(path, '/') || isEqual(path,'/sign-in') || isEqual(path,'/sign-up')))
+    })
+    const [isBusy, setIsBusy] = useState(true)
+
+    useEffect(() => {
+        checkLogin()
             .then((response) => {
-                if(response){         
-                    changeAvatar(response.mail, "")
+                if (response?.status !== "Error") {         
+                    changeAvatar(response.username, "", response.googleAccount)
                 }
+                setIsBusy(false)
             })
     }, []);
 
     
     const handleLogout = async () => {
         const response = await logout()
-        if(response)
-            changeAvatar("", "")
+        if (response?.status !== "Error")
+            changeAvatar("", "", false)
     }
     
-    const changeAvatar = (username, pfp) => {
+    const changeAvatar = (username, pfp, isGoogle) => {
         setUsername(username)
         setPfp(pfp)
+        setIsGoogle(isGoogle)
     }
 
     const isLoggedIn = () =>{
         return username !== ""
     }
 
+    if (isBusy){
+        return <SpinnerSearchBox/>
+    }
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<App username={username} pfp={pfp} logout={handleLogout}/>}>
+                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout} showHeader={showHeader}/>}>
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
-                    <Route path="nuevo" exact element={<NewCalculationPage edit={false} beginInput='CITY' />}/>
+                    <Route path="nuevo" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<NewCalculationPage edit={false} beginInput='CITY' />))}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
                     <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage />))}/>
                     <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<PlantillaCalculationPage />))}/>

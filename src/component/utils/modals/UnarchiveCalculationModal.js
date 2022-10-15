@@ -5,64 +5,35 @@ import {
     ModalBody,
     ModalCloseButton, ModalContent, ModalFooter,
     ModalHeader,
-    ModalOverlay, Text,
-    useDisclosure
+    Text,
 } from "@chakra-ui/react";
-import {useState} from "react"
-import {useToast} from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import {unarchivedTrip} from "../../../BackendService";
-import {RiInboxUnarchiveFill} from "react-icons/ri";
 import {useNavigate} from "react-router";
+import { useState } from "react";
 
 export const UnarchiveCalculationModal = (props) => {
-    const OverlayOne = () => (
-        <ModalOverlay
-            bg='blackAlpha.300'
-            backdropFilter='blur(5px)'
-        />
-    )
-
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const unarchivedCalculation = async () => {
+        setIsLoading(true)
         const response = await unarchivedTrip(props.calculationId)
-        if(response) {
-            toast({
-                title: 'Viaje desarchivado!',
-                description: `Su viaje a ${props.calculationName} fue desarchivado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-            onClose()
+        if (response?.status !== "Error") {
+            showSuccessToast('Viaje desarchivado!', `Su viaje a ${props.calculationName} fue desarchivado correctamente`)
+            props.onClose()
             navigate("/mis-calculos")
         } else {
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo desarchivar su viaje',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
+        setIsLoading(false)
     }
 
     return (
         <>
-            <Button rightIcon={<RiInboxUnarchiveFill />} bg='#94A1AA' variant='solid' alignSelf='flex-end'
-                    onClick={() => {
-                        setOverlay(<OverlayOne />)
-                        onOpen()
-                    }}
-            >
-                Desarchivar cálculo
-            </Button>
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
-                {overlay}
+            <Modal isCentered isOpen={props.isOpen} onClose={props.onClose}>
+                {props.overlay}
                 <ModalContent>
                     <ModalHeader> Desarchivar cálculo </ModalHeader>
                     <Divider />
@@ -73,8 +44,8 @@ export const UnarchiveCalculationModal = (props) => {
                         </Text>
                     </ModalBody>
                     <ModalFooter>
-                        <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
+                        <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
