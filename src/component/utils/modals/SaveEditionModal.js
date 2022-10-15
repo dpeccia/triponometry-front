@@ -12,13 +12,13 @@ import { useState } from "react"
 import { FaSave } from "react-icons/fa";
 import { isEmpty, isNull } from "lodash";
 import { saveNewTrip, saveNewEdition } from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 import { Radio } from "@chakra-ui/radio";
 import { RadioGroup } from "@chakra-ui/radio";
 
 export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs }) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const [radioValue, setRadioValue] = useState(null)
 
@@ -33,6 +33,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [tripName, setTripName] = useState("")
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onNameInputChange = (e) => {
         setError(false)
@@ -50,53 +51,30 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 setError(true)
                 return
             } 
-    
+
+            setIsLoading(true)
             const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
             
-            if (response) {
-                toast({
-                    title: 'Viaje guardado!',
-                    description: `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`,
-                    variant: 'top-accent',
-                    status: 'success',
-                    isClosable: true,
-                })
-    
+            if (response?.status !== "Error") {
+                showSuccessToast('Viaje guardado!', `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                toast({
-                    title: 'Ocurrio un error',
-                    description: 'No se pudo guardar su viaje',
-                    variant: 'top-accent',
-                    status: 'error',
-                    isClosable: true,
-                })
+                showErrorToast(response.msg)
             }
         } else {
+            setIsLoading(true)
             const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
             
-            if (response) {
-                toast({
-                    title: 'Editado!',
-                    description: `Su viaje a ${calculatorInputs.city.name} fue editado correctamente`,
-                    variant: 'top-accent',
-                    status: 'success',
-                    isClosable: true,
-                })
-    
+            if (response?.status !== "Error") {
+                showSuccessToast('Editado!', `Su viaje a ${calculatorInputs.city.name} fue editado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                toast({
-                    title: 'Ocurrio un error',
-                    description: 'No se pudo editar su viaje',
-                    variant: 'top-accent',
-                    status: 'error',
-                    isClosable: true,
-                })
+                showErrorToast(response.msg)
             }
         }
+        setIsLoading(false)
     }
 
     const addName = () => {
@@ -145,7 +123,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isDisabled={isNull(radioValue)} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
+                        <Button isLoading={isLoading} isDisabled={isNull(radioValue)} variant='solid' bg='#EFB4BF' onClick={saveEdition}> Guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

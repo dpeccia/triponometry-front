@@ -7,13 +7,11 @@ import {
     ModalCloseButton, ModalContent, ModalFooter,
     ModalHeader,
     ModalOverlay, Text,
-    useDisclosure,
-    useToast
+    useDisclosure
 } from "@chakra-ui/react";
-import { isNull } from "lodash";
 import { useState } from "react"
-import { useNavigate } from "react-router";
 import { deleteDraft } from "../../../BackendService";
+import { useToast } from "../useToast";
 
 export const DeleteDraftModal = (props) => {
     const OverlayOne = () => (
@@ -23,33 +21,22 @@ export const DeleteDraftModal = (props) => {
         />
     )
 
-    const toast = useToast()
-    const navigate = useNavigate()
+    const [showSuccessToast, showErrorToast] = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [overlay, setOverlay] = useState(<OverlayOne />)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleConfirmClick = async () => {
+        setIsLoading(true)
         const response = await deleteDraft(props.draftId)
-        if(!isNull(response)){
-            toast({
-                title: 'Borrador eliminado con exito!',
-                description: `Su borrador ${props.calculationName} fue eliminado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+        if (response?.status !== "Error") {
+            showSuccessToast('Borrador eliminado con exito!', `Su borrador ${props.calculationName} fue eliminado correctamente`)
             onClose()
             props.fetchCalculations()
         } else {
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo eliminar el borrador',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
+        setIsLoading(false)
     }
 
     return (
@@ -77,7 +64,7 @@ export const DeleteDraftModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Si, eliminar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Si, eliminar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

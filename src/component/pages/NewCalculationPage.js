@@ -1,4 +1,4 @@
-import {Flex, Spinner} from "@chakra-ui/react";
+import {Flex, Box, Button, Image} from "@chakra-ui/react";
 import { useState } from "react";
 import { CalculatorComponent } from "../calculator/CalculatorComponent";
 import {CityInput} from "../calculator/inputs/city/CityInput";
@@ -8,16 +8,24 @@ import { HorariosInput } from "../calculator/inputs/horarios/HorariosInput";
 import { MobilityInput } from "../calculator/inputs/mobility/MobilityInput";
 import { NewCalculationResult } from "../calculator/output/NewCalculationResult";
 import { calculateNewTrip} from "../../BackendService";
-import { isNull, isEqual } from "lodash";
+import { isNull } from "lodash";
 import { Heading } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../utils/useToast";
 import { EditCalculationResult } from "../calculator/output/EditCalculationResult";
 import { EditBadge } from "../utils/EditBadge";
 import { PlantillaBadge } from "../utils/PlantillaBadge";
+import { getRandomImage } from "../utils/AdHandler";
+import { useEffect } from "react";
+import { ArrowRightIcon } from "@chakra-ui/icons";
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original }) => {
-    const toast = useToast()
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo }) => {
+    const [_, showErrorToast] = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
+    const [image, setImage] = useState(getRandomImage())
+
+    useEffect(() =>{
+        setImage(getRandomImage())
+    },[])
 
     const setInitialState = () => {
         if (edit || status === 'DRAFT' || original) {
@@ -43,42 +51,24 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
 
     const [showResults, setShowResults] = useState(false)
     const [calculatorOutputs, setCalculatorOutputs] = useState(null)
+    const [showAd, setShowAd] = useState(false)
+
+    const closeAd = () => {
+        setShowAd(false)
+    }
 
     const calculateTrip = async () => {
+        setShowAd(true)
         setCalculatorOutputs(null)
         setShowResults(true)
 
         const response = await calculateNewTrip(calculatorInputs)
         
-        if (response) {
-            setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount })
+        if (response?.status !== "Error") {
+            setTimeout(() => setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount }), 3000)
         } else {
             setShowResults(false)
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo calcular su nuevo viaje',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
-        }
-    }
-
-
-    if(showResults) {
-        if(isNull(calculatorOutputs)) {
-            return (
-                <Flex direction='column' minHeight='600px' w='100%' justify='center' align='center'>
-                    <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='red.300' size='xl' mb='6'/>
-                    <Heading size='md'>Calculando tu viaje ideal en {calculatorInputs.city.name}...</Heading>
-                </Flex>
-            );
-        }
-
-        if(edit) {
-            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
-        } else {
-            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
+            showErrorToast(response.msg)
         }
     }
 
@@ -90,6 +80,40 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         }
     }
 
+
+    if(showResults) {
+        if(showAd) {
+            return (
+                <Flex direction='column' minHeight='600px' w='100%' justify='center' align='center'>
+                    <Heading size='lg' mb={2}>Calculando tu viaje ideal en {calculatorInputs.city.name}...</Heading>
+                    <iframe 
+                        width="1200" 
+                        height="630" 
+                        src={image+"?&autoplay=1"} 
+                        title="Publicidad" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <Button mt={2}
+                        rightIcon={<ArrowRightIcon />}
+                        isLoading={isNull(calculatorOutputs)}
+                        colorScheme='pink'
+                        variant='outline'
+                        onClick={closeAd}
+                    >
+                        Ver viaje
+                    </Button>
+                </Flex>
+            );
+        }
+
+        if(edit) {
+            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo}/>
+        } else {
+            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
+        }
+    }
     return (
         <>
             <CalculatorComponent handleClick={changeInputType} calculatorInputs={calculatorInputs} setCalculatorInputs={setCalculatorInputs} calculateTrip={calculateTrip} 
@@ -100,5 +124,5 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
                 {inputSpecificComponent}
             </Flex>
         </>
-    );
+    )
 }

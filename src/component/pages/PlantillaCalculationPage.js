@@ -18,7 +18,7 @@ export const PlantillaCalculationPage = () => {
     }
 
     const onFinish = (response) => {
-        if(response){
+        if (response?.status !== "Error") {
             setCalculation(response)
             setIsLoading(false)
         } else {
@@ -31,6 +31,6 @@ export const PlantillaCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: `http://localhost:3000/explorar/${idCalculation}`}}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: window.location.origin + `/explorar/${idCalculation}`}}/>) : <NotFound/>
     )
 }

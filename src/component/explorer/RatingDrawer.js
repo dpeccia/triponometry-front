@@ -1,4 +1,4 @@
-import {Button, Flex, Input, ModalOverlay, useDisclosure} from "@chakra-ui/react";
+import {Flex} from "@chakra-ui/react";
 import {
     Drawer,
     DrawerBody,
@@ -7,21 +7,10 @@ import {
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
-import {useState} from "react";
-import {BiCommentDetail} from "react-icons/bi";
 import {RatingCard} from "./RatingCard";
 import {RatingSummary} from "./RatingSummary";
 
 export const RatingDrawer = (props) => {
-    const OverlayOne = () => (
-        <ModalOverlay
-            bg='blackAlpha.300'
-            backdropFilter='blur(5px)'
-        />
-    )
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [overlay, setOverlay] = useState(<OverlayOne />)
 
     const ratingCards = props.reviews.map((review) => {
         return(
@@ -30,26 +19,20 @@ export const RatingDrawer = (props) => {
                 score={review.stars}
                 hasDone={review.done}
                 review={review.description}
+                userId={review.user}
             />
         )
     })
 
     return (
         <>
-            <Button rightIcon={<BiCommentDetail />} variant='solid' alignSelf='flex-end' ml={2}
-                    onClick={() => {
-                        setOverlay(<OverlayOne />)
-                        onOpen()
-                    }}>
-                Ver opiniones
-            </Button>
             <Drawer
-                isOpen={isOpen}
+                isOpen={props.isOpen}
                 placement='right'
-                onClose={onClose}
+                onClose={props.onClose}
                 size='sm'
             >
-                {overlay}
+                {props.overlay}
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />

@@ -4,11 +4,11 @@ import { ActivitiesSearchBar } from "./ActivitiesSearchBar";
 import { ActivitiesList } from "./ActivitiesList";
 import { useActivities } from "./useActivities";
 import {NextButton} from "../../../utils/NextButton";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../../../utils/useToast";
 import { filter, includes, lowerCase, size } from "lodash";
 
 export const ActivitiesInputs = (props) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const [selectedActivities, setSelectedActivities] = useState(props.calculatorInputs.activities);
     const [stepFinished, setStepFinished] = useState(false);
     const [activities, searchActivities] = useActivities('', props.calculatorInputs.accommodation);
@@ -32,23 +32,18 @@ export const ActivitiesInputs = (props) => {
             setStepFinished(false)
         }
         setSelectedActivities(filter(selectedActivities, (selectedActivity) => lowerCase(selectedActivity.name) !== lowerCase(activity.name)))
-        toast({
-            title: 'Actividad eliminada!',
-            description: `Eliminaste ${activity.name}`,
-            status: 'success',
-            duration: 1800,
-        })
+        showSuccessToast('Actividad eliminada!', `Eliminaste ${activity.name}`)
     }
     
     const addActivity = (activity) => {
-        setSelectedActivities([...selectedActivities, activity])
-        setStepFinished(true)
-        toast({
-            title: 'Actividad seleccionada!',
-            description: `Elegiste ${activity.name}`,
-            status: 'success',
-            duration: 1800,
-        })
+        if(size(selectedActivities) < 9)
+        {
+            setSelectedActivities([...selectedActivities, activity])
+            setStepFinished(true)
+            showSuccessToast('Actividad seleccionada!', `Elegiste ${activity.name}`)
+        } else {
+            showErrorToast('Estas en el límite!', `Si querés realizar esta actividad es necesario eliminar otra`)
+        }
     }
 
     return (
@@ -62,7 +57,9 @@ export const ActivitiesInputs = (props) => {
                 activities={activities}
                 addActivity={addActivity}
                 removeActivity={removeActivity}
-                activityWasAlreadySelected={activityWasAlreadySelected}/>
+                activityWasAlreadySelected={activityWasAlreadySelected}
+                disableAdd={size(selectedActivities) == 9}
+                />
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}

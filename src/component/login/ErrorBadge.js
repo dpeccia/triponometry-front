@@ -1,4 +1,5 @@
-import { Badge, ListItem, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, UnorderedList, VStack } from "@chakra-ui/react"
+import { Badge, ListItem, Popover, PopoverHeader, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, UnorderedList, VStack } from "@chakra-ui/react"
+import { isEmpty } from "lodash"
 import { useState } from "react"
 
 export const ErrorBadge = (props) => {
@@ -9,12 +10,15 @@ export const ErrorBadge = (props) => {
         <VStack>
             <Popover isOpen={props.message && openPop} autoFocus={false}>
                 <PopoverTrigger>
-                    <Badge  colorScheme='red' variant='solid' mb={1}> {props.msg} </Badge>
+                    <Badge  colorScheme='red' variant='subtle' mb={1}> {props.msg} </Badge>
                 </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverCloseButton onClick={() => {setOpenPop(false)}}/>
+                <PopoverContent borderColor='#F0A7B4' fontSize='sm'>
+                    <PopoverHeader pt={2} fontWeight='bold'>
+                        Tu contraseña tiene que incluir:
+                    </PopoverHeader>
                     <PopoverArrow/>
-                    <PopoverBody>                       
+                    <PopoverCloseButton onClick={() => {setOpenPop(false)}}/>
+                    <PopoverBody>
                         <UnorderedList>    
                             {listItems}
                         </UnorderedList>

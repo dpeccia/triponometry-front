@@ -19,9 +19,8 @@ export const EditCalculationPage = () => {
     }
 
     const onFinish = (response) => {
-        if(response){
+        if (response?.status !== "Error") {
             setCalculation(response)
-            console.log(response);
             setIsLoading(false)
         } else {
             setIsValid(false)
@@ -49,6 +48,6 @@ export const EditCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status} userInfo={calculation.user}/>) : <NotFound/>
     )
 }

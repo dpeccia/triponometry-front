@@ -16,7 +16,9 @@ export const ActivitiesList = (props) => {
                 activity={activity} mt={2}
                 addActivity={props.addActivity}
                 removeActivity={props.removeActivity}
-                activityWasAlreadySelected={props.activityWasAlreadySelected}/>
+                activityWasAlreadySelected={props.activityWasAlreadySelected}
+                disableAdd={props.disableAdd}
+                />
         )
     })
 

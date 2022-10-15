@@ -24,7 +24,7 @@ export const ActivitiesCard = (props) => {
         if (props.activityWasAlreadySelected(props.activity)) {
             return <IconButton icon={<FaMinus w='80%' h='80%' />} onClick={() => props.removeActivity(props.activity)} colorScheme='red' size='sm' isRound/>
         } else {
-            return <AddActivityModal city={props.city} activity={props.activity} addActivity={props.addActivity}/>
+            return <AddActivityModal city={props.city} activity={props.activity} addActivity={props.addActivity} isDisabled={props.disableAdd}/>
         }
     }
 

@@ -12,11 +12,11 @@ import { useState } from "react"
 import { FaSave } from "react-icons/fa";
 import { isEmpty } from "lodash";
 import { saveNewTrip } from "../../../BackendService";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 
 export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) => {
-    const toast = useToast()
+    const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
 
     const OverlayOne = () => (
@@ -30,6 +30,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
     const [overlay, setOverlay] = useState(<OverlayOne />)
     const [tripName, setTripName] = useState("")
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onNameInputChange = (e) => {
         setError(false)
@@ -47,28 +48,17 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
             return
         } 
 
+        setIsLoading(true)
         const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
         
-        if (response) {
-            toast({
-                title: 'Viaje guardado!',
-                description: `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`,
-                variant: 'top-accent',
-                status: 'success',
-                isClosable: true,
-            })
-
+        if (response?.status !== "Error") {
+            showSuccessToast('Viaje guardado!', `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
             onClose()
             navigate("/mis-calculos")
         } else {
-            toast({
-                title: 'Ocurrio un error',
-                description: 'No se pudo guardar su viaje',
-                variant: 'top-accent',
-                status: 'error',
-                isClosable: true,
-            })
+            showErrorToast(response.msg)
         }
+        setIsLoading(false)
     }
 
     return (
@@ -103,7 +93,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

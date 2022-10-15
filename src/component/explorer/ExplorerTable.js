@@ -1,11 +1,15 @@
-import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton} from '@chakra-ui/react'
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
-import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
+import {Table, Thead, Tbody, Tr, Th, Td, chakra, Text, Flex, IconButton, Box, Avatar, Tooltip, Icon} from '@chakra-ui/react'
+import {StarIcon, TriangleDownIcon, TriangleUpIcon} from '@chakra-ui/icons'
+import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters } from 'react-table'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {FilterInput} from "./FilterInput";
 import { useMemo } from 'react';
 import {useNavigate} from "react-router";
+import Flag from 'react-world-flags'
+import {countryToAlpha3} from "country-to-iso";
+import { BsFillCheckCircleFill } from 'react-icons/bs';
+
 
 export const ExplorerTable = ({ data }) => {
 
@@ -19,6 +23,8 @@ export const ExplorerTable = ({ data }) => {
             {
                 Header: 'Nombre',
                 accessor: 'name',
+                Filter: ColumnFilter,
+                Cell: (tableProps) => { return styleName(tableProps.row.original.name, tableProps.row.original.imageUrl, tableProps.row.original.userInfo)}
             },
             {
                 Header: 'Ciudad',
@@ -104,3 +110,61 @@ export const ExplorerTable = ({ data }) => {
         </>
     );
 }
+
+const verifiedBadge = (userInfo) => {
+    if (userInfo.verified) {
+        return (
+            <Tooltip label={userInfo.username} bg='blue.400' placement='bottom'>
+                <span><Icon as={BsFillCheckCircleFill} color='blue.400'/></span>   
+            </Tooltip>
+        )
+    }
+}
+
+const styleName = (name, imageUrl, userInfo) => {
+    return (
+        <Flex alignItems='center'>
+            <Avatar size='md' src={imageUrl}/>
+            <Text ml={4}> {name} </Text>
+            {verifiedBadge(userInfo)}
+        </Flex>
+    )
+}
+
+const styleCountry = (code) => {
+    return (
+        <Flex h={5} w='30px' justifyContent='start' >
+            <Flag code={code}/>
+            <Text ml={2}> {code} </Text>
+        </Flex>
+    )
+}
+
+const colour = (rating) => {
+    switch(rating){
+        case 1:
+            return 'red.500';
+        case 2:
+            return 'red.300';
+        case 3:
+            return 'orange.300';
+        case 4:
+            return 'green.300';
+        case 5:
+            return 'green.500';
+        default:
+            return 'gray.400'
+    }
+}
+
+const styleRating = (rating) => {
+    return (
+        <Flex h={5} w='30px' justifyContent='space-between' alignItems='center' >
+            <Text as='b' fontSize='md' color={colour(rating)}> {rating}</Text>
+            <Flex alignItems='center'>
+                <StarIcon color={colour(rating)}/>
+            </Flex>
+        </Flex>
+    )
+}
+
