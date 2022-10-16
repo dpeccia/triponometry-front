@@ -3,8 +3,8 @@ import _, { isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
     baseURL: 'http://triponometry-back.triponometry.org/',
-    headers: { "Access-Control-Allow-Origin": "*" }, 
-    withCredentials: true
+    // headers: { "Access-Control-Allow-Origin": "*" }, 
+    // withCredentials: true
 });
 
 const handleSuccess = (response) => {
