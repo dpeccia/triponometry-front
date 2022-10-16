@@ -20,13 +20,12 @@ export const ChangePasswordModal = () => {
     const [successToast, errorToast] = useToast()
     const navigate = useNavigate()
 
-
     useEffect(() => {
         setArePassEquals(false)
     }, [newPassword])
     
     const handleChangePasswordClick = async () => {
-
+        
         if (!isPasswordValid || !arePassEquals){
             errorToast("Corrija los campos en rojo y vuelva intentar")
         } else {
@@ -35,7 +34,7 @@ export const ChangePasswordModal = () => {
             if(response.status !== "Error"){
                 successToast("Cambio de contraseña exitoso", "Su contraseña ha sido modificada exitosamente")
                 navigate('/mis-calculos')
-                onClose()
+                handleClose()
     
             } else {
                 errorToast(response.msg)
@@ -43,10 +42,17 @@ export const ChangePasswordModal = () => {
         }
     }
 
+    const handleClose = () => {
+        setActualPassword("")
+        setConfirmNewPassword("")
+        setNewPassword("")
+        onClose()
+    }
+
     return(
         <>
             <MenuItem onClick={onOpen}> Cambiar contraseña </MenuItem>
-            <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
+            <Modal isCentered isOpen={isOpen} onClose={handleClose} size='lg'>
                 <ModalOverlay/>
                 <ModalContent>
                     <ModalHeader> Modificar contraseña </ModalHeader>
