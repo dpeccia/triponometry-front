@@ -2,7 +2,9 @@ import axios from 'axios';
 import _, { isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
-    baseURL: 'https://triponometry-back.herokuapp.com/'
+    baseURL: 'http://triponometry-back.triponometry.org/',
+    headers: { "Access-Control-Allow-Origin": "*" }, 
+    withCredentials: true
 });
 
 const handleSuccess = (response) => {
