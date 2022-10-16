@@ -2,9 +2,7 @@ import axios from 'axios';
 import _, { isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
-    baseURL: 'http://localhost:8080/',
-    headers: { "Access-Control-Allow-Origin": "*" }, 
-    withCredentials: true
+    baseURL: 'https://triponometry-back.herokuapp.com/'
 });
 
 const handleSuccess = (response) => {
