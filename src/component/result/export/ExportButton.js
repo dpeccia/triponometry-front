@@ -35,10 +35,10 @@ export const ExportButton = (props) => {
 
   return (
     props.exportType === 'map' ?
-    <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={downloadFile} mt={3} bg='#EFB4BF'>{props.downloadText}</Button>
+    <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={downloadFile} bg='#EFB4BF'>{props.downloadText}</Button>
     :
     <>
-    <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={handleSelectStartDateCalendarClick} mt={3} bg='#EFB4BF'>{props.downloadText}</Button>
+    <Button isLoading={isLoading} leftIcon={<BiDownload />} onClick={handleSelectStartDateCalendarClick} bg='#EFB4BF'>{props.downloadText}</Button>
     <SelectStartDateCalendarModal isOpen={isOpenSelectStartDateCalendar} onOpen={onOpenSelectStartDateCalendar} onClose={onCloseSelectStartDateCalendar} exportInfoLoader={exportInformationLoader} onConfirm={downloadFile}></SelectStartDateCalendarModal>
     </>
   );

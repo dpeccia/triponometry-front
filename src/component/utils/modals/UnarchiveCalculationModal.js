@@ -32,7 +32,7 @@ export const UnarchiveCalculationModal = (props) => {
 
     return (
         <>
-            <Modal isCentered isOpen={props.isOpen} onClose={props.onClose}>
+            <Modal isCentered isOpen={props.isOpen} onClose={props.onClose} size='lg'>
                 {props.overlay}
                 <ModalContent>
                     <ModalHeader> Desarchivar cálculo </ModalHeader>
@@ -41,6 +41,9 @@ export const UnarchiveCalculationModal = (props) => {
                     <ModalBody>
                         <Text>
                             ¿Estas seguro que deseas desarchivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                        </Text>
+                        <Text mt='3'>
+                            Esta acción llevará a tu cálculo nuevamente a la pestaña <Text as='abbr' fontWeight='bold'> Guardados </Text> y podrás editarlo
                         </Text>
                     </ModalBody>
                     <ModalFooter>

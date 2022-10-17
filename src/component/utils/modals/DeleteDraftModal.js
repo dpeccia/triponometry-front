@@ -51,7 +51,7 @@ export const DeleteDraftModal = (props) => {
                     onOpen()
                 }}
             />
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <Modal isCentered isOpen={isOpen} onClose={onClose} size='xl'>
                 {overlay}
                 <ModalContent>
                     <ModalHeader> Eliminar cálculo </ModalHeader>
@@ -60,6 +60,9 @@ export const DeleteDraftModal = (props) => {
                     <ModalBody>
                         <Text>
                             ¿Estas seguro que deseas eliminar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                        </Text>
+                        <Text mt='3'>
+                            Esta acción es definitiva y ya no podrás recuperarlo
                         </Text>
                     </ModalBody>
                     <ModalFooter>

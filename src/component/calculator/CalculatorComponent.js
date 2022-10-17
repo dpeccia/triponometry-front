@@ -1,5 +1,5 @@
 import {AddIcon, MinusIcon} from "@chakra-ui/icons";
-import { Box, Grid, VStack, IconButton, GridItem } from "@chakra-ui/react";
+import { Box, Grid, VStack, IconButton, GridItem, Flex } from "@chakra-ui/react";
 import { CalculatorScreen } from "./CalculatorScreen";
 import { CalculatorButton } from "./CalculatorButton";
 import { FaEquals } from "react-icons/fa";
@@ -7,6 +7,7 @@ import {BedIcon,BusIcon,CalendarIcon,DestinationIcon,DollarIcon,HourglassIcon} f
 import { isEmpty } from "lodash";
 import { SaveDraftModal } from "../utils/modals/SaveDraftModal";
 import { SaveDraftEditionModal } from "../utils/modals/SaveDraftEditionModal";
+import { NewCalculationInfo } from "./NewCalculationInfo";
 
 export const CalculatorComponent = (props) => {
     const checkInputs = () => {
@@ -39,6 +40,7 @@ export const CalculatorComponent = (props) => {
     const { isDisabled, filter, backgroundColor } = checkInputs()
 
     return(
+        <Flex direction='column'>
         <Box bg='#94A1AA' minW='440px' h='572px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
             <VStack>
                 <CalculatorScreen calculatorInputs={props.calculatorInputs} width='400px' height='250px' />
@@ -65,5 +67,7 @@ export const CalculatorComponent = (props) => {
                 </Grid>
             </VStack>
         </Box>
+        <NewCalculationInfo/>
+        </Flex>
     )
 }

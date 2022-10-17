@@ -52,7 +52,7 @@ export const ArchiveCalculationModal = (props) => {
                     onOpen()
                 }}
             />
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
                 {overlay}
                 <ModalContent>
                     <ModalHeader> Archivar cálculo </ModalHeader>
@@ -61,6 +61,12 @@ export const ArchiveCalculationModal = (props) => {
                     <ModalBody>
                         <Text>
                             ¿Estas seguro que deseas archivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                        </Text>
+                        <Text mt='3'>
+                            Esta acción llevará a tu cálculo a la pestaña <Text as='abbr' fontWeight='bold'> Archivados </Text>
+                        </Text>
+                        <Text mt='3'>
+                            Ya no podrás editarlo pero en caso de que desees hacerlo podrás desarchivarlo en cualquier momento
                         </Text>
                     </ModalBody>
                     <ModalFooter>

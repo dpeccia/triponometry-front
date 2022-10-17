@@ -57,21 +57,21 @@ export const MyCalculationsPage = () => {
     }, []);
 
     return (
-        <Tabs colorScheme='red' defaultIndex={defaultIndex}>
+        <Tabs colorScheme='red' defaultIndex={defaultIndex} w='100%' size='lg'>
             <TabList>
-                <Tab>Guardados</Tab>
-                <Tab>Borradores</Tab>
-                <Tab>Archivados</Tab>
+                <Tab fontWeight='medium'>Guardados</Tab>
+                <Tab fontWeight='medium'>Borradores</Tab>
+                <Tab fontWeight='medium'>Archivados</Tab>
             </TabList>
 
-            <TabPanels>
-                <TabPanel>
+            <TabPanels h='100%'>
+                <TabPanel h='100%' >
                     { isLoading ? <SpinnerSearchBox/> : <TabSaved savedCalculations={calculations.saved} fetchCalculations={fetchCalculations}/> }
                 </TabPanel>
-                <TabPanel>
+                <TabPanel h='100%'>
                     { isLoading ? <SpinnerSearchBox/> : <TabDrafts draftsCalculations={calculations.drafts} fetchCalculations={fetchCalculations} /> }
                 </TabPanel>
-                <TabPanel>
+                <TabPanel h='100%'>
                     { isLoading ? <SpinnerSearchBox/> : <TabArchive archivedCalculations={calculations.archive} /> }
                 </TabPanel>
             </TabPanels>
