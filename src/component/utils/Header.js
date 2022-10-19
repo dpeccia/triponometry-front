@@ -5,7 +5,7 @@ import { ChangePasswordModal } from "./modals/ChangePasswordModal";
 
 const Logo = () =>
     <Flex minW='500px' ml='15px' p={1} justifyContent='flex-start' alignItems='center'>
-        <Image src={'../nombre-triponometry.png'} w='235px'/>
+        <Image src={'../nombre-triponometry.png'} w='350px'/>
     </Flex>
 
 const Spacer = () =>
@@ -13,19 +13,18 @@ const Spacer = () =>
 
 const NavigationMenu = () => 
     <>
-        <Link as={ReachLink} to='/nuevo' mr={4} >
+        <Link fontSize='lg' fontWeight='medium' as={ReachLink} to='/nuevo' mr={10} >
             Nuevo
         </Link>
-        <Link as={ReachLink} to='/explorar' mr={4}>
+        <Link fontSize='lg' fontWeight='medium' as={ReachLink} to='/explorar' mr={10}>
             Explorar
         </Link>
-        <Link as={ReachLink} to='/mis-calculos' mr={4}>
-            Mis calculos
+        <Link fontSize='lg' fontWeight='medium' as={ReachLink} to='/mis-calculos' mr={10}>
+            Mis Cálculos
         </Link>
     </>
 
 const NavBar = (props) =>{
-
     const handleLogClick = () => {
         props.logout()
     }
@@ -43,7 +42,7 @@ const NavBar = (props) =>{
             <Menu>
                 <MenuButton>
                     <WrapItem>
-                        <Avatar size='sm' name={props.username} src={props.pfp} mr={4}/>{' '}
+                        <Avatar size='md' name={props.username} src={props.pfp} mr={7}/>{' '}
                     </WrapItem>
                 </MenuButton>
                 <MenuList>

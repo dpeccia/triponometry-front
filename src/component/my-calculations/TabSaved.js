@@ -4,6 +4,8 @@ import {ArchiveCalculationModal} from "../utils/modals/ArchiveCalculationModal";
 import {ShareCalculationModal} from "../utils/modals/ShareCalculationModal";
 import {useNavigate} from "react-router";
 import {EditCalculationIconModal} from "../utils/modals/EditCalculationIconModal";
+import { isEmpty } from "lodash";
+import { EmptySavedPage } from "./EmptySavedPage";
 
 const TabSaved = (props) => {
     const navigate = useNavigate()
@@ -19,11 +21,18 @@ const TabSaved = (props) => {
         );
     });
 
-    return (
-        <Flex wrap='wrap'>
-            {calculationCards}
-        </Flex>  
-    );
+    const showSavedComponent = () => {
+        if (isEmpty(props.savedCalculations)) {
+            return <EmptySavedPage />
+        }
+        return (
+            <Flex wrap='wrap'>
+                {calculationCards}
+            </Flex>
+        )
+    }
+
+    return showSavedComponent()
 }
 
 export default TabSaved;

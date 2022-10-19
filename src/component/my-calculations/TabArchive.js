@@ -3,6 +3,8 @@ import { Flex } from '@chakra-ui/react'
 import { FaShareSquare } from 'react-icons/fa'; 
 import {ShareCalculationModal} from "../utils/modals/ShareCalculationModal";
 import {useNavigate} from "react-router";
+import { EmptyArchivedPage } from "./EmptyArchivedPage";
+import { isEmpty } from "lodash";
 
 const TabArchive = ({ archivedCalculations }) => {
     const navigate = useNavigate()
@@ -17,11 +19,18 @@ const TabArchive = ({ archivedCalculations }) => {
         );
     });
 
-    return (
-        <Flex wrap='wrap'>
-            {calculationCards}
-        </Flex>  
-    );
+    const showArchiveComponent = () => {
+        if (isEmpty(archivedCalculations)) {
+            return <EmptyArchivedPage/>
+        }
+        return (
+            <Flex wrap='wrap'>
+                {calculationCards}
+            </Flex>
+        )
+    }
+
+    return showArchiveComponent()
 }
 
 export default TabArchive;

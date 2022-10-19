@@ -3,7 +3,6 @@ import {StarIcon, TriangleDownIcon, TriangleUpIcon} from '@chakra-ui/icons'
 import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters } from 'react-table'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import {GlobalFilter} from "./GlobalFilter";
 import {ColumnFilter} from "./ColumnFilter";
 import {useMemo} from 'react';
 import {useNavigate} from "react-router";
@@ -11,9 +10,7 @@ import Flag from 'react-world-flags'
 import {countryToAlpha3} from "country-to-iso";
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 
-
 export const ExplorerTable = ({ data }) => {
-
     const navigate = useNavigate()
     const handleRowClick = (id) => {
         navigate(`/explorar/${id}`)
@@ -60,15 +57,12 @@ export const ExplorerTable = ({ data }) => {
         getTableProps, getTableBodyProps, headerGroups,
         // Pagination
         page, prepareRow, canPreviousPage, canNextPage, pageOptions, pageCount, gotoPage, nextPage, previousPage,
-        // Filtering
-        setGlobalFilter,
-        state: { pageIndex, globalFilter }
-    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 8 } },
+        state: { pageIndex }
+    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 7 } },
         useFilters, useGlobalFilter, useSortBy, usePagination)
     
     return (
         <>
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
             <Table {...getTableProps()}>
                 <Thead>
                     {headerGroups.map((headerGroup) => (

@@ -10,7 +10,7 @@ export const ConfirmPassInput = (props) => {
     const handleViewPassClick = () => setViewPass(!viewPass)
 
     const isConfirmPasswordValid = (aConfirmPassword) => {
-        return isEqual(props.password,aConfirmPassword)
+        return isEqual(props.password,aConfirmPassword) && !isEmpty(props.password)
     }
 
     const handleConfirmPasswordChange = (event) => {
@@ -22,7 +22,7 @@ export const ConfirmPassInput = (props) => {
         <>
             <InputGroup mt={2} mb={1}>
                 <Input placeholder='Confirmar contraseña' type={viewPass ? 'text' : 'password'} onChange={handleConfirmPasswordChange}/>
-                {props.confirmPasswordValid &&
+                {props.confirmPasswordValid && !isEmpty(props.password) &&
                     <InputLeftElement pointerEvents='none' children={<CheckIcon color='green.400'/>}/>}
                 <InputRightElement>
                     <IconButton  icon={viewPass ? <ViewOffIcon/> : <ViewIcon/>} onClick={handleViewPassClick} size='sm'/>

@@ -3,6 +3,8 @@ import { Flex } from '@chakra-ui/react'
 import { FaTrashAlt } from 'react-icons/fa'; 
 import {DeleteDraftModal} from "../utils/modals/DeleteDraftModal";
 import {useNavigate} from "react-router";
+import { EmptyDraftsPage } from "./EmptyDraftsPage";
+import { isEmpty } from "lodash";
 
 const TabDrafts = ({ draftsCalculations, fetchCalculations }) => {
     const navigate = useNavigate()
@@ -21,11 +23,18 @@ const TabDrafts = ({ draftsCalculations, fetchCalculations }) => {
         );
     });
 
-    return (
-        <Flex wrap='wrap'>
-            {calculationCards}
-        </Flex>  
-    );
+    const showDraftsComponent = () => {
+        if (isEmpty(draftsCalculations)) {
+            return <EmptyDraftsPage />
+        }
+        return (
+            <Flex wrap='wrap'>
+                {calculationCards}
+            </Flex>
+        )
+    }
+
+    return showDraftsComponent()
 }
 
 export default TabDrafts;

@@ -1,9 +1,10 @@
-import {Text, Flex, Avatar} from '@chakra-ui/react'
+import {Text, Flex} from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
 import { getAllTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { ExplorerTable } from '../explorer/ExplorerTable';
 import { useToast } from '../utils/useToast';
+import { Heading } from '@chakra-ui/layout';
 
 export const ExplorerPage = () => {
     const [_, showErrorToast] = useToast()
@@ -41,6 +42,9 @@ export const ExplorerPage = () => {
 
     return (
         <Flex direction='column' grow={2} ml={8} mr={8}>
+            <Heading my='3' fontSize='3xl'>Explorá cálculos de viaje de otros usuarios!</Heading>
+            <Text mt='3' mb='7'>Podés filtrarlos y ordenarlos por cualquiera de las columnas, calificarlo, ver opiniones, y si un viaje te gustó mucho: 
+            <Text as='em'> podés usarlo como plantilla para generar tu propio recorrido a partir de éste!</Text></Text>
             { isLoading ? <SpinnerSearchBox/> : <ExplorerTable data={trips} />}
         </Flex>
     )
