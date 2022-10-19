@@ -38,7 +38,7 @@ export const ResultMap = ({ mapId, accommodation }) => {
             zoom={10}
             onLoad={map => {
               new window.google.maps.KmlLayer(kmlTest, {
-                suppressInfoWindows: true,
+                suppressInfoWindows: false,
                 preserveViewport: false,
                 map: map
               });

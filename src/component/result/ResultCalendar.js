@@ -26,7 +26,7 @@ export var ResultCalendar = ({events,daysAmount}) => {
     (event, start, end, isSelected) => ({
       ...({
         style: {
-          backgroundColor: getEventBackgroundColor(start.getDay()),
+          backgroundColor: getEventBackgroundColor(getDateNumber(start.toDateString())),
         },
       })
     }),
