@@ -1,58 +1,35 @@
 import {Field, Formik} from "formik";
-import {FormControl, FormErrorMessage, HStack, IconButton, Input} from "@chakra-ui/react";
+import {Flex, FormControl, FormErrorMessage, HStack, IconButton, Input, Text} from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
-import opentripmap from "../../../../api/opentripmap";
-import {isEmpty} from "lodash";
+import {AccommodationsFilterMenu} from "./AccommodationsFilterMenu";
+import {useState} from "react";
+import {AccommodationsDistanceMenu} from "./AccommodationsDistanceMenu";
 
 export const AccommodationSearchBar = (props) => {
+    const [selectedCategory, setSelectedCategory] = useState({ id: 'accomodations', name: 'Todos' })
+    const [selectedDistance, setSelectedDistance] = useState({ id: '1000', name: 'Menos de 1 km' })
+
     return (
         <>
-            <Formik
-                initialValues={{
-                    accommodation: "",
-                }}
-                onSubmit={ async (values) => {
-                    props.setIsLoading(true);
-                    const response = await opentripmap.get(
-                        '/radius',
-                        {
-                            params: {
-                                lat: props.cityLat,
-                                lon: props.cityLon,
-                                name: values.accommodation,
-                                radius:'1000',
-                                kinds: 'accomodations',
-                                limit: '100',
-                                rate: '2',
-                                format: 'json',
-                                apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
-                            },
-                        });
-                    props.setIsLoading(false);
-                    props.setIsEmpty(isEmpty(response.data));
-                    props.setAccommodationsResponse(response.data);
-                }}
-            >
+            <Formik initialValues={{accommodation: ""}} onSubmit={(values) => props.searchAccommodations(values.accommodation, selectedCategory, selectedDistance)}>
                 {({ handleSubmit,  errors, touched}) => (
                     <form onSubmit={handleSubmit}>
                         <FormControl isInvalid={!!errors.accommodation && touched.accommodation}>
-                            <HStack>
-                                <Field
-                                    as={Input}
-                                    id="accommodation"
-                                    name="accommodation"
-                                    variant="filled"
-                                    placeholder='A donde quieres alojarte?'
-                                    validate={(value) => {
-                                        let error;
-                                        if (value.length < 1 ) {
-                                            error = "Debes ingresar un alojamiento valida";
-                                        }
-                                        return error;
-                                    }}
-                                />
-                                <IconButton type="submit" icon={<SearchIcon />}/>
-                            </HStack>
+                            <Flex direction='row' alignItems='flex-end' gap={2}>
+                                <Flex direction='column' w='600px' alignItems='stretch'>
+                                    <Text as='b' size='xs' align='center' color='#718096'>¿Adónde querés alojarte?</Text>
+                                    <Field
+                                        as={Input}
+                                        id="accommodation"
+                                        name="accommodation"
+                                        variant="filled"
+                                        placeholder='...'
+                                    />
+                                </Flex>
+                                <AccommodationsFilterMenu selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+                                <AccommodationsDistanceMenu selectedDistance={selectedDistance} setSelectedDistance={setSelectedDistance}/>
+                                <IconButton type="submit" icon={<SearchIcon />} />
+                            </Flex>
                             <FormErrorMessage>{errors.accommodation}</FormErrorMessage>
                         </FormControl>
                     </form>

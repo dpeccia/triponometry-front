@@ -18,7 +18,7 @@ export const CityList = (props) => {
         )
     })
     return (
-        <Box w='100%' h='420px' mb={1} p={2}>
+        <Box w='100%' h='490px' mb={1} p={2}>
             <ScrollingBox>
                 {cities}
             </ScrollingBox>
