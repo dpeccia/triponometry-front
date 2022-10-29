@@ -9,18 +9,20 @@ import {
 import CalendarEvent from './calendar/Event';
 import getEventBackgroundColor from './calendar/CalendarDayColorMap';
 import {ExportButton} from "./export/ExportButton";
-import {Box, Flex} from "@chakra-ui/react";
+import {Box, Flex, Text, Link} from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { ModalOverlay } from "@chakra-ui/modal";
 import { useState } from "react";
 import { IconButton } from "@chakra-ui/button";
 import { DownloadCalendarInfoModal } from '../utils/modals/DownloadCalendarInfoModal';
 import { InfoOutlineIcon } from "@chakra-ui/icons";
+import { Link as ReachLink } from "react-router-dom";
+
 
 moment.locale('en-GB');
 const localizer = momentLocalizer(moment);
 
-export var ResultCalendar = ({events,daysAmount}) => {
+export var ResultCalendar = ({events,daysAmount, loggedIn}) => {
 
   const eventPropGetter = useCallback(
     (event, start, end, isSelected) => ({
@@ -65,6 +67,31 @@ export var ResultCalendar = ({events,daysAmount}) => {
     onOpen()
   }
 
+  const NotLoggedMessage = () => {
+    return(
+      <Text fontSize='md' mt={4}>
+        Si querés guardar tu viaje y acceder a mas funcionalidades {<Link as={ReachLink} to='/sign-up' color='#F0A7B4' fontWeight='bold'> registrate </Link>} o {<Link as={ReachLink} to='/sign-in' color='#F0A7B4' fontWeight='bold'> inicia sesión </Link>}
+      </Text>
+    )
+  }
+
+  const exportButton = () => {
+    if(loggedIn){
+      return(
+        <>
+        <Flex alignItems='center' justify='space-between' mt={3}>
+          
+          <ExportButton exportType='calendar' requestData={events} fileType='text/plain' fileName='myCalendar.ics' downloadText='Descargar calendario'/>
+          <IconButton p={1} variant='ghost' color='yellow.500' as={InfoOutlineIcon} onClick={handleClick}/>
+        </Flex>
+        <DownloadCalendarInfoModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} overlay={overlay}/>
+        </>
+      ) 
+    }
+    
+    return(<NotLoggedMessage/>) 
+  }
+
   return (
       <Flex direction='column' minW='735px'>
           <Box h='606px'>
@@ -85,11 +112,7 @@ export var ResultCalendar = ({events,daysAmount}) => {
                   messages={{date : "DÍA", time: "HORARIO", event: "ACTIVIDAD"}}
               />
           </Box>
-          <Flex alignItems='center' justify='space-between' mt={3}>
-          <ExportButton exportType='calendar' requestData={events} fileType='text/plain' fileName='myCalendar.ics' downloadText='Descargar calendario'/>
-            <IconButton p={1} variant='ghost' color='yellow.500' as={InfoOutlineIcon} onClick={handleClick}/>
-          </Flex>
-          <DownloadCalendarInfoModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} overlay={overlay}/>
+          {exportButton()}
       </Flex>
   );
 }

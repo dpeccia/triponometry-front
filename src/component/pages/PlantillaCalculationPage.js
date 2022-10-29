@@ -31,6 +31,6 @@ export const PlantillaCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: window.location.origin + `/explorar/${idCalculation}`}}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: window.location.origin + `/explorar/${idCalculation}`}} loggedIn={true}/>) : <NotFound/>
     )
 }

@@ -1,4 +1,4 @@
-import {Flex, Box, MenuButton, MenuItem, Menu, MenuList} from "@chakra-ui/react";
+import {Flex, MenuButton, MenuItem, Menu, MenuList} from "@chakra-ui/react";
 import { NewCalculationResultInfo } from "./NewCalculationResultInfo";
 import { PdfButtonExport1 } from "./ExportPdf";
 import { SaveCalculationModal } from "../../utils/modals/SaveCalculationModal";
@@ -9,23 +9,26 @@ import { SaveDraftAsTripModal } from "../../utils/modals/SaveDraftAsTripModal";
 import { PlantillaBadge } from "../../utils/PlantillaBadge";
 import {HamburgerIcon} from "@chakra-ui/icons";
 
-export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original }) => {
+export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original, loggedIn }) => {
 
     const saveModal = () => {
-        if (id) {
-            return (
-                <SaveDraftAsTripModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
-            )
-        } else {
-            return (
-                <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
-            )
+        if(loggedIn) {
+            if (id) {
+                return (
+                    <SaveDraftAsTripModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+                )
+            } else {
+                return (
+                    <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+                )
+            }
         }
     }
 
     const plantillaBadge = () => {
-        if (original)
+        if (original){
             return <PlantillaBadge justify='end' align='center' original={original} />
+        }
     }
 
     return (
@@ -35,6 +38,7 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                 <Flex alignItems='center' width="100%" justifyContent='space-between'>
                     <NewCalculationResultInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
                     {plantillaBadge()}
+                    { loggedIn &&
                     <Flex mt={2} justifyContent='flex-end'>
                         <Menu>
                             <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
@@ -44,10 +48,10 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                                 </MenuItem>
                             </MenuList>
                         </Menu>
-                    </Flex>
+                    </Flex>}
                 </Flex>
             </Flex>
-            <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+            <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} loggedIn={loggedIn} />
             {saveModal()}
         </Flex>
     );

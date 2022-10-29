@@ -19,9 +19,12 @@ export const LandingPage = () => {
                             <br />
                             tus tiempos y tu presupuesto con tan solo unos clicks
                         </Text>
-                        <Button mt={4} w='150px' bg='#F0A7B4' fontWeight='bold' color='white'  onClick={() => navigate("/sign-up")}>
-                            Registrarme
-                        </Button>
+                        <Flex>
+                            <Button mt={4} w='150px' bg='#F0A7B4' fontWeight='bold' color='white'  onClick={() => navigate("/sign-up")}>
+                                Registrarme
+                            </Button>
+                        </Flex>
+                        <Link as={ReachLink} to='/nuevo' color='#F0A7B4' mt={2}> Continuar sin registrarme </Link>
                     </Flex>
                     <Flex direction='column' justifyContent='space-between' alignItems='flex-end' grow='2'>
                         <Button mb={4} bg='gray.400' fontWeight='bold' color='white'  onClick={() => navigate("/sign-in")}>

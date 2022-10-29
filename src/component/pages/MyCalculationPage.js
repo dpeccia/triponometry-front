@@ -114,7 +114,7 @@ export const MyCalculationPage = () => {
                                     </Menu>
                                 </Flex>
                             </Flex>
-                            <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
+                            <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()} loggedIn={true}/>
                             <UnarchiveCalculationModal isOpen={isOpenUnarchive} onOpen={onOpenUnarchive} onClose={onCloseUnarchive} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
                             <EditCalculationModal isOpen={isOpenEdit} onOpen={onOpenEdit} onClose={onCloseEdit} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
                             <EditAvatarImageModal isOpen={isOpenEditAvatar} onOpen={onOpenEditAvatar} onClose={onCloseEditAvatar} overlay={overlay} calculationId={calculation.id} setHasNewImage={setHasNewImage}/>

@@ -48,6 +48,6 @@ export const EditCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status} userInfo={calculation.user}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status} userInfo={calculation.user} loggedIn={true}/>) : <NotFound/>
     )
 }

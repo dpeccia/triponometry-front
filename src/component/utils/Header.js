@@ -29,6 +29,23 @@ const NavBar = (props) =>{
         props.logout()
     }
 
+
+    const loginlogout = () => {
+        if(!isEmpty(props.username)){
+            return(               
+                <MenuItem onClick={handleLogClick}>
+                    Cerrar sesión
+                </MenuItem>
+            )
+        } else {
+            return(
+                <MenuItem as={ReachLink} to="/sign-in">
+                    Iniciar sesión
+                </MenuItem>
+            )
+        }
+    }
+
     const changePassItem = () =>
     {
         if(!isEmpty(props.username) && !props.isGoogle){
@@ -47,9 +64,7 @@ const NavBar = (props) =>{
                 </MenuButton>
                 <MenuList>
                     {changePassItem()}
-                    <MenuItem onClick={handleLogClick}>
-                        Cerrar sesión
-                    </MenuItem>
+                    {loginlogout()}
                 </MenuList>
             </Menu>
         </Flex>

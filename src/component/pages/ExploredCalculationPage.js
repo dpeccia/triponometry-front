@@ -84,7 +84,7 @@ export const ExploredCalculationPage = () => {
                                 </Menu>
                             </Flex>
                         </Flex>
-                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} loggedIn={true}/>
                         <SaveRatingModal isOpen={isOpenModal} onOpen={onOpenModal} onClose={onCloseModal} overlay={overlay} calculationId={idCalculation} calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} setNewRating={setNewRating}/>
                         <RatingDrawer isOpen={isOpenDrawer} onOpen={onOpenDrawer} onClose={onCloseDrawer} overlay={overlay} reviews={calculation.reviews} averageRating={calculation.rating}/>
                     </>

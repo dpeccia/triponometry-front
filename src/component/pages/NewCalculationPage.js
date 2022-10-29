@@ -18,7 +18,7 @@ import { getRandomImage } from "../utils/AdHandler";
 import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo }) => {
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo, loggedIn }) => {
     const [_, showErrorToast] = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
     const [image, setImage] = useState(getRandomImage())
@@ -109,9 +109,9 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         }
 
         if(edit) {
-            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo}/>
+            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo} loggedIn={loggedIn}/>
         } else {
-            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
+            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original} loggedIn={loggedIn}/>
         }
     }
     return (

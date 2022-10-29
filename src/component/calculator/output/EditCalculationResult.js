@@ -7,7 +7,7 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { IconButton } from "@chakra-ui/button";
 import { PdfButtonExport1 } from "./ExportPdf";
 
-export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status, userInfo }) => {
+export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status, userInfo, loggedIn }) => {
 
 
     return (
@@ -22,7 +22,7 @@ export const EditCalculationResult = ({ setShowResults, id, name, calculatorInpu
                     <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
                 </Box>
             </Flex>
-            <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+            <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} loggedIn={loggedIn}/>
             <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
         </Flex>
     );

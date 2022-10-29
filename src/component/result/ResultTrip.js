@@ -4,16 +4,16 @@ import {ResultMap} from "./ResultMap";
 import {LoadScript} from "@react-google-maps/api";
 import {ResultCalendar} from "./ResultCalendar";
 
-export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft }) => {
+export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft, loggedIn }) => {
 
     const showMap = () => {
         if(!isDraft){
             if(window.google) {
-                return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
+                return <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation} loggedIn={loggedIn}/>
             }
             return (
                 <LoadScript googleMapsApiKey="AIzaSyAIQZSE4hWZYz9YcyNuTCSjjs6j3jObME0">
-                    <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation}/>
+                    <ResultMap mapId={calculatorOutputs.mapId} accommodation={calculatorInputs.accommodation} loggedIn={loggedIn}/>
                 </LoadScript>
             );
         }
@@ -22,7 +22,7 @@ export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft }) => 
     const showResult = () => {
         if(!isDraft)
         return (
-            <ResultCalendar events={calculatorOutputs.events} daysAmount={calculatorOutputs.daysAmount}/>
+            <ResultCalendar events={calculatorOutputs.events} daysAmount={calculatorOutputs.daysAmount} loggedIn={loggedIn}/>
         )
     }
 
