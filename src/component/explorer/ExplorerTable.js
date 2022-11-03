@@ -8,7 +8,7 @@ import {useMemo} from 'react';
 import {useNavigate} from "react-router";
 import Flag from 'react-world-flags'
 import {countryToAlpha3} from "country-to-iso";
-import { BsFillCheckCircleFill } from 'react-icons/bs';
+import {BsFillPatchCheckFill} from 'react-icons/bs';
 
 export const ExplorerTable = ({ data }) => {
     const navigate = useNavigate()
@@ -87,7 +87,8 @@ export const ExplorerTable = ({ data }) => {
                     {page.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <Tr {...row.getRowProps()} onClick={()=> handleRowClick(row.original.id)}>
+                            <Tr {...row.getRowProps()} onClick={()=> handleRowClick(row.original.id)}
+                                _hover={{ background: "gray.50", shadow: 'md', filter: 'auto'}}>
                                 {row.cells.map((cell) => (
                                     <Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
                                         {cell.render('Cell')}
@@ -116,8 +117,8 @@ export const ExplorerTable = ({ data }) => {
 const verifiedBadge = (userInfo) => {
     if (userInfo.verified) {
         return (
-            <Tooltip label={userInfo.username} bg='blue.400' placement='bottom'>
-                <span><Icon as={BsFillCheckCircleFill} color='blue.400'/></span>   
+            <Tooltip label={userInfo.username} bg='blue.400' placement='right'>
+                <Flex><Icon as={BsFillPatchCheckFill} ml={1} color='blue.400'/></Flex>
             </Tooltip>
         )
     }
