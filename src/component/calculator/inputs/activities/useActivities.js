@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import opentripmap from '../../../../api/opentripmap';
-import _, { isEmpty } from 'lodash';
-import { wikidataDetails } from '../../../../api/wikidata';
-import { wikidataImages } from '../../../../api/wikidata';
-import axios from 'axios';
+import _, {isEmpty, lowerCase} from 'lodash';
 
 export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
     const [activities, setActivities] = useState(null);
 
     useEffect(() => {
-        search(defaultSearchTerm, { id: 'interesting_places', name: 'Todos' });
+        search(defaultSearchTerm, { id: 'interesting_places', name: 'Todos' }, { id: '1000', name: 'Menos de 1 km' });
     }, [defaultSearchTerm]);
 
-    const getSearchEndpoint = (term, category) => {
+    const getSearchEndpoint = (term, category, distance) => {
         if (_.isEmpty(term)) {
             return ({
                 endpoint: '/radius', 
@@ -20,9 +17,9 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
                     params: {
                         lat: selectedAccommodation.latitude,
                         lon: selectedAccommodation.longitude,
-                        radius: '10000',
+                        radius: `${distance.id}`,
                         kinds: category.id,
-                        rate: '3',
+                        rate: '1',
                         format: 'json',
                         apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
                         limit: '1000'
@@ -37,9 +34,9 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
                         name: term,
                         lat: selectedAccommodation.latitude,
                         lon: selectedAccommodation.longitude,
-                        radius: '10000',
+                        radius: `${distance.id}`,
                         kinds: category.id,
-                        rate: '3',
+                        rate: '1',
                         format: 'json',
                         apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
                         limit: '1000'
@@ -49,52 +46,16 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
         }
     }
 
-    const getDetailsFromWikidata = async (activity) => {
-        const wikiDataId = activity.wikidata
-        const response = await wikidataDetails.get(`${wikiDataId}.json`)
-
-        const wikiDataDetailsObject = response.data.entities[wikiDataId]
-        
-        const imageName = wikiDataDetailsObject?.claims?.P18[0]?.mainsnak?.datavalue?.value
-        if (isEmpty(imageName))
-            return activity
-
-        const imagePageResponse = await wikidataImages.get('', {
-            params: {
-                action: "query",
-                format: "json",
-                formatversion: "2",
-                prop: "pageimages|pageterms",
-                piprop: "thumbnail",
-                pithumbsize: "400",
-                titles: `File:${imageName}`,
-                origin: "*"
-            }
-        })
-        
-        const image = imagePageResponse?.data?.query?.pages[0]?.thumbnail?.source
-        const description = wikiDataDetailsObject?.descriptions?.en?.value
-        const wikipediaEnglish = wikiDataDetailsObject?.sitelinks?.enwiki?.url
-        const wikipediaSpanish = wikiDataDetailsObject?.sitelinks?.eswiki?.url
-
-        return ({...activity,
-            image: image,
-            description: description,
-            wikipediaEnglishLink: wikipediaEnglish,
-            wikipediaSpanishLink: wikipediaSpanish
-        });
-    }
-
-    const search = async (term, category) => {
+    const search = async (term, category, distance) => {
         setActivities(null)
-        const {endpoint, parameters} = getSearchEndpoint(term, category);
+        const {endpoint, parameters} = getSearchEndpoint(term, category, distance);
         
         const response = await opentripmap.get(endpoint, parameters);
-    
+
         const bestRatedActivities = _(response.data)
             .filter((activity) => !_.isEmpty(activity.name))
-            .uniqBy('name')
-            .sortBy((activity) => activity.dist)
+            .uniqBy((activity) => !isEmpty(activity.wikidata) ? activity.wikidata : {} && lowerCase(activity.name))
+            .sortBy((activity) => 7 - activity.rate)
             .map((activity) => {
                 return {
                     id: activity.xid,
@@ -105,12 +66,10 @@ export const useActivities = (defaultSearchTerm, selectedAccommodation) => {
                     wikidata: activity.wikidata
                 }
             })
-            .take(10)
+            .take(35)
             .value();
-    
-        axios.all(bestRatedActivities.map((activity) => getDetailsFromWikidata(activity))).then(
-            (data) => setActivities(data)
-        );
+        
+        setActivities(bestRatedActivities)
     }
 
     return [activities, search];

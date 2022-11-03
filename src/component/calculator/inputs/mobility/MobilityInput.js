@@ -97,10 +97,10 @@ export const MobilityInput = (props) => {
                         <BsArrowLeftSquare size={40}/>
                         <Flex direction='column'>
                             <Text fontSize='lg'>
-                                Completaste todos los inputs necesarios.
+                                Completaste todos los datos necesarios.
                             </Text>
                             <Text fontSize='lg'>
-                                    Clickea el igual para obtener tu calculo de viaje
+                                    Clickea el igual para obtener tu cálculo de viaje
                             </Text>
                         </Flex>
                     </Flex>

@@ -4,18 +4,16 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 export const AccommodationsFilterMenu = ({selectedCategory, setSelectedCategory}) => {
     const accommodationsTypes = [
         { id: 'accomodations', name: 'Todos' },
-        { id: 'alpine_hut', name: 'Refugio de montaña' },
+        { id: 'campsites', name: 'Camping' },
         { id: 'apartments', name: 'Departamento' },
-        { id: 'campsites', name: 'Campamento' },
-        { id: 'guest_houses', name: 'Casas de huéspedes' },
-        { id: 'hostels', name: 'Hostels' },
-        { id: 'other_hotels', name: 'Hotels' },
-        { id: 'resorts', name: 'Resorts' },
-        { id: 'villas_and_chalet', name: 'Villas y Chalets' },
+        { id: 'hostels', name: 'Hostel' },
+        { id: 'other_hotels', name: 'Hotel' },
+        { id: 'guest_houses', name: 'Pensión' },
+        { id: 'resorts', name: 'Resort' },
     ]
 
     return (
-        <Flex direction='column' w='500px' alignItems='stretch'>
+        <Flex direction='column' w='500px' alignItems='stretch' gap={1}>
             <Text as='b' size='xs' align='center' color='#718096'>Tipo de alojamiento</Text>
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

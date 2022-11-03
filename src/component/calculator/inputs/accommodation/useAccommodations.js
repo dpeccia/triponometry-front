@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import opentripmap from '../../../../api/opentripmap';
-import _, { isEmpty } from 'lodash';
+import _, {isEmpty} from 'lodash';
 
 export const useAccommodations = (defaultSearchTerm, selectedCity) => {
     const [accommodations, setAccommodations] = useState(null);
@@ -19,7 +19,7 @@ export const useAccommodations = (defaultSearchTerm, selectedCity) => {
                         lon: selectedCity.longitude,
                         radius: `${distance.id}`,
                         kinds: category.id,
-                        rate: '2',
+                        rate: '1',
                         format: 'json',
                         apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
                         limit: '1000'
@@ -36,7 +36,7 @@ export const useAccommodations = (defaultSearchTerm, selectedCity) => {
                         lon: selectedCity.longitude,
                         radius: `${distance.id}`,
                         kinds: category.id,
-                        rate: '2',
+                        rate: '1',
                         format: 'json',
                         apikey: '5ae2e3f221c38a28845f05b6f49a7b8966e8aa9ad3d18032148adf6f',
                         limit: '1000'
@@ -54,7 +54,8 @@ export const useAccommodations = (defaultSearchTerm, selectedCity) => {
 
         const bestRatedAccommodations = _(response.data)
             .filter((accommodation) => !isEmpty(accommodation.xid))
-            .sortBy((accommodation) => accommodation.dist)
+            .uniqBy((accommodation) => !isEmpty(accommodation.wikidata) ? accommodation.wikidata : {})
+            .sortBy((accommodation) => 3 - accommodation.rate)
             .map((accommodation) => {
                 return {
                     id: accommodation.xid,

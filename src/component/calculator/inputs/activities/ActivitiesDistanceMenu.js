@@ -1,8 +1,8 @@
 import {Menu, MenuButton, MenuList, MenuItemOption, MenuOptionGroup, Button, Text, Flex} from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-export const AccommodationsDistanceMenu = ({selectedDistance, setSelectedDistance}) => {
-    const accommodationsDistance = [
+export const ActivitiesDistanceMenu = ({selectedDistance, setSelectedDistance}) => {
+    const activitiesDistance = [
         { id: '1000', name: 'Menos de 1 km' },
         { id: '3000', name: 'Menos de 3 km' },
         { id: '5000', name: 'Menos de 5 km' },
@@ -11,7 +11,7 @@ export const AccommodationsDistanceMenu = ({selectedDistance, setSelectedDistanc
 
     return (
         <Flex direction='column' w='500px' alignItems='stretch' gap={1}>
-            <Text as='b' size='xs' align='center' color='#718096'>Distancia al centro</Text>
+            <Text as='b' size='xs' align='center' color='#718096'>Distancia al hotel</Text>
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     { selectedDistance.name }
@@ -19,7 +19,7 @@ export const AccommodationsDistanceMenu = ({selectedDistance, setSelectedDistanc
                 <MenuList>
                     <MenuOptionGroup defaultValue='asc' type='radio'>
                         {
-                            accommodationsDistance.map( dist => (
+                            activitiesDistance.map( dist => (
                                 <MenuItemOption key={dist.id} value={dist.id} onClick={()=> setSelectedDistance(dist)}>
                                     {dist.name}
                                 </MenuItemOption>

@@ -16,14 +16,21 @@ export const AccommodationSearchBar = (props) => {
                     <form onSubmit={handleSubmit}>
                         <FormControl isInvalid={!!errors.accommodation && touched.accommodation}>
                             <Flex direction='row' alignItems='flex-end' gap={2}>
-                                <Flex direction='column' w='600px' alignItems='stretch'>
+                                <Flex direction='column' w='600px' alignItems='stretch' gap={1}>
                                     <Text as='b' size='xs' align='center' color='#718096'>¿Adónde querés alojarte?</Text>
                                     <Field
                                         as={Input}
                                         id="accommodation"
                                         name="accommodation"
                                         variant="filled"
-                                        placeholder='...'
+                                        placeholder='Ingresa el nombre'
+                                        validate={(value) => {
+                                            let error;
+                                            if (value.length > 0 && value.length < 3 ) {
+                                                error = "Ingresar al menos 3 caracteres";
+                                            }
+                                            return error;
+                                        }}
                                     />
                                 </Flex>
                                 <AccommodationsFilterMenu selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>

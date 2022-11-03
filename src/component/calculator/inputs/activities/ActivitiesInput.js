@@ -47,7 +47,7 @@ export const ActivitiesInputs = (props) => {
     }
 
     return (
-        <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
+        <Flex direction="column" alignContent="space-around" w='750px' mt='3vh'>
             <Heading textAlign='center' marginBottom={3}>
                 Actividades
             </Heading>

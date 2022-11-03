@@ -1,4 +1,4 @@
-import { Checkbox, HStack, NumberInput, NumberInputField, Select } from "@chakra-ui/react"
+import {Checkbox, Flex, HStack, NumberInput, NumberInputField, Select} from "@chakra-ui/react"
 import { isNull, isUndefined } from "lodash"
 import { useState } from "react"
 
@@ -28,10 +28,10 @@ export const MealItem = ({label, meal, handleChange}) => {
     }
 
     return(
-        <HStack>
+        <Flex justifyContent='space-between'>
             <Checkbox isChecked={!isDisabled} onChange={onCheckboxChange}>{label}</Checkbox>
             <HStack marginLeft='auto' onChange={(event) => {change(event)}}>
-                <NumberInput isDisabled={isDisabled} id='number' value={number} onChange={(event) => {setNumber(event)}}>
+                <NumberInput isDisabled={isDisabled} id='number' value={number} size='sm' onChange={(event) => {setNumber(event)}}>
                     <NumberInputField size='3'/>
                 </NumberInput>
                 <Select w='fit-content' size='sm' isDisabled={isDisabled} id='time' value={time} onChange={(event) => {setTime(event.target.value)}}>
@@ -39,6 +39,6 @@ export const MealItem = ({label, meal, handleChange}) => {
                     <option value='min'>Minutos</option>
                 </Select>
             </HStack>
-        </HStack>
+        </Flex>
     )
 }
