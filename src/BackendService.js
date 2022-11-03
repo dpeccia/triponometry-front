@@ -165,7 +165,7 @@ export const loadCalendarEvents = async (eventsList, startDate) => {
     const calendarRequest = {
         "events": eventsList,
         "startDate": {
-          "day": startDate.getDate(),
+          "day": startDate.getDate()+1,
           "hour": 0,
           "minute": 0,
           "month": startDate.getMonth(),

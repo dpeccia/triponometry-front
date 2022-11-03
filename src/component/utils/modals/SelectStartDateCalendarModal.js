@@ -9,18 +9,20 @@ import {
     Center,
     Input
 } from "@chakra-ui/react";
+import moment from 'moment';
+
 
 export const SelectStartDateCalendarModal = (props) => {
 
     const goToEdit = () => {
          
-        const dateValue = document.querySelector('input[type="date"]').value
+        const dateValue = document.querySelector('input[type="date"]').value + "T00:00:00"
 
         const startDate = new Date(dateValue)
 
-        startDate.setDate(startDate.getDate() + 1)
+        //startDate.setDate(startDate.getDate() + 1)
 
-        props.exportInfoLoader.calendarStartDate = new Date(startDate)
+        props.exportInfoLoader.calendarStartDate = startDate
 
         props.onConfirm()
         props.onClose()
@@ -41,7 +43,7 @@ export const SelectStartDateCalendarModal = (props) => {
                         <Center marginTop="10px">
                             {/* <DatePicker onChange={onChange} value={value} /> */}
                             <Input
-                                defaultValue={"2022-05-10"}
+                                defaultValue={moment(new Date()).format('YYYY-MM-DD')}
                                 size="md"
                                 type="date"
                             />
