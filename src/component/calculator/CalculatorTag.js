@@ -1,4 +1,5 @@
 import { Tag, TagLabel } from "@chakra-ui/react";
+import {isEqual} from "lodash";
 
 export const ItemCard = (props) => {
     if(props.children) return (
@@ -24,4 +25,13 @@ export const FreeDayCard = (props) => {
     if(props.freeDay) return (
         <ItemCard>{`${props.freeDay} dias libres`}</ItemCard>
     )
+}
+
+export const MobilityCard = (props) => {
+    if(isEqual(props.mobility,'DRIVING'))
+        return  <ItemCard>En automóvil</ItemCard>
+    if(isEqual(props.mobility,'BICYCLING'))
+        return  <ItemCard>En bicicleta</ItemCard>
+    if(isEqual(props.mobility,'WALKING'))
+        return  <ItemCard>Caminando</ItemCard>
 }
