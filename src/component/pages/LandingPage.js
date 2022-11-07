@@ -1,5 +1,4 @@
-import {Box, Button, Flex, Image, Link, Text} from "@chakra-ui/react";
-import {Link as ReachLink} from "react-router-dom";
+import {Button, Flex, Image, Text} from "@chakra-ui/react";
 import {useNavigate} from "react-router";
 
 export const LandingPage = () => {
@@ -15,19 +14,21 @@ export const LandingPage = () => {
                     <Flex direction='column' gap={3} w='450px' >
                         <Text fontSize='4xl'>Planificá tu viaje ideal!</Text>
                         <Text fontSize='md' textAlign='justify'>
-                            Creá tu cronograma óptimo de viaje en base a tus gustos,
+                            Creá tu cronograma óptimo de viaje en base a tus gustos
                             <br />
-                            tus tiempos y tu presupuesto con tan solo unos clicks
+                            y tus tiempos con tan solo unos clicks
                         </Text>
                         <Flex>
-                            <Button mt={4} w='150px' bg='#F0A7B4' fontWeight='bold' color='white'  onClick={() => navigate("/sign-up")}>
+                            <Button variant='solid' bg='#EFB4BF' shadow='md' mt={4} onClick={() => navigate("/sign-up")}>
                                 Registrarme
                             </Button>
                         </Flex>
-                        <Link as={ReachLink} to='/nuevo' color='#F0A7B4' mt={2}> Continuar sin registrarme </Link>
+                        <Button alignSelf='flex-start' variant='link' size='xs' fontWeight='normal' mt={1} onClick={() => navigate("/nuevo")}>
+                            Continuar sin registrarme
+                        </Button>
                     </Flex>
                     <Flex direction='column' justifyContent='space-between' alignItems='flex-end' grow='2'>
-                        <Button mb={4} bg='gray.400' fontWeight='bold' color='white'  onClick={() => navigate("/sign-in")}>
+                        <Button variant='solid' colorScheme='gray' shadow='md' mb={4} onClick={() => navigate("/sign-in")}>
                             Iniciar sesión
                         </Button>
                         <Image w='30%' h='80%' zIndex='-1' boxSize='3xl' src={'../landing.png'} />

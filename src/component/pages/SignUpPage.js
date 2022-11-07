@@ -1,4 +1,4 @@
-import {Flex, Button, Link, Text, HStack, Divider, Image} from "@chakra-ui/react"
+import {Flex, Button, Link, Text, HStack, Divider, Image, Box} from "@chakra-ui/react"
 import {useEffect, useState} from "react"
 import {Link as ReachLink, useNavigate} from "react-router-dom";
 import { logIn, signUp, googleLogIn } from "../../BackendService";
@@ -73,7 +73,9 @@ export const SignUpPage = (props) => {
             <Flex direction='column' grow={2} justifyContent='center' alignItems='center'>
                 <Flex direction='column' minW='440px' h='550px' borderWidth='1px' borderRadius='40px' px='5' py='6' boxShadow='lg'>
                     <Flex justifyContent='center'>
-                        <Image w='300px' mb={3} src={'../nombre-triponometry.png'} />
+                        <Box as='button' onClick={() => navigate("/")}>
+                            <Image w='300px' mb={3} src={'../nombre-triponometry.png'}/>
+                        </Box>
                     </Flex>
                     <Divider borderColor='blackAlpha.300' marginBottom={2}/>
                     <Flex direction='column' grow={2}>
