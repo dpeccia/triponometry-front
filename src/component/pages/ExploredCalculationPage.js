@@ -10,6 +10,7 @@ import {FaRegLightbulb} from "react-icons/fa";
 import {RatingDrawer} from "../explorer/RatingDrawer";
 import {HamburgerIcon} from "@chakra-ui/icons";
 import {MdOutlineAddComment, MdOutlineInsertComment} from "react-icons/md";
+import {BackButton} from "../utils/BackButton";
 
 export const ExploredCalculationPage = () => {
     const navigate = useNavigate()
@@ -65,14 +66,17 @@ export const ExploredCalculationPage = () => {
             {
                 isLoading ? <SpinnerSearchBox/> :
                     <>
-                        <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo
-                                calculatorName={calculation.name}
-                                calculatorInputs={calculation.calculatorInputs}
-                                calculatorOutputs={calculation.calculatorOutputs}
-                                userInfo={calculation.user}
-                                isMine={false}
-                                isAvatarEditable={false}/>
+                        <Flex alignItems='center' justifyContent='space-between' p={2}>
+                            <Flex alignItems='center' gap={1}>
+                                <BackButton onClick={() => navigate(`/explorar`)}/>
+                                <MyCalculationInfo
+                                  calculatorName={calculation.name}
+                                  calculatorInputs={calculation.calculatorInputs}
+                                  calculatorOutputs={calculation.calculatorOutputs}
+                                  userInfo={calculation.user}
+                                  isMine={false}
+                                  isAvatarEditable={false}/>
+                            </Flex>
                             <Flex mt={2} justifyContent='flex-end'>
                                 <Menu>
                                     <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>

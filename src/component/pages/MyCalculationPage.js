@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import {useNavigate, useParams} from "react-router";
 import { useEffect, useState } from "react";
 import { getMyTrip } from "../../BackendService";
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox";
@@ -13,8 +13,10 @@ import {HamburgerIcon} from "@chakra-ui/icons";
 import {RiInboxUnarchiveFill} from "react-icons/ri";
 import {FaEdit} from "react-icons/fa";
 import {EditAvatarImageModal} from "../utils/modals/EditAvatarImageModal";
+import {BackButton} from "../utils/BackButton";
 
 export const MyCalculationPage = () => {
+    const navigate = useNavigate()
     const params = useParams();
     const idCalculation = params.id;
 
@@ -82,17 +84,20 @@ export const MyCalculationPage = () => {
                 isValid ? (
                     isLoading ? <SpinnerSearchBox/> :
                         <>
-                            <Flex alignItems='center' justifyContent='space-between'>
-                                <MyCalculationInfo
-                                    calculatorName={calculation.name}
-                                    calculatorInputs={calculation.calculatorInputs}
-                                    calculatorOutputs={calculation.calculatorOutputs}
-                                    userInfo={calculation.user}
-                                    isDraft={isDraft()}
-                                    isMine={true}
-                                    isAvatarEditable={true}
-                                    handleEditAvatarClick={handleEditAvatarClick}
-                                    setNewImage={setHasNewImage}/>
+                            <Flex alignItems='center' justifyContent='space-between' p={2}>
+                                <Flex alignItems='center' gap={1}>
+                                    <BackButton onClick={() => navigate(`/mis-calculos`)}/>
+                                    <MyCalculationInfo
+                                      calculatorName={calculation.name}
+                                      calculatorInputs={calculation.calculatorInputs}
+                                      calculatorOutputs={calculation.calculatorOutputs}
+                                      userInfo={calculation.user}
+                                      isDraft={isDraft()}
+                                      isMine={true}
+                                      isAvatarEditable={true}
+                                      handleEditAvatarClick={handleEditAvatarClick}
+                                      setNewImage={setHasNewImage}/>
+                                </Flex>
                                 <Flex mt={2} justifyContent='flex-end'>
                                     <Menu>
                                         <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>

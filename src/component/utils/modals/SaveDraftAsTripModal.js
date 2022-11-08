@@ -44,7 +44,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
 
     return (
         <>
-            <Button leftIcon={<FaSave />} mt={5} mr="100px" w='200px' colorScheme='red' variant='solid' alignSelf='flex-end' 
+            <Button leftIcon={<FaSave />} variant='solid' bg='gray.300' alignSelf='flex-end'
                 onClick={() => {
                     setOverlay(<OverlayOne />)
                     onOpen()

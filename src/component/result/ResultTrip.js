@@ -27,7 +27,7 @@ export const ResultTrip = ({ calculatorInputs, calculatorOutputs, isDraft, logge
     }
 
     return (
-        <Flex justify='space-around' gap={2}>
+        <Flex justify='space-around' grow={1} gap={2}>
             <Flex flexDirection="column">
                 <Box margin={1} bg='#94A1AA' borderTopRadius='40px' px='3' py='3' boxShadow='lg'>
                     <CalculatorScreen calculatorInputs={calculatorInputs} width='500px' height='200px' />

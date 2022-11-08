@@ -4,10 +4,10 @@ import { PdfButtonExport1 } from "./ExportPdf";
 import { SaveCalculationModal } from "../../utils/modals/SaveCalculationModal";
 import { ResultTrip } from "../../result/ResultTrip";
 import { IconButton } from "@chakra-ui/button";
-import { MdArrowBackIosNew } from "react-icons/md";
 import { SaveDraftAsTripModal } from "../../utils/modals/SaveDraftAsTripModal";
 import { PlantillaBadge } from "../../utils/PlantillaBadge";
 import {HamburgerIcon} from "@chakra-ui/icons";
+import {BackButton} from "../../utils/BackButton";
 
 export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original, loggedIn }) => {
 
@@ -33,13 +33,14 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
 
     return (
         <Flex flexDirection="column" width="100%">
-            <Flex width="100%">
-                <IconButton variant='ghost' as={MdArrowBackIosNew} size='lg' mt={5} ml={5} p={1} onClick={() => setShowResults(false)} />
-                <Flex alignItems='center' width="100%" justifyContent='space-between'>
+            <Flex alignItems='center' width="100%" justifyContent='space-between' p={2}>
+                <Flex alignItems='center' gap={1}>
+                    <BackButton onClick={() => setShowResults(false)}/>
                     <NewCalculationResultInfo calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
-                    {plantillaBadge()}
-                    { loggedIn &&
-                    <Flex mt={2} justifyContent='flex-end'>
+                </Flex>
+                { loggedIn &&
+                    <Flex mt={2} justifyContent='flex-end' gap={8}>
+                        {plantillaBadge()}
                         <Menu>
                             <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
                             <MenuList>
@@ -48,11 +49,13 @@ export const NewCalculationResult = ({ setShowResults, calculatorInputs, calcula
                                 </MenuItem>
                             </MenuList>
                         </Menu>
-                    </Flex>}
-                </Flex>
+                    </Flex>
+                }
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} loggedIn={loggedIn} />
-            {saveModal()}
+            <Flex justifyContent='flex-end'>
+                {saveModal()}
+            </Flex>
         </Flex>
     );
 }

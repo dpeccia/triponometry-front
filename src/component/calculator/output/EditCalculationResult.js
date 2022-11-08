@@ -1,26 +1,32 @@
-import { Flex, Box } from "@chakra-ui/react";
+import {Flex, Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
 import { SaveEditionModal } from "../../utils/modals/SaveEditionModal";
 import {ResultTrip} from "../../result/ResultTrip";
 import { MyCalculationInfo } from "../../my-calculations/MyCalculationInfo";
 import { EditBadge } from "../../utils/EditBadge";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { IconButton } from "@chakra-ui/button";
 import { PdfButtonExport1 } from "./ExportPdf";
+import {BackButton} from "../../utils/BackButton";
+import {IconButton} from "@chakra-ui/button";
+import {HamburgerIcon} from "@chakra-ui/icons";
 
 export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status, userInfo, loggedIn }) => {
-
-
     return (
         <Flex flexDirection="column" width="100%">
-            <Flex width="100%">
-                <IconButton variant='ghost' as={MdArrowBackIosNew} size='lg' mt={5} ml={5} p={1} onClick={() => setShowResults(false)}/>
-                <Flex alignItems='center' width="100%" justifyContent='space-between'>
-                    <MyCalculationInfo ml='25' calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} userInfo={userInfo}/>
-                    <EditBadge justify='end' align='center' />
+            <Flex alignItems='center' width="100%" justifyContent='space-between' p={2}>
+                <Flex alignItems='center' gap={1}>
+                    <BackButton onClick={() => setShowResults(false)}/>
+                    <MyCalculationInfo calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} userInfo={userInfo}/>
                 </Flex>
-                <Box boxSize='90px' marginLeft={1000}>
-                    <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
-                </Box>
+                <Flex mt={2} justifyContent='flex-end' gap={8}>
+                    <EditBadge justify='end' align='center'/>
+                    <Menu>
+                        <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
+                        <MenuList>
+                            <MenuItem>
+                                <PdfButtonExport1 calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs}/>
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+                </Flex>
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} loggedIn={loggedIn}/>
             <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>

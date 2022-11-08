@@ -63,7 +63,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
 
     return (
         <>
-            <Button leftIcon={<FaSave />} mt={5} mr="100px" w='150px' colorScheme='red' variant='solid' alignSelf='flex-end' 
+            <Button leftIcon={<FaSave />} variant='solid' bg='gray.300' alignSelf='flex-end'
                 onClick={() => {
                     setOverlay(<OverlayOne />)
                     onOpen()
