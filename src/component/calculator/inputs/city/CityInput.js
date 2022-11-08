@@ -52,7 +52,7 @@ export const CityInput = (props) =>{
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}
-                description='Continua con Alojamiento'/>
+                description='Continuá con Alojamiento'/>
         </Flex>
     )
 }

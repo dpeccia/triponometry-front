@@ -35,7 +35,7 @@ export const RestorePasswordStep = ({ restoreInfo, closeModal }) => {
         <>
             <ModalBody>
                 <Text fontSize='md'>
-                    Todo listo para restablecer tu contraseña!
+                    ¡Todo listo para restablecer tu contraseña!
                 </Text>
                 <Box mt={3} mx={5} >
                     <FormControl>

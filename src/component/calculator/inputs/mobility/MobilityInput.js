@@ -63,7 +63,7 @@ export const MobilityInput = (props) => {
                                                 fontWeight='semibold'
                                                 lineHeight='tight'
                                                 noOfLines={1}>
-                                                En automovil
+                                                En auto
                                             </Box>
                                         </Flex>
                                     </Radio>
@@ -97,10 +97,10 @@ export const MobilityInput = (props) => {
                         <BsArrowLeftSquare size={40}/>
                         <Flex direction='column'>
                             <Text fontSize='lg'>
-                                Completaste todos los datos necesarios.
+                                Completaste todos los datos necesarios
                             </Text>
                             <Text fontSize='lg'>
-                                    Clickea el igual para obtener tu cálculo de viaje
+                                    Hacé click en el igual para obtener tu cálculo de viaje
                             </Text>
                         </Flex>
                     </Flex>

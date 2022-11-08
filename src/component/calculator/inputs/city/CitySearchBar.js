@@ -35,17 +35,17 @@ export const CitySearchBar = (props) => {
                         <FormControl isInvalid={!!errors.city && touched.city}>
                             <Flex direction='row' alignItems='flex-end' gap={2}>
                                 <Flex direction='column' w='600px' alignItems='stretch' gap={1}>
-                                    <Text as='b' size='xs' color='#718096'>¿Adónde querés viajar?</Text>
+                                    <Text as='b' size='xs' color='#718096'>¿A dónde querés viajar?</Text>
                                     <Field
                                         as={Input}
                                         id="city"
                                         name="city"
                                         variant="filled"
-                                        placeholder='Ingresar la ciudad'
+                                        placeholder='Ingresá la ciudad'
                                         validate={(value) => {
                                             let error;
                                             if (value.length < 1 ) {
-                                                error = "Debes ingresar una ciudad valida";
+                                                error = "Tenés que ingresar al menos un caracter";
                                             }
                                             return error;
                                         }}

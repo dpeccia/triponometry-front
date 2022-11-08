@@ -11,7 +11,7 @@ export const UsernameInput = (props) => {
     return (
         <InputGroup mt={2} mb={1}>
             <InputLeftElement pointerEvents='none' children={<BsFillPersonFill/>}/>
-            <Input onChange={handleUsernameChange} placeholder="Username"/>
+            <Input onChange={handleUsernameChange} placeholder="Nombre de usuario"/>
         </InputGroup>
     )
 }

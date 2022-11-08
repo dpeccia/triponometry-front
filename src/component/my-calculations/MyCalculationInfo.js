@@ -43,11 +43,6 @@ export const MyCalculationInfo = (props) => {
                         {heading()}
                         { !props.isMine && verifiedUser()}
                     </Flex>
-                    <Flex direction='column' alignContent='space-around' ml={3}>
-                        <Heading size='lg' mb={2}>{props.calculatorName}</Heading>
-                        {heading()}
-                        {verifiedUser()}
-                    </Flex>
                 </Flex>
             </Flex>
         </>

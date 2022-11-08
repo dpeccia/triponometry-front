@@ -33,7 +33,7 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Editado!', `Su borrador ${calculatorName} fue editado correctamente`)
+            showSuccessToast('¡Editado!', `Tu borrador ${calculatorName} fue editado correctamente`)
             onClose()
             navigate("/mis-calculos", {state: {defaultIndex: 1}})
         } else {
@@ -57,7 +57,7 @@ export const SaveDraftEditionModal = ({ tripId, calculatorName, calculatorInputs
                     <ModalBody>
                         <Flex direction='column'>
                             <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés actualizar el borrador <Text as='abbr' fontWeight='bold'> {calculatorName} </Text>?
+                                ¿Estás seguro que querés actualizar el borrador <Text as='abbr' fontWeight='bold'> {calculatorName} </Text>?
                             </Text>
                         </Flex>
                     </ModalBody>

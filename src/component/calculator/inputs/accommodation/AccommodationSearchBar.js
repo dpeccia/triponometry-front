@@ -17,17 +17,17 @@ export const AccommodationSearchBar = (props) => {
                         <FormControl isInvalid={!!errors.accommodation && touched.accommodation}>
                             <Flex direction='row' alignItems='flex-end' gap={2}>
                                 <Flex direction='column' w='600px' alignItems='stretch' gap={1}>
-                                    <Text as='b' size='xs' align='center' color='#718096'>¿Adónde querés alojarte?</Text>
+                                    <Text as='b' size='xs' align='center' color='#718096'>¿A dónde querés alojarte?</Text>
                                     <Field
                                         as={Input}
                                         id="accommodation"
                                         name="accommodation"
                                         variant="filled"
-                                        placeholder='Ingresa el nombre'
+                                        placeholder='Ingresá el nombre'
                                         validate={(value) => {
                                             let error;
                                             if (value.length > 0 && value.length < 3 ) {
-                                                error = "Ingresar al menos 3 caracteres";
+                                                error = "Tenés que ingresar al menos 3 caracteres";
                                             }
                                             return error;
                                         }}

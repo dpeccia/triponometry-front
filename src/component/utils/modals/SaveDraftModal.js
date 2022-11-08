@@ -40,7 +40,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
 
     const checkError = () => {
         if(error)
-            return <FormErrorMessage>Debe ingresar un nombre</FormErrorMessage>
+            return <FormErrorMessage>Tenés que ingresar un nombre</FormErrorMessage>
     }
 
     const saveTrip = async () => {
@@ -53,7 +53,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
         const response = await saveNewTrip(tripName, calculatorInputs, null)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Borrador guardado!', `Su borrador a ${calculatorInputs.city.name} fue guardado correctamente`)
+            showSuccessToast('¡Borrador guardado!', `Tu borrador a ${calculatorInputs.city.name} fue guardado correctamente`)
             onClose()
             navigate("/mis-calculos",{state: {defaultIndex: 1}})
         } else {
@@ -77,12 +77,12 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
                     <ModalBody>
                         <Flex direction='column'>
                             <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés guardar el progreso de tu viaje a <Text as='abbr' fontWeight='bold'> {calculatorInputs.city.name} </Text> como borrador?
+                                ¿Estás seguro que querés guardar el progreso de tu viaje a <Text as='abbr' fontWeight='bold'> {calculatorInputs.city.name} </Text> como borrador?
                             </Text>
                             <Flex mt={5}>
                                 <Avatar size='2xl' src={calculatorInputs.city.imageUrl} mr={4}/>
                                 <FormControl isInvalid={error}>
-                                    <FormLabel>Ingresá un nombre para identificarlo!</FormLabel>
+                                    <FormLabel>¡Ingresá un nombre para identificarlo!</FormLabel>
                                     <Input placeholder='Nombre' value={tripName} onChange={onNameInputChange}/>
                                     {checkError()}
                                 </FormControl>
@@ -91,7 +91,7 @@ export const SaveDraftModal = ({ calculatorInputs, isDisabled }) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Sí, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

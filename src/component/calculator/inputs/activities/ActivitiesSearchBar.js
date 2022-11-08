@@ -27,11 +27,11 @@ export const ActivitiesSearchBar = (props) => {
                                         id="activity"
                                         name="activity"
                                         variant="filled"
-                                        placeholder='Ingresa el nombre'
+                                        placeholder='Ingresá el nombre'
                                         validate={(value) => {
                                             let error;
                                             if (value.length > 0 && value.length < 3 ) {
-                                                error = "Ingresar al menos 3 caracteres";
+                                                error = "Tenés que ingresar al menos 3 caracteres";
                                             }
                                             return error;
                                         }}

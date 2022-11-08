@@ -13,16 +13,16 @@ export const NotFound = () => {
                     <Image boxSize='xs' m={5} src={'../compass.png'} />
                     <Flex direction='column' w='450px'>
                         <Text color='#F08B9D ' fontSize='4xl' as='b'>
-                            Oops! Por aqui no es...
+                            ¡Oops! Por acá no es...
                         </Text>
                         <Text fontSize='xl' as='cite'>
                             '{pathname}'
                         </Text>
                         <Text fontSize='xl'>
-                            no existe o no tienes autorizacion.
+                            no existe o no tenés autorización.
                         </Text>
                         <Button leftIcon={<ArrowLeftIcon />} mt={4} w='230px' bg='gray.400' color='white' onClick={() => navigate("/mis-calculos")}>
-                            Volver a Mis calculos
+                            Volver a Mis Cálculos
                         </Button>
                     </Flex>
                 </Flex>

@@ -39,7 +39,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
 
     const checkError = () => {
         if(error)
-            return <FormErrorMessage>Debe ingresar un nombre</FormErrorMessage>
+            return <FormErrorMessage>Tenés que ingresar un nombre</FormErrorMessage>
     }
 
     const saveTrip = async () => {
@@ -52,7 +52,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
         const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Viaje guardado!', `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
+            showSuccessToast('¡Viaje guardado!', `Tu viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
             onClose()
             navigate("/mis-calculos")
         } else {
@@ -70,7 +70,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
                 }}>
                 Guardar
             </Button>
-            <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
+            <Modal isCentered isOpen={isOpen} onClose={onClose} size='xl'>
                 {overlay}
                 <ModalContent>
                     <ModalHeader> Guardar cálculo </ModalHeader>
@@ -78,13 +78,13 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
                     <ModalCloseButton/>
                     <ModalBody>
                         <Flex direction='column'>
-                            <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés guardar tu cálculo de <Text as='abbr' fontWeight='bold'> {calculatorInputs.city.name} </Text>?
+                            <Text alignSelf='center'>
+                                ¿Estás seguro que querés guardar tu cálculo de <Text as='abbr' fontWeight='bold'> {calculatorInputs.city.name} </Text>?
                             </Text>
                             <Flex mt={5}>
                                 <Avatar size='2xl' src={calculatorInputs.city.imageUrl} mr={4}/>
                                 <FormControl isInvalid={error}>
-                                    <FormLabel>Ingresá un nombre para identificarlo!</FormLabel>
+                                    <FormLabel>¡Ingresá un nombre para identificarlo!</FormLabel>
                                     <Input placeholder='Nombre' value={tripName} onChange={onNameInputChange}/>
                                     {checkError()}
                                 </FormControl>
@@ -93,7 +93,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Si, guardar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveTrip}> Sí, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

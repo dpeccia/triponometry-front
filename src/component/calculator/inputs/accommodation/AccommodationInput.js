@@ -27,7 +27,7 @@ export const AccommodationInput = (props) => {
     const addAccommodation = (accommodation) => {
         setSelectedAccommodation(accommodation)
         setStepFinished(true)
-        showSuccessToast('Alojamiento seleccionado!', `Elegiste ${accommodation.name}`)
+        showSuccessToast('¡Alojamiento seleccionado!', `Elegiste ${accommodation.name}`)
     }
 
     return(
@@ -43,7 +43,7 @@ export const AccommodationInput = (props) => {
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}
-                description='Continua con Actividades'/>
+                description='Continuá con Actividades'/>
         </Flex>
     )
 }

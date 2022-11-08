@@ -49,7 +49,7 @@ export const HorariosInput = (props) => {
                 <NextButton
                     stepFinished={!isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse) && !isInvalid()}
                     onClick={onClick}
-                    description='Continua con Transporte'/>
+                    description='Continuá con Transporte'/>
             </Flex>
     )
 }

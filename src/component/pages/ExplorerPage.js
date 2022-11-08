@@ -41,7 +41,7 @@ export const ExplorerPage = () => {
 
     return (
         <Flex direction='column' grow={2} ml={8} mr={8}>
-            <Text as='b' fontSize='3xl' color='#E87288'> Explorá cálculos de viaje de otros usuarios! </Text>
+            <Text as='b' fontSize='3xl' color='#E87288'> ¡Explorá cálculos de viaje de otros usuarios! </Text>
             <Text mb={3} fontSize='md' color='#718096'>Podés filtrar y ordenar los viajes por cualquiera de las columnas, calificarlos y ver opiniones. Si un viaje te gustó mucho podés usarlo como plantilla para generar tu propio recorrido a partir de éste!</Text>
             { isLoading ? <SpinnerSearchBox/> : <ExplorerTable data={trips} />}
         </Flex>

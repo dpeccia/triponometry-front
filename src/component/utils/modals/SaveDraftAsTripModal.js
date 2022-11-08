@@ -33,7 +33,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Guardado!', `Su viaje ${calculatorName} fue generado correctamente`)
+            showSuccessToast('¡Guardado!', `Tu viaje ${calculatorName} fue generado correctamente`)
             onClose()
             navigate("/mis-calculos")
         } else {
@@ -60,7 +60,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
                     <ModalBody>
                         <Flex direction='column'>
                             <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés guardar el calculo? El borrador asociado dejará de existir
+                                ¿Estás seguro que querés guardar el cálculo? Su borrador asociado dejará de existir
                             </Text>
                         </Flex>
                     </ModalBody>

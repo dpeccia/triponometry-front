@@ -32,7 +32,7 @@ export const SaveRatingModal = (props) => {
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
         if (response?.status !== "Error") {
-            showSuccessToast('Opinión guardada!', `Su opinión a ${props.calculatorName} fue guardado correctamente`)
+            showSuccessToast('¡Opinión guardada!', `Tu opinión a ${props.calculatorName} fue guardada correctamente`)
             props.onClose()
             props.setNewRating(true)
         } else {
@@ -60,7 +60,7 @@ export const SaveRatingModal = (props) => {
                                 <RadioGroup onChange={setHasDone} colorScheme='blackAlpha'>
                                     <HStack spacing={5}>
                                         <Radio value={'true'}>
-                                            Si
+                                            Sí
                                         </Radio>
                                         <Radio value={'false'}>
                                             No
@@ -72,7 +72,7 @@ export const SaveRatingModal = (props) => {
                                 <FormLabel>Escribir tu opinión</FormLabel>
                                 <Textarea
                                     onChange={(e) => setReview(e.target.value)}
-                                    placeholder='¿Queres decirnos algo más sobre tu calificación?'
+                                    placeholder='¿Querés decirnos algo más sobre tu calificación?'
                                     size='sm'
                                 />
                             </FormControl>
@@ -80,7 +80,7 @@ export const SaveRatingModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onCancel} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} isDisabled={isEmpty(score) || isEmpty(hasDone)} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
+                        <Button isLoading={isLoading} isDisabled={isEmpty(score) || isEmpty(hasDone)} variant='solid' bg='#EFB4BF' onClick={saveRating}> Sí, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

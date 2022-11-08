@@ -12,7 +12,7 @@ export const LandingPage = () => {
 
                 <Flex grow='2' alignItems='center' alignSelf='center'>
                     <Flex direction='column' gap={3} w='450px' >
-                        <Text fontSize='4xl'>Planificá tu viaje ideal!</Text>
+                        <Text fontSize='4xl'>¡Planificá tu viaje ideal!</Text>
                         <Text fontSize='md' textAlign='justify'>
                             Creá tu cronograma óptimo de viaje en base a tus gustos
                             <br />

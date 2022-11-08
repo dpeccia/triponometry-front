@@ -71,7 +71,7 @@ export var ResultCalendar = ({events,daysAmount, loggedIn}) => {
   const NotLoggedMessage = () => {
     return(
       <Text fontSize='md' mt={4}>
-        Si querés guardar tu viaje y acceder a mas funcionalidades {<Link as={ReachLink} to='/sign-up' color='#F0A7B4' fontWeight='bold'> registrate </Link>} o {<Link as={ReachLink} to='/sign-in' color='#F0A7B4' fontWeight='bold'> inicia sesión </Link>}
+        Si querés guardar tu viaje y acceder a más funcionalidades {<Link as={ReachLink} to='/sign-up' color='#F0A7B4' fontWeight='bold'> registrate </Link>} o {<Link as={ReachLink} to='/sign-in' color='#F0A7B4' fontWeight='bold'> inicia sesión </Link>}
       </Text>
     )
   }

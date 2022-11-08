@@ -85,7 +85,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         if(showAd) {
             return (
                 <Flex direction='column' minHeight='600px' w='100%' justify='center' align='center'>
-                    <Heading size='lg' mb={2}>Calculando tu viaje ideal en {calculatorInputs.city.name}...</Heading>
+                    <Heading size='lg' mb={2}>Calculando tu viaje ideal a {calculatorInputs.city.name}...</Heading>
                     <iframe 
                         width="1200" 
                         height="630" 

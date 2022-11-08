@@ -27,12 +27,12 @@ export const EditCalculationModal = (props) => {
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text>
-                            ¿Estas seguro que deseas editar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                            ¿Estás seguro que querés editar el cálculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
                         </Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button variant='solid' bg='#EFB4BF' onClick={goToEdit}> Si, editar </Button>
+                        <Button variant='solid' bg='#EFB4BF' onClick={goToEdit}> Sí, editar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

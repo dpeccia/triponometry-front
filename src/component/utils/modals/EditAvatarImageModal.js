@@ -37,7 +37,7 @@ export const EditAvatarImageModal = (props) => {
         const response = await updateTripAvatar(props.calculationId, imageUrl)
 
         if (response?.status !== "Error") {
-            showSuccessToast('Imagen guardada!', `Tu nueva imagen fue guardado correctamente`)
+            showSuccessToast('¡Imagen guardada!', `Tu nueva imagen fue guardada correctamente`)
             props.onClose()
             props.setHasNewImage(true)
         } else {
@@ -66,14 +66,14 @@ export const EditAvatarImageModal = (props) => {
                         </Text>
                         <Flex direction='column' mt={2} mb={2}>
                             <FormControl isInvalid={error}>
-                                <Input placeholder='Ingresa acá el link...' onChange={onImageUrlInputChange}  size='sm' />
+                                <Input placeholder='Ingresá acá el link...' onChange={onImageUrlInputChange}  size='sm' />
                                 {error && <FormErrorMessage> Recordá que debe tener el formato .jpg o .png </FormErrorMessage>}
                             </FormControl>
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onCancel} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveImageUrl}> Si, editar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveImageUrl}> Sí, editar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

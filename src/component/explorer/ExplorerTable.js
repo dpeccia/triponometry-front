@@ -107,7 +107,7 @@ export const ExplorerTable = ({ data }) => {
                     <IconButton as={HiChevronDoubleRight} onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} size='sm' p={2} bg='#EFB4BF'/>
                 </Flex>
                 <Text ml={2} fontSize='sm' as='b' color='#F5A0B0'>
-                    {`Pagina ${pageIndex + 1} de ${pageOptions.length}`}
+                    {`Página ${pageIndex + 1} de ${pageOptions.length}`}
                 </Text>
             </Flex>
         </>

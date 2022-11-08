@@ -56,7 +56,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
             const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
-                showSuccessToast('Viaje guardado!', `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
+                showSuccessToast('¡Viaje guardado!', `Tu viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {
@@ -67,7 +67,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
             const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
-                showSuccessToast('Editado!', `Su viaje a ${calculatorInputs.city.name} fue editado correctamente`)
+                showSuccessToast('¡Editado!', `Tu viaje a ${calculatorInputs.city.name} fue editado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {

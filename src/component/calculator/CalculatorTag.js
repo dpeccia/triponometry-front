@@ -23,7 +23,7 @@ export const BedCard = (props) => {
 
 export const FreeDayCard = (props) => {
     if(props.freeDay) return (
-        <ItemCard>{`${props.freeDay} dias libres`}</ItemCard>
+        <ItemCard>{`${props.freeDay} días libres`}</ItemCard>
     )
 }
 
