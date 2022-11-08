@@ -53,13 +53,13 @@ export const CalculatorComponent = (props) => {
                     <CalculatorButton column='2' row='3' icon={<DollarIcon w='70%' h='70%'/>} input={{}} onClick={() => {}} />
 
                     <GridItem gridColumnStart='3' gridRowStart='1' w='100%' h='70px'>
-                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<MinusIcon w='40%' h='40%'/>} onClick={() => props.handleClick("Eliminar")} />
+                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<MinusIcon w='40%' h='40%'/>} isDisabled={true} onClick={() => props.handleClick("Eliminar")} />
                     </GridItem>
                     <GridItem gridColumnStart='4' gridRowStart='1' w='100%' h='70px'>
                         {draftModal()}
                     </GridItem>
                     <GridItem gridColumnStart='3' gridRowStart='2' w='100%' h='100%' rowSpan='2'>
-                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<AddIcon w='35%' h='35%' />} onClick={() => props.handleClick("Agregar")}/>
+                        <IconButton bg='gray.200' boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<AddIcon w='35%' h='35%' />} isDisabled={true} onClick={() => props.handleClick("Agregar")}/>
                     </GridItem>
                     <GridItem gridColumnStart='4' gridRowStart='2' w='100%' h='100%' rowSpan='2'>
                         <IconButton bg={backgroundColor} filter={filter} isDisabled={isDisabled} boxShadow='2xl' borderRadius='15' w='100%' h='100%' icon={<FaEquals w='100%' h='100%' />} onClick={() => props.calculateTrip()}/>

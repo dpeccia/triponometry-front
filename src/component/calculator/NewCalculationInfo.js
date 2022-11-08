@@ -60,12 +60,12 @@ export const NewCalculationInfo = () => {
 
     return (
         <Flex direction='column' w='440px'>
-            <Tag mt={7} p={3} colorScheme='yellow' >
-                <TagLeftIcon boxSize='25px' as={InfoOutlineIcon} color='yellow.600'/>
-                <Text fontSize='md' color='yellow.600'>{actualInformation}</Text>
+            <Tag mt={7} p={3} colorScheme='blue' >
+                <TagLeftIcon boxSize='25px' as={InfoOutlineIcon} color='blue.600'/>
+                <Text fontSize='md' color='blue.600'>{actualInformation}</Text>
             </Tag>
-            <Progress colorScheme='yellow' bgColor='yellow.100' value={actualProgress} size='sm' />
-            <Flex mt={1} direction='row' justifyContent='flex-end' color='yellow.600'>
+            <Progress colorScheme='blue' bgColor='blue.100' value={actualProgress} size='sm' />
+            <Flex mt={1} direction='row' justifyContent='flex-end' color='blue.600'>
                 <IconButton mr={1} variant='ghost' size='xs' as={MdNavigateBefore} onClick={previousInformation}/>
                 <Text>{helpInformation.indexOf(actualInformation) + 1} de {size(helpInformation)}</Text>
                 <IconButton ml={1} variant='ghost' size='xs' as={MdNavigateNext} onClick={nextInformation}/>

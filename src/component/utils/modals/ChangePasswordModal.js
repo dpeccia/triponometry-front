@@ -5,6 +5,7 @@ import { updateUserPassword } from "../../../BackendService"
 import { useNavigate } from "react-router"
 import { ConfirmPassInput } from "../../login/ConfirmPassInput"
 import { useToast } from "../useToast"
+import {BsNutFill} from "react-icons/bs";
 
 export const ChangePasswordModal = () => {
 
@@ -51,7 +52,7 @@ export const ChangePasswordModal = () => {
 
     return(
         <>
-            <MenuItem onClick={onOpen}> Cambiar contraseña </MenuItem>
+            <MenuItem icon={<BsNutFill/>} onClick={onOpen}> Cambiar contraseña </MenuItem>
             <Modal isCentered isOpen={isOpen} onClose={handleClose} size='lg'>
                 <ModalOverlay/>
                 <ModalContent>

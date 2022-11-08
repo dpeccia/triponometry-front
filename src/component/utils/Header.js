@@ -2,6 +2,7 @@ import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuIte
 import {Link as ReachLink} from "react-router-dom";
 import { isEmpty } from "lodash";
 import { ChangePasswordModal } from "./modals/ChangePasswordModal";
+import {MdLogin, MdLogout} from "react-icons/md";
 
 const Logo = () => {
     return (
@@ -36,13 +37,13 @@ const NavBar = (props) =>{
     const loginlogout = () => {
         if(!isEmpty(props.username)){
             return(               
-                <MenuItem onClick={handleLogClick}>
+                <MenuItem icon={<MdLogout/>} onClick={handleLogClick}>
                     Cerrar sesión
                 </MenuItem>
             )
         } else {
             return(
-                <MenuItem as={ReachLink} to="/sign-in">
+                <MenuItem icon={<MdLogin/>} as={ReachLink} to="/sign-in">
                     Iniciar sesión
                 </MenuItem>
             )
