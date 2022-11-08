@@ -17,6 +17,7 @@ import { IconButton } from "@chakra-ui/button";
 import { DownloadCalendarInfoModal } from '../utils/modals/DownloadCalendarInfoModal';
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 import { Link as ReachLink } from "react-router-dom";
+import {FiInfo} from "react-icons/fi";
 
 
 moment.locale('en-GB');
@@ -79,10 +80,9 @@ export var ResultCalendar = ({events,daysAmount, loggedIn}) => {
     if(loggedIn){
       return(
         <>
-        <Flex alignItems='center' justify='space-between' mt={3}>
-          
+        <Flex alignItems='center' mt={3} gap={1}>
           <ExportButton exportType='calendar' requestData={events} fileType='text/plain' fileName='myCalendar.ics' downloadText='Descargar calendario'/>
-          <IconButton p={1} variant='ghost' color='yellow.500' as={InfoOutlineIcon} onClick={handleClick}/>
+          <IconButton p={1} size='sm' colorScheme='blackAlpha' variant='ghost' as={FiInfo} onClick={handleClick}/>
         </Flex>
         <DownloadCalendarInfoModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} overlay={overlay}/>
         </>

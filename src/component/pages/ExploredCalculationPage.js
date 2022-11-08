@@ -66,7 +66,13 @@ export const ExploredCalculationPage = () => {
                 isLoading ? <SpinnerSearchBox/> :
                     <>
                         <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} userInfo={calculation.user}/>
+                            <MyCalculationInfo
+                                calculatorName={calculation.name}
+                                calculatorInputs={calculation.calculatorInputs}
+                                calculatorOutputs={calculation.calculatorOutputs}
+                                userInfo={calculation.user}
+                                isMine={false}
+                                isAvatarEditable={false}/>
                             <Flex mt={2} justifyContent='flex-end'>
                                 <Menu>
                                     <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>

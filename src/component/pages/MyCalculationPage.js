@@ -84,12 +84,13 @@ export const MyCalculationPage = () => {
                         <>
                             <Flex alignItems='center' justifyContent='space-between'>
                                 <MyCalculationInfo
-                                    calculationId={calculation.id}
                                     calculatorName={calculation.name}
                                     calculatorInputs={calculation.calculatorInputs}
                                     calculatorOutputs={calculation.calculatorOutputs}
                                     userInfo={calculation.user}
                                     isDraft={isDraft()}
+                                    isMine={true}
+                                    isAvatarEditable={true}
                                     handleEditAvatarClick={handleEditAvatarClick}
                                     setNewImage={setHasNewImage}/>
                                 <Flex mt={2} justifyContent='flex-end'>

@@ -1,9 +1,11 @@
 import {Avatar, Box, Flex, Text} from "@chakra-ui/react";
-import {Icon, StarIcon} from "@chakra-ui/icons";
-import {BsFillCheckCircleFill, BsFillXCircleFill} from "react-icons/bs";
+import {Icon} from "@chakra-ui/icons";
+import {BsFillCheckCircleFill, BsFillPatchCheckFill, BsFillXCircleFill} from "react-icons/bs";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getUserInfo } from "../../BackendService";
+import {Stars} from "../utils/Stars";
+import {isEmpty} from "lodash";
 
 export const RatingCard = (props) => {
 
@@ -20,52 +22,44 @@ export const RatingCard = (props) => {
     }
 
     return (
-        <Box m={1} bg='gray.100' borderWidth='1px' borderRadius='xl' boxShadow='md' overflow='hidden'>
+        <Box m={1} bg='gray.50' borderWidth='1px' borderRadius='xl' boxShadow='md' overflow='hidden'>
             <Box display='flex' justifyContent='space-between'>
                 <Box p={3}>
-                    <Flex>
-                        <Flex>
-                            <Avatar bg='#EFB4BF'/>
-                        </Flex>
-                        <Flex ml={3} direction='column' gap={1}>                            
-                            <Flex alignItems='center'>
-                                <Text as='b'> {userInfo.username} </Text>
-                                <Text as='b' fontSize='md' ml={1}>{props.score}</Text>
-                                <StarIcon/>
-                            </Flex>
+                    <Flex direction='column'>
+                        <Flex alignItems='center'>
                             <Flex>
+                                <Avatar name={userInfo.username}/>
+                            </Flex>
+                            <Flex ml={3} direction='column' gap={1}>
+                                <Flex alignItems='center' gap={1}>
+                                    <Text as='b' noOfLines={1}> {userInfo.username} </Text>
+                                    { userInfo.verified && <Flex><Icon as={BsFillPatchCheckFill} color='blue.400'/></Flex>}
+                                </Flex>
+                                <Flex gap={3}>
+                                    <Stars rating={props.score}/>
+                                    {
+                                        props.hasDone ? (
+                                            <Flex alignItems='center'>
+                                                <Icon as={BsFillCheckCircleFill} color='#8AA7BC'/>
+                                                <Text ml={1} as='b' fontSize='sm' color='#8AA7BC'> realizó el viaje </Text>
+                                            </Flex>
+                                        ):(
+                                            <Flex alignItems='center'>
+                                                <Icon as={BsFillXCircleFill} color='#8AA7BC'/>
+                                                <Text ml={1} as='b' fontSize='sm' color='#8AA7BC'> no realizó el viaje </Text>
+                                            </Flex>
+                                        )
+                                    }
+                                </Flex>
+                            </Flex>
+                        </Flex>
+                        { !isEmpty(props.review) &&
+                            <Flex m={1}>
                                 <Text>
                                     {props.review}
                                 </Text>
                             </Flex>
-                            <Flex>
-                                    {
-                                        props.hasDone ? (
-                                            <Flex alignItems='center'>
-                                                <Icon as={BsFillCheckCircleFill} color='green.400'/>
-                                                <Text ml={1} as='b' fontSize='sm' color='green.400'> realizó el viaje </Text>
-                                            </Flex>
-                                        ):(
-                                            <Flex alignItems='center'>
-                                                <Icon as={BsFillXCircleFill} color='red.400'/>
-                                                <Text ml={1} as='b' fontSize='sm' color='red.400'> no realizó el viaje </Text>
-                                            </Flex>
-                                        )
-
-                                    }
-                                    {
-                                        userInfo.verified ? (
-                                            <Flex alignItems='center' ml={1}>
-                                                <Icon as={BsFillCheckCircleFill} color='blue.400'/>
-                                                <Text ml={1} as='b' fontSize='sm' color='blue.400'> Usuario Verificado </Text>
-                                            </Flex>
-                                        ):(
-                                            <></>
-                                        )
-
-                                    }
-                            </Flex>
-                        </Flex>
+                        }
                     </Flex>
                 </Box>
             </Box>

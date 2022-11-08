@@ -12,6 +12,7 @@ import { useState } from "react"
 import {saveNewRating} from "../../BackendService";
 import { useToast } from "../utils/useToast";
 import {RatingButtons} from "../utils/RatingButtons";
+import {isEmpty} from "lodash";
 
 export const SaveRatingModal = (props) => {
     const [showSuccessToast, showErrorToast] = useToast()
@@ -19,6 +20,12 @@ export const SaveRatingModal = (props) => {
     const [hasDone, setHasDone] = useState('')
     const [review, setReview] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+
+    const onCancel = () => {
+        setScore(0)
+        setHasDone('')
+        props.onClose()
+    }
 
     const saveRating = async () => {
         setIsLoading(true)
@@ -72,8 +79,8 @@ export const SaveRatingModal = (props) => {
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
+                        <Button variant='outline' onClick={onCancel} m={1}> Cancelar </Button>
+                        <Button isLoading={isLoading} isDisabled={isEmpty(score) || isEmpty(hasDone)} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
