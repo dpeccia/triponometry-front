@@ -9,17 +9,17 @@ import { PlantillaBadge } from "../../utils/PlantillaBadge";
 import {HamburgerIcon} from "@chakra-ui/icons";
 import {BackButton} from "../../utils/BackButton";
 
-export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original, loggedIn }) => {
+export const NewCalculationResult = ({ setShowResults, calculatorInputs, calculatorOutputs, id, name, original, loggedIn, logout }) => {
 
     const saveModal = () => {
         if(loggedIn) {
             if (id) {
                 return (
-                    <SaveDraftAsTripModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+                    <SaveDraftAsTripModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} logout={logout}/>
                 )
             } else {
                 return (
-                    <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} />
+                    <SaveCalculationModal calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} logout={logout}/>
                 )
             }
         }

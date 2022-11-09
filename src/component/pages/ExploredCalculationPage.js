@@ -11,8 +11,10 @@ import {RatingDrawer} from "../explorer/RatingDrawer";
 import {HamburgerIcon} from "@chakra-ui/icons";
 import {MdOutlineAddComment, MdOutlineInsertComment} from "react-icons/md";
 import {BackButton} from "../utils/BackButton";
+import { useToast } from "../utils/useToast";
+import { checkErrorTokenExpired } from "../../BackendService";
 
-export const ExploredCalculationPage = () => {
+export const ExploredCalculationPage = ({logout}) => {
     const navigate = useNavigate()
     const params = useParams();
     const idCalculation = params.id;
@@ -31,6 +33,8 @@ export const ExploredCalculationPage = () => {
     const [calculation, setCalculation] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [hasNewRating, setNewRating] = useState(false)
+    const [_, showErrorToast] = useToast()
+
 
     const handlePlantillaClick = () => {
         navigate(`/explorar/${idCalculation}/edicion`)
@@ -54,7 +58,9 @@ export const ExploredCalculationPage = () => {
         if (response?.status !== "Error") {
             setCalculation(response)
             setIsLoading(false)
-        }
+        } else {
+            showErrorToast(response.msg, logout)
+        }        
     }
 
     useEffect(() => {

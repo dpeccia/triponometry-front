@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _, { isNull, isUndefined } from 'lodash';
+import _, { isEqual, isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
     baseURL: 'http://localhost:8080/',
@@ -44,6 +44,10 @@ const getMinutes = (mealTime) => {
     } else {
         return null
     }
+}
+
+export const checkErrorTokenExpired = (error) => {
+    return isEqual(error, "Tu sesión expiró. Iniciá sesión nuevamente")
 }
 
 export const calculateNewTrip = async (calculatorInputs) => {

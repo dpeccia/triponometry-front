@@ -14,8 +14,9 @@ import { isEmpty } from "lodash";
 import { saveNewTrip } from "../../../BackendService";
 import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
+import { checkErrorTokenExpired } from "../../../BackendService";
 
-export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) => {
+export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs, logout }) => {
     const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
 
@@ -56,7 +57,7 @@ export const SaveCalculationModal = ({ calculatorInputs, calculatorOutputs }) =>
             onClose()
             navigate("/mis-calculos")
         } else {
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
         setIsLoading(false)
     }

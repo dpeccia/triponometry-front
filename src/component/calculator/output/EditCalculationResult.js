@@ -8,7 +8,7 @@ import {BackButton} from "../../utils/BackButton";
 import {IconButton} from "@chakra-ui/button";
 import {HamburgerIcon} from "@chakra-ui/icons";
 
-export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status, userInfo, loggedIn }) => {
+export const EditCalculationResult = ({ setShowResults, id, name, calculatorInputs, calculatorOutputs, status, userInfo, loggedIn, logout }) => {
     return (
         <Flex flexDirection="column" width="100%">
             <Flex alignItems='center' width="100%" justifyContent='space-between' p={2}>
@@ -29,7 +29,7 @@ export const EditCalculationResult = ({ setShowResults, id, name, calculatorInpu
                 </Flex>
             </Flex>
             <ResultTrip calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} loggedIn={loggedIn}/>
-            <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status}/>
+            <SaveEditionModal tripId={id} calculatorName={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} logout={logout}/>
         </Flex>
     );
 }

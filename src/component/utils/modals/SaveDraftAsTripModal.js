@@ -13,8 +13,9 @@ import { FaSave } from "react-icons/fa";
 import {  saveNewEdition } from "../../../BackendService";
 import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
+import { checkErrorTokenExpired } from "../../../BackendService";
 
-export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs}) => {
+export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs, logout}) => {
     const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const OverlayOne = () => (
@@ -37,7 +38,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
             onClose()
             navigate("/mis-calculos")
         } else {
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
         setIsLoading(false)
     }

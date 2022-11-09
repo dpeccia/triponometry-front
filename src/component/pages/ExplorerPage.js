@@ -1,11 +1,11 @@
 import {Text, Flex} from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import { getAllTrips } from '../../BackendService';
+import { checkErrorTokenExpired, getAllTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { ExplorerTable } from '../explorer/ExplorerTable';
 import { useToast } from '../utils/useToast';
 
-export const ExplorerPage = () => {
+export const ExplorerPage = ({logout}) => {
     const [_, showErrorToast] = useToast()
     const [trips, setTrips] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +31,7 @@ export const ExplorerPage = () => {
             setTrips(tripsMapped)
             setIsLoading(false)
         } else {
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
     }
 

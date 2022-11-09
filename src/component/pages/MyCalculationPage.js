@@ -14,8 +14,10 @@ import {RiInboxUnarchiveFill} from "react-icons/ri";
 import {FaEdit} from "react-icons/fa";
 import {EditAvatarImageModal} from "../utils/modals/EditAvatarImageModal";
 import {BackButton} from "../utils/BackButton";
+import { useToast } from "../utils/useToast";
+import { checkErrorTokenExpired } from "../../BackendService";
 
-export const MyCalculationPage = () => {
+export const MyCalculationPage = ({logout}) => {
     const navigate = useNavigate()
     const params = useParams();
     const idCalculation = params.id;
@@ -36,6 +38,7 @@ export const MyCalculationPage = () => {
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
     const [hasNewImage, setHasNewImage] = useState(false)
+    const [_, showErrorToast] = useToast()
 
     const handleEditClick = () => {
         setOverlay(<OverlayOne />)
@@ -71,6 +74,7 @@ export const MyCalculationPage = () => {
             setIsLoading(false)
         } else {
             setIsValid(false)
+            showErrorToast(response.msg, logout)
         }
     }
 

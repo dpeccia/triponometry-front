@@ -5,14 +5,17 @@ import { getMyTrip } from "../../BackendService"
 import { useParams } from "react-router"
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox"
 import { isEmpty } from "lodash"
+import { useToast } from "../utils/useToast"
+import { checkErrorTokenExpired } from "../../BackendService"
 
-export const EditCalculationPage = () => {
+export const EditCalculationPage = ({logout}) => {
     const params = useParams()
     const idCalculation = params.id
 
     const [isValid, setIsValid] = useState(true)
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+    const [_, showErrorToast] = useToast()
 
     const fetchCalculation = async () => {
         return await getMyTrip(idCalculation)
@@ -24,6 +27,7 @@ export const EditCalculationPage = () => {
             setIsLoading(false)
         } else {
             setIsValid(false)
+            showErrorToast(response.msg, logout)
         }
     }
 
@@ -48,6 +52,6 @@ export const EditCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status} userInfo={calculation.user} loggedIn={true}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage tripId={idCalculation} edit={calculation.status !== 'DRAFT'} beginInput={getFirstMissing()} inputs={calculation.calculatorInputs} name={calculation.name} status={calculation.status} userInfo={calculation.user} loggedIn={true} logout={logout}/>) : <NotFound/>
     )
 }

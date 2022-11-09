@@ -4,14 +4,18 @@ import { NotFound } from "./NotFoundPage"
 import { getATrip } from "../../BackendService"
 import { useParams } from "react-router"
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox"
+import { checkErrorTokenExpired } from "../../BackendService"
+import { useToast } from "../utils/useToast"
 
-export const PlantillaCalculationPage = () => {
+export const PlantillaCalculationPage = ({logout}) => {
     const params = useParams()
     const idCalculation = params.id
 
     const [isValid, setIsValid] = useState(true)
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+    const [_, showErrorToast] = useToast()
+
 
     const fetchCalculation = async () => {
         return await getATrip(idCalculation)
@@ -23,6 +27,7 @@ export const PlantillaCalculationPage = () => {
             setIsLoading(false)
         } else {
             setIsValid(false)
+            showErrorToast(response.msg, logout)
         }
     }
 
@@ -31,6 +36,6 @@ export const PlantillaCalculationPage = () => {
     }, []);
 
     return (
-        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: window.location.origin + `/explorar/${idCalculation}`}} loggedIn={true}/>) : <NotFound/>
+        isValid ? (isLoading ? <SpinnerSearchBox/> : <NewCalculationPage beginInput='ACCOMMODATION' inputs={calculation.calculatorInputs} original={{name: calculation.name, link: window.location.origin + `/explorar/${idCalculation}`}} loggedIn={true} logout={logout}/>) : <NotFound/>
     )
 }

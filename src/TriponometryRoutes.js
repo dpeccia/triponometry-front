@@ -29,7 +29,7 @@ export function TriponometryRoutes() {
             .then((response) => {
                 if (response?.status !== "Error") {         
                     changeAvatar(response.username, "", response.googleAccount)
-                }
+                } 
                 setIsBusy(false)
             })
     }, []);
@@ -47,6 +47,10 @@ export function TriponometryRoutes() {
         setIsGoogle(isGoogle)
     }
 
+    const handleCookieExpired = () => {
+        changeAvatar("","",false)
+    }
+
     const isLoggedIn = () =>{
         return username !== ""
     }
@@ -61,13 +65,13 @@ export function TriponometryRoutes() {
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
-                    <Route path="nuevo" exact element={(<NewCalculationPage edit={false} beginInput='CITY' loggedIn={isLoggedIn()} />)}/>
-                    <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage />))}/>
-                    <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage />))}/>
-                    <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<PlantillaCalculationPage />))}/>
-                    <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage />))}/>
-                    <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage />))}/>
-                    <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<EditCalculationPage />))}/>
+                    <Route path="nuevo" exact element={(<NewCalculationPage edit={false} beginInput='CITY' loggedIn={isLoggedIn()} logout={handleCookieExpired}/>)}/>
+                    <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage logout={handleCookieExpired}/>))}/>
+                    <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage logout={handleCookieExpired} />))}/>
+                    <Route path="explorar/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<PlantillaCalculationPage logout={handleCookieExpired}/>))}/>
+                    <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage logout={handleCookieExpired} />))}/>
+                    <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage logout={handleCookieExpired} />))}/>
+                    <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<EditCalculationPage logout={handleCookieExpired}/>))}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>

@@ -16,8 +16,9 @@ import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 import { Radio } from "@chakra-ui/radio";
 import { RadioGroup } from "@chakra-ui/radio";
+import { checkErrorTokenExpired } from "../../../BackendService";
 
-export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs }) => {
+export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs, logout }) => {
     const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const [radioValue, setRadioValue] = useState(null)
@@ -60,7 +61,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                showErrorToast(response.msg)
+                showErrorToast(response.msg, logout)
             }
         } else {
             setIsLoading(true)
@@ -71,7 +72,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                showErrorToast(response.msg)
+                showErrorToast(response.msg, logout)
             }
         }
         setIsLoading(false)
