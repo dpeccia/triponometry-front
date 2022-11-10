@@ -21,7 +21,7 @@ export const UnarchiveCalculationModal = (props) => {
         setIsLoading(true)
         const response = await unarchivedTrip(props.calculationId)
         if (response?.status !== "Error") {
-            showSuccessToast('Viaje desarchivado!', `Su viaje a ${props.calculationName} fue desarchivado correctamente`)
+            showSuccessToast('¡Viaje desarchivado!', `Tu viaje a ${props.calculationName} fue desarchivado correctamente`)
             props.onClose()
             navigate("/mis-calculos")
         } else {
@@ -40,15 +40,15 @@ export const UnarchiveCalculationModal = (props) => {
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text>
-                            ¿Estas seguro que deseas desarchivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                            ¿Estás seguro que querés desarchivar el cálculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
                         </Text>
                         <Text mt='3'>
-                            Esta acción llevará a tu cálculo nuevamente a la pestaña <Text as='abbr' fontWeight='bold'> Guardados </Text> y podrás editarlo
+                            Esta acción va a llevar a tu cálculo nuevamente a la pestaña <Text as='abbr' fontWeight='bold'> Guardados </Text> y vas a poder editarlo
                         </Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Si, desarchivar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={unarchivedCalculation}> Sí, desarchivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

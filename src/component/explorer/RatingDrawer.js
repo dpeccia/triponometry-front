@@ -39,7 +39,7 @@ export const RatingDrawer = (props) => {
                     <DrawerHeader borderBottomWidth='1px'>Opiniones</DrawerHeader>
                     <DrawerBody>
                         <RatingSummary reviews={props.reviews} averageRating={props.averageRating}/>
-                        <Flex direction='column'>
+                        <Flex direction='column' gap={1}>
                             {ratingCards}
                         </Flex>
                     </DrawerBody>

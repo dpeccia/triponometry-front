@@ -1,12 +1,11 @@
 import {Text, Flex} from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import { getAllTrips } from '../../BackendService';
+import { checkErrorTokenExpired, getAllTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { ExplorerTable } from '../explorer/ExplorerTable';
 import { useToast } from '../utils/useToast';
-import { Heading } from '@chakra-ui/layout';
 
-export const ExplorerPage = () => {
+export const ExplorerPage = ({logout}) => {
     const [_, showErrorToast] = useToast()
     const [trips, setTrips] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +31,7 @@ export const ExplorerPage = () => {
             setTrips(tripsMapped)
             setIsLoading(false)
         } else {
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
     }
 
@@ -42,9 +41,8 @@ export const ExplorerPage = () => {
 
     return (
         <Flex direction='column' grow={2} ml={8} mr={8}>
-            <Heading my='3' fontSize='3xl'>Explorá cálculos de viaje de otros usuarios!</Heading>
-            <Text mt='3' mb='7'>Podés filtrarlos y ordenarlos por cualquiera de las columnas, calificarlo, ver opiniones, y si un viaje te gustó mucho: 
-            <Text as='em'> podés usarlo como plantilla para generar tu propio recorrido a partir de éste!</Text></Text>
+            <Text as='b' fontSize='3xl' color='#E87288'> ¡Explorá cálculos de viaje de otros usuarios! </Text>
+            <Text mb={3} fontSize='md' color='#718096'>Podés filtrar y ordenar los viajes por cualquiera de las columnas, calificarlos y ver opiniones. Si un viaje te gustó mucho podés usarlo como plantilla para generar tu propio recorrido a partir de éste!</Text>
             { isLoading ? <SpinnerSearchBox/> : <ExplorerTable data={trips} />}
         </Flex>
     )

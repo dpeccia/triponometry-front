@@ -10,8 +10,11 @@ import {FaRegLightbulb} from "react-icons/fa";
 import {RatingDrawer} from "../explorer/RatingDrawer";
 import {HamburgerIcon} from "@chakra-ui/icons";
 import {MdOutlineAddComment, MdOutlineInsertComment} from "react-icons/md";
+import {BackButton} from "../utils/BackButton";
+import { useToast } from "../utils/useToast";
+import { checkErrorTokenExpired } from "../../BackendService";
 
-export const ExploredCalculationPage = () => {
+export const ExploredCalculationPage = ({logout}) => {
     const navigate = useNavigate()
     const params = useParams();
     const idCalculation = params.id;
@@ -30,6 +33,8 @@ export const ExploredCalculationPage = () => {
     const [calculation, setCalculation] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [hasNewRating, setNewRating] = useState(false)
+    const [_, showErrorToast] = useToast()
+
 
     const handlePlantillaClick = () => {
         navigate(`/explorar/${idCalculation}/edicion`)
@@ -53,7 +58,9 @@ export const ExploredCalculationPage = () => {
         if (response?.status !== "Error") {
             setCalculation(response)
             setIsLoading(false)
-        }
+        } else {
+            showErrorToast(response.msg, logout)
+        }        
     }
 
     useEffect(() => {
@@ -65,8 +72,17 @@ export const ExploredCalculationPage = () => {
             {
                 isLoading ? <SpinnerSearchBox/> :
                     <>
-                        <Flex alignItems='center' justifyContent='space-between'>
-                            <MyCalculationInfo calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} userInfo={calculation.user}/>
+                        <Flex alignItems='center' justifyContent='space-between' p={2}>
+                            <Flex alignItems='center' gap={1}>
+                                <BackButton onClick={() => navigate(`/explorar`)}/>
+                                <MyCalculationInfo
+                                  calculatorName={calculation.name}
+                                  calculatorInputs={calculation.calculatorInputs}
+                                  calculatorOutputs={calculation.calculatorOutputs}
+                                  userInfo={calculation.user}
+                                  isMine={false}
+                                  isAvatarEditable={false}/>
+                            </Flex>
                             <Flex mt={2} justifyContent='flex-end'>
                                 <Menu>
                                     <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
@@ -84,7 +100,7 @@ export const ExploredCalculationPage = () => {
                                 </Menu>
                             </Flex>
                         </Flex>
-                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs}/>
+                        <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} loggedIn={true}/>
                         <SaveRatingModal isOpen={isOpenModal} onOpen={onOpenModal} onClose={onCloseModal} overlay={overlay} calculationId={idCalculation} calculatorName={calculation.name} calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} setNewRating={setNewRating}/>
                         <RatingDrawer isOpen={isOpenDrawer} onOpen={onOpenDrawer} onClose={onCloseDrawer} overlay={overlay} reviews={calculation.reviews} averageRating={calculation.rating}/>
                     </>

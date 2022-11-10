@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import {ScrollingBox} from "../utils/ScrollingBox";
-import { ItemCard, MealCard, BedCard, FreeDayCard } from "./CalculatorTag";
+import {ItemCard, MealCard, BedCard, FreeDayCard, MobilityCard} from "./CalculatorTag";
 
 export const CalculatorScreen = (props) => {
     const generateTags = (calculatorInputs) => {
@@ -20,7 +20,7 @@ export const CalculatorScreen = (props) => {
                 <BedCard bed={calculatorInputs.horarios.despertarse} bedType='Despertarse'/>
                 <BedCard bed={calculatorInputs.horarios.dormirse} bedType='Dormirse'/>
                 <FreeDayCard freeDay={calculatorInputs.horarios.libres}/>
-                <ItemCard>{calculatorInputs.mobility}</ItemCard>
+                <MobilityCard mobility={calculatorInputs.mobility}/>
             </>
         )
     }

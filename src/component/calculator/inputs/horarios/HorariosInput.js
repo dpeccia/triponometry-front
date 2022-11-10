@@ -36,7 +36,7 @@ export const HorariosInput = (props) => {
     }
 
     return(
-            <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
+            <Flex direction="column" alignContent="space-around" w='580px' mt='3vh'>
                 <Heading textAlign='center' marginBottom={3}>
                     Horarios
                 </Heading>
@@ -49,7 +49,7 @@ export const HorariosInput = (props) => {
                 <NextButton
                     stepFinished={!isEmpty(selectedHorarios.dormirse) && !isEmpty(selectedHorarios.despertarse) && !isInvalid()}
                     onClick={onClick}
-                    description='Continua con Transporte'/>
+                    description='Continuá con Transporte'/>
             </Flex>
     )
 }

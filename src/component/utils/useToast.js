@@ -1,7 +1,10 @@
 import { useToast as useChakraUiToast } from "@chakra-ui/toast";
+import { useNavigate } from "react-router";
+import { checkErrorTokenExpired } from "../../BackendService";
 
 export const useToast = () => {
     const showToast = useChakraUiToast()
+    const navigate = useNavigate()
 
     const showSuccessToast = (toastTitle, toastMessage) => {
         showToast({
@@ -13,7 +16,7 @@ export const useToast = () => {
         })
     }
 
-    const showErrorToast = (toastMessage) => {
+    const showErrorToast = (toastMessage, logout) => {
         showToast({
             title: 'Error',
             description: toastMessage,
@@ -21,6 +24,10 @@ export const useToast = () => {
             status: 'error',
             isClosable: true,
         })
+        if(checkErrorTokenExpired(toastMessage) && logout){
+            logout()
+            navigate("/")
+        }
     }
 
     return [showSuccessToast, showErrorToast]

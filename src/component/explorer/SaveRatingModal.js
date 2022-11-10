@@ -12,6 +12,7 @@ import { useState } from "react"
 import {saveNewRating} from "../../BackendService";
 import { useToast } from "../utils/useToast";
 import {RatingButtons} from "../utils/RatingButtons";
+import {isEmpty} from "lodash";
 
 export const SaveRatingModal = (props) => {
     const [showSuccessToast, showErrorToast] = useToast()
@@ -20,12 +21,18 @@ export const SaveRatingModal = (props) => {
     const [review, setReview] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
+    const onCancel = () => {
+        setScore(0)
+        setHasDone('')
+        props.onClose()
+    }
+
     const saveRating = async () => {
         setIsLoading(true)
         const response = await saveNewRating(props.calculationId, score, hasDone, review)
 
         if (response?.status !== "Error") {
-            showSuccessToast('Opinión guardada!', `Su opinión a ${props.calculatorName} fue guardado correctamente`)
+            showSuccessToast('¡Opinión guardada!', `Tu opinión a ${props.calculatorName} fue guardada correctamente`)
             props.onClose()
             props.setNewRating(true)
         } else {
@@ -53,7 +60,7 @@ export const SaveRatingModal = (props) => {
                                 <RadioGroup onChange={setHasDone} colorScheme='blackAlpha'>
                                     <HStack spacing={5}>
                                         <Radio value={'true'}>
-                                            Si
+                                            Sí
                                         </Radio>
                                         <Radio value={'false'}>
                                             No
@@ -65,15 +72,15 @@ export const SaveRatingModal = (props) => {
                                 <FormLabel>Escribir tu opinión</FormLabel>
                                 <Textarea
                                     onChange={(e) => setReview(e.target.value)}
-                                    placeholder='¿Queres decirnos algo más sobre tu calificación?'
+                                    placeholder='¿Querés decirnos algo más sobre tu calificación?'
                                     size='sm'
                                 />
                             </FormControl>
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button variant='outline' onClick={props.onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={saveRating}> Si, guardar </Button>
+                        <Button variant='outline' onClick={onCancel} m={1}> Cancelar </Button>
+                        <Button isLoading={isLoading} isDisabled={isEmpty(score) || isEmpty(hasDone)} variant='solid' bg='#EFB4BF' onClick={saveRating}> Sí, guardar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

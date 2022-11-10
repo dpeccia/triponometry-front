@@ -16,8 +16,9 @@ import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
 import { Radio } from "@chakra-ui/radio";
 import { RadioGroup } from "@chakra-ui/radio";
+import { checkErrorTokenExpired } from "../../../BackendService";
 
-export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs }) => {
+export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs, logout }) => {
     const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const [radioValue, setRadioValue] = useState(null)
@@ -56,22 +57,22 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
             const response = await saveNewTrip(tripName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
-                showSuccessToast('Viaje guardado!', `Su viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
+                showSuccessToast('¡Viaje guardado!', `Tu viaje a ${calculatorInputs.city.name} fue guardado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                showErrorToast(response.msg)
+                showErrorToast(response.msg, logout)
             }
         } else {
             setIsLoading(true)
             const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
             
             if (response?.status !== "Error") {
-                showSuccessToast('Editado!', `Su viaje a ${calculatorInputs.city.name} fue editado correctamente`)
+                showSuccessToast('¡Editado!', `Tu viaje a ${calculatorInputs.city.name} fue editado correctamente`)
                 onClose()
                 navigate("/mis-calculos")
             } else {
-                showErrorToast(response.msg)
+                showErrorToast(response.msg, logout)
             }
         }
         setIsLoading(false)
@@ -92,7 +93,7 @@ export const SaveEditionModal = ({ tripId, calculatorName, calculatorInputs, cal
 
     return (
         <>
-            <Button leftIcon={<FaSave />} mt={5} mr="100px" w='200px' colorScheme='red' variant='solid' alignSelf='flex-end' 
+            <Button leftIcon={<FaSave />} variant='solid' bg='gray.300' alignSelf='flex-end'
                 onClick={() => {
                     setOverlay(<OverlayOne />)
                     onOpen()

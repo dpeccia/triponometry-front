@@ -13,8 +13,9 @@ import { FaSave } from "react-icons/fa";
 import {  saveNewEdition } from "../../../BackendService";
 import { useToast } from "../useToast";
 import { useNavigate } from "react-router";
+import { checkErrorTokenExpired } from "../../../BackendService";
 
-export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs}) => {
+export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs, calculatorOutputs, logout}) => {
     const [showSuccessToast, showErrorToast] = useToast()
     const navigate = useNavigate()
     const OverlayOne = () => (
@@ -33,18 +34,18 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
         const response = await saveNewEdition(tripId, calculatorName, calculatorInputs, calculatorOutputs)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Guardado!', `Su viaje ${calculatorName} fue generado correctamente`)
+            showSuccessToast('¡Guardado!', `Tu viaje ${calculatorName} fue generado correctamente`)
             onClose()
             navigate("/mis-calculos")
         } else {
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
         setIsLoading(false)
     }
 
     return (
         <>
-            <Button leftIcon={<FaSave />} mt={5} mr="100px" w='200px' colorScheme='red' variant='solid' alignSelf='flex-end' 
+            <Button leftIcon={<FaSave />} variant='solid' bg='gray.300' alignSelf='flex-end'
                 onClick={() => {
                     setOverlay(<OverlayOne />)
                     onOpen()
@@ -60,7 +61,7 @@ export const SaveDraftAsTripModal = ({ tripId, calculatorName, calculatorInputs,
                     <ModalBody>
                         <Flex direction='column'>
                             <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés guardar el calculo? El borrador asociado dejará de existir
+                                ¿Estás seguro que querés guardar el cálculo? Su borrador asociado dejará de existir
                             </Text>
                         </Flex>
                     </ModalBody>

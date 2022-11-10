@@ -49,10 +49,10 @@ export const ShareCalculationModal = (props) => {
                         </Flex>
                         <Text p={1}>
                             Cualquier usuario que haya iniciado sesión y tenga acceso a este vínculo podrá
-                            <Text as='em' fontWeight='bold'> visualizar tu calculo o usarlo cómo plantilla </Text>.
+                            <Text as='em' fontWeight='bold'> visualizar tu cálculo o usarlo cómo plantilla </Text>.
                         </Text>
                         <Text p={1} color='red.300' fontWeight='bold'>
-                            No te preocupes, no podrá modificar tu calculo!
+                            ¡No te preocupes, no podrá modificar tu cálculo!
                         </Text>
                     </ModalBody>
                     <ModalFooter>

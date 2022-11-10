@@ -14,7 +14,7 @@ export const EmailSendStep = ({ next, restoreInfo, setRestoreInfo, closeModal })
         const response = await sendRestorePasswordEmail(restoreInfo.email)
         
         if (response?.status !== "Error") {
-            showSuccessToast('Email enviado!', `Se ha enviado un email con un codigo de verificacion a: ${restoreInfo.email}`)
+            showSuccessToast('¡Email enviado!', `Se te envió un email con un código de verificación a: ${restoreInfo.email}`)
             next('SECOND_STEP')
         } else {
             showErrorToast(response.msg)
@@ -30,7 +30,7 @@ export const EmailSendStep = ({ next, restoreInfo, setRestoreInfo, closeModal })
         <>
             <ModalBody>
                 <Text fontSize='md'>
-                    Podés restablecerla en tres sencillos pasos!
+                    ¡Podés restablecerla en tres sencillos pasos!
                 </Text>
                 <Box mt={3} mx={5} >
                     <FormControl>

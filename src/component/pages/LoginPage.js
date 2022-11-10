@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Divider, Text, Button} from "@chakra-ui/react"
+import {Box, Flex, Image, Divider, Text, Button} from "@chakra-ui/react"
 import { useState } from "react";
 import { logIn,googleLogIn } from "../../BackendService";
 import { ErrorBadge } from "../login/ErrorBadge";
@@ -61,7 +61,9 @@ export const LoginPage = (props) => {
             <Image src={'../esquina-izquierda.png'} h='300px' position='absolute' zIndex='-1' left='0' bottom='4'/>
             <Flex direction='column' minW='750px' h='450px' borderWidth='1px' borderRadius='40px' boxShadow='lg' margin='auto' p={4} bg='white'>
                 <Flex justifyContent='space-between' alignItems='center' direction='row' p={2} mb={2}>
-                    <Image w='380px' src={'../nombre-triponometry.png'} />
+                    <Box as='button' onClick={() => navigate("/")}>
+                        <Image w='380px' src={'../nombre-triponometry.png'} />
+                    </Box>
                     <Button variant='link' fontWeight='bold' size='sm' m={2} onClick={() => navigate("/sign-up")}>
                         Registrarme
                     </Button>

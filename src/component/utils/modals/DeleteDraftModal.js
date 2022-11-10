@@ -30,7 +30,7 @@ export const DeleteDraftModal = (props) => {
         setIsLoading(true)
         const response = await deleteDraft(props.draftId)
         if (response?.status !== "Error") {
-            showSuccessToast('Borrador eliminado con exito!', `Su borrador ${props.calculationName} fue eliminado correctamente`)
+            showSuccessToast('¡Borrador eliminado con éxito!', `Tu borrador ${props.calculationName} fue eliminado correctamente`)
             onClose()
             props.fetchCalculations()
         } else {
@@ -59,15 +59,15 @@ export const DeleteDraftModal = (props) => {
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text>
-                            ¿Estas seguro que deseas eliminar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                            ¿Estás seguro que querés eliminar el cálculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
                         </Text>
                         <Text mt='3'>
-                            Esta acción es definitiva y ya no podrás recuperarlo
+                            Esta acción es definitiva y ya no vas a poder recuperarlo
                         </Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Si, eliminar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={handleConfirmClick}> Sí, eliminar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

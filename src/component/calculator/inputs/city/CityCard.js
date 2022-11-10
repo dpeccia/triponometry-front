@@ -19,7 +19,7 @@ export const CityCard = (props) => {
         props.setSelectedCity(cityWithImage)
         props.setStepFinished(true)
         setShowSpinner(false)
-        showSuccessToast('Ciudad seleccionada!', `Elegiste ${props.city.name}`)
+        showSuccessToast('¡Ciudad seleccionada!', `Elegiste ${props.city.name}`)
     }
 
     const showChargingSpinner = () => {

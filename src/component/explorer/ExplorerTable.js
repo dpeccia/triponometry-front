@@ -8,7 +8,7 @@ import {useMemo} from 'react';
 import {useNavigate} from "react-router";
 import Flag from 'react-world-flags'
 import {countryToAlpha3} from "country-to-iso";
-import { BsFillCheckCircleFill } from 'react-icons/bs';
+import {BsFillPatchCheckFill} from 'react-icons/bs';
 
 export const ExplorerTable = ({ data }) => {
     const navigate = useNavigate()
@@ -87,7 +87,8 @@ export const ExplorerTable = ({ data }) => {
                     {page.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <Tr {...row.getRowProps()} onClick={()=> handleRowClick(row.original.id)}>
+                            <Tr {...row.getRowProps()} onClick={()=> handleRowClick(row.original.id)}
+                                _hover={{ background: "gray.50", shadow: 'md', filter: 'auto'}}>
                                 {row.cells.map((cell) => (
                                     <Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
                                         {cell.render('Cell')}
@@ -106,7 +107,7 @@ export const ExplorerTable = ({ data }) => {
                     <IconButton as={HiChevronDoubleRight} onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} size='sm' p={2} bg='#EFB4BF'/>
                 </Flex>
                 <Text ml={2} fontSize='sm' as='b' color='#F5A0B0'>
-                    {`Pagina ${pageIndex + 1} de ${pageOptions.length}`}
+                    {`Página ${pageIndex + 1} de ${pageOptions.length}`}
                 </Text>
             </Flex>
         </>
@@ -116,8 +117,8 @@ export const ExplorerTable = ({ data }) => {
 const verifiedBadge = (userInfo) => {
     if (userInfo.verified) {
         return (
-            <Tooltip label={userInfo.username} bg='blue.400' placement='bottom'>
-                <span><Icon as={BsFillCheckCircleFill} color='blue.400'/></span>   
+            <Tooltip label={userInfo.username} bg='blue.400' placement='right'>
+                <Flex><Icon as={BsFillPatchCheckFill} ml={1} color='blue.400'/></Flex>
             </Tooltip>
         )
     }

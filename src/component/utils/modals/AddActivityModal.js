@@ -38,7 +38,7 @@ export const AddActivityModal = (props) => {
 
     const checkError = () => {
         if(error)
-            return <FormErrorMessage>Debe ingresar el tiempo que le dedicará a esta actividad</FormErrorMessage>
+            return <FormErrorMessage>Tenés que ingresar algún número</FormErrorMessage>
     }
 
     const addActivity = () => {
@@ -86,7 +86,7 @@ export const AddActivityModal = (props) => {
     return (
         <>
             <IconButton isLoading={isLoading} icon={<FaPlus w='80%' h='80%' />} onClick={openModal} colorScheme='whatsapp' size='sm' isRound isDisabled={props.isDisabled}/>
-            <Modal isCentered isOpen={isOpen} onClose={onClose} size='lg'>
+            <Modal isCentered isOpen={isOpen} onClose={onClose} size='xl'>
                 {overlay}
                 <ModalContent>
                     <ModalHeader> Agregar actividad </ModalHeader>
@@ -94,12 +94,12 @@ export const AddActivityModal = (props) => {
                     <ModalCloseButton/>
                     <ModalBody>
                         <Flex direction='column'>
-                            <Text alignSelf='center' fontSize='lg'>
-                                ¿Estas seguro que querés agregar la actividad <Text as='abbr' fontWeight='bold'>{props.activity.name}</Text>?
+                            <Text>
+                                ¿Estás seguro que querés agregar la actividad <Text as='abbr' fontWeight='bold'>{props.activity.name}</Text>?
                             </Text>
                             <Flex mt={5}>
                                 <FormControl isInvalid={error}>
-                                    <FormLabel>Ingrese cuantas horas le dedicará a esta actividad:</FormLabel>
+                                    <FormLabel>Ingresá cuantas horas le vas a dedicar a esta actividad:</FormLabel>
                                     <InputGroup w='200px'>
                                         <Input placeholder='Ejemplo: 2' value={hoursQty} onChange={onHoursInputChange}/>
                                         <InputRightAddon children='horas' />

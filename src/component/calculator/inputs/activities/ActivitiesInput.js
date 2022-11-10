@@ -32,7 +32,7 @@ export const ActivitiesInputs = (props) => {
             setStepFinished(false)
         }
         setSelectedActivities(filter(selectedActivities, (selectedActivity) => lowerCase(selectedActivity.name) !== lowerCase(activity.name)))
-        showSuccessToast('Actividad eliminada!', `Eliminaste ${activity.name}`)
+        showSuccessToast('¡Actividad eliminada!', `Eliminaste ${activity.name}`)
     }
     
     const addActivity = (activity) => {
@@ -40,14 +40,14 @@ export const ActivitiesInputs = (props) => {
         {
             setSelectedActivities([...selectedActivities, activity])
             setStepFinished(true)
-            showSuccessToast('Actividad seleccionada!', `Elegiste ${activity.name}`)
+            showSuccessToast('¡Actividad seleccionada!', `Elegiste ${activity.name}`)
         } else {
-            showErrorToast('Estas en el límite!', `Si querés realizar esta actividad es necesario eliminar otra`)
+            showErrorToast('¡Estás en el límite!', `Si querés realizar esta actividad es necesario eliminar otra`)
         }
     }
 
     return (
-        <Flex direction="column" alignContent="space-around" w='550px' mt='3vh'>
+        <Flex direction="column" alignContent="space-around" w='750px' mt='3vh'>
             <Heading textAlign='center' marginBottom={3}>
                 Actividades
             </Heading>
@@ -63,7 +63,7 @@ export const ActivitiesInputs = (props) => {
             <NextButton
                 stepFinished={stepFinished}
                 onClick={onClick}
-                description='Continua con Horarios'/>
+                description='Continuá con Horarios'/>
         </Flex>
     )
 }

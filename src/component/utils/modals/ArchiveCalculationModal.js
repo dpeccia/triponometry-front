@@ -31,7 +31,7 @@ export const ArchiveCalculationModal = (props) => {
         setIsLoading(true)
         const response = await archiveTrip(props.calculationId)
         if (response?.status !== "Error") {
-            showSuccessToast('Viaje archivado!', `Su viaje a ${props.calculationName} fue archivado correctamente`)
+            showSuccessToast('¡Viaje archivado!', `Tu viaje a ${props.calculationName} fue archivado correctamente`)
             props.fetchCalculations()
             onClose()
         } else {
@@ -60,18 +60,18 @@ export const ArchiveCalculationModal = (props) => {
                     <ModalCloseButton/>
                     <ModalBody>
                         <Text>
-                            ¿Estas seguro que deseas archivar el calculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
+                            ¿Estás seguro que querés archivar el cálculo  <Text as='abbr' fontWeight='bold'> {props.calculationName} </Text> ?
                         </Text>
                         <Text mt='3'>
-                            Esta acción llevará a tu cálculo a la pestaña <Text as='abbr' fontWeight='bold'> Archivados </Text>
+                            Esta acción va a llevar a tu cálculo a la pestaña <Text as='abbr' fontWeight='bold'> Archivados </Text>
                         </Text>
                         <Text mt='3'>
-                            Ya no podrás editarlo pero en caso de que desees hacerlo podrás desarchivarlo en cualquier momento
+                            Ya no vas a poder editarlo pero en caso de que quieras hacerlo podrés desarchivarlo en cualquier momento
                         </Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant='outline' onClick={onClose} m={1}> Cancelar </Button>
-                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Si, archivar </Button>
+                        <Button isLoading={isLoading} variant='solid' bg='#EFB4BF' onClick={archiveCalculation}> Sí, archivar </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

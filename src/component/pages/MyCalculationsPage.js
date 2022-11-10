@@ -8,8 +8,9 @@ import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { take } from 'lodash';
 import { useLocation } from 'react-router';
 import { useToast } from '../utils/useToast';
+import { checkErrorTokenExpired } from '../../BackendService';
 
-export const MyCalculationsPage = () => {
+export const MyCalculationsPage = ({logout}) => {
     const [_, showErrorToast] = useToast()
     const {state} = useLocation()
     const defaultIndex = state ? state.defaultIndex : 0
@@ -48,7 +49,7 @@ export const MyCalculationsPage = () => {
             setIsLoading(false)
         } else {
             setIsLoading(false)
-            showErrorToast(tripsResponse.msg)
+            showErrorToast(tripsResponse.msg, logout)
         }
     }
 

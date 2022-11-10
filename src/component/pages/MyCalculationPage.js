@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import {useNavigate, useParams} from "react-router";
 import { useEffect, useState } from "react";
 import { getMyTrip } from "../../BackendService";
 import { SpinnerSearchBox } from "../utils/SpinnerSearchBox";
@@ -13,8 +13,12 @@ import {HamburgerIcon} from "@chakra-ui/icons";
 import {RiInboxUnarchiveFill} from "react-icons/ri";
 import {FaEdit} from "react-icons/fa";
 import {EditAvatarImageModal} from "../utils/modals/EditAvatarImageModal";
+import {BackButton} from "../utils/BackButton";
+import { useToast } from "../utils/useToast";
+import { checkErrorTokenExpired } from "../../BackendService";
 
-export const MyCalculationPage = () => {
+export const MyCalculationPage = ({logout}) => {
+    const navigate = useNavigate()
     const params = useParams();
     const idCalculation = params.id;
 
@@ -34,6 +38,7 @@ export const MyCalculationPage = () => {
     const [calculation, setCalculation] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
     const [hasNewImage, setHasNewImage] = useState(false)
+    const [_, showErrorToast] = useToast()
 
     const handleEditClick = () => {
         setOverlay(<OverlayOne />)
@@ -69,6 +74,7 @@ export const MyCalculationPage = () => {
             setIsLoading(false)
         } else {
             setIsValid(false)
+            showErrorToast(response.msg, logout)
         }
     }
 
@@ -82,16 +88,20 @@ export const MyCalculationPage = () => {
                 isValid ? (
                     isLoading ? <SpinnerSearchBox/> :
                         <>
-                            <Flex alignItems='center' justifyContent='space-between'>
-                                <MyCalculationInfo
-                                    calculationId={calculation.id}
-                                    calculatorName={calculation.name}
-                                    calculatorInputs={calculation.calculatorInputs}
-                                    calculatorOutputs={calculation.calculatorOutputs}
-                                    userInfo={calculation.user}
-                                    isDraft={isDraft()}
-                                    handleEditAvatarClick={handleEditAvatarClick}
-                                    setNewImage={setHasNewImage}/>
+                            <Flex alignItems='center' justifyContent='space-between' p={2}>
+                                <Flex alignItems='center' gap={1}>
+                                    <BackButton onClick={() => navigate(`/mis-calculos`)}/>
+                                    <MyCalculationInfo
+                                      calculatorName={calculation.name}
+                                      calculatorInputs={calculation.calculatorInputs}
+                                      calculatorOutputs={calculation.calculatorOutputs}
+                                      userInfo={calculation.user}
+                                      isDraft={isDraft()}
+                                      isMine={true}
+                                      isAvatarEditable={true}
+                                      handleEditAvatarClick={handleEditAvatarClick}
+                                      setNewImage={setHasNewImage}/>
+                                </Flex>
                                 <Flex mt={2} justifyContent='flex-end'>
                                     <Menu>
                                         <MenuButton as={IconButton} icon={<HamburgerIcon />} variant='outline'/>
@@ -114,7 +124,7 @@ export const MyCalculationPage = () => {
                                     </Menu>
                                 </Flex>
                             </Flex>
-                            <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()}/>
+                            <ResultTrip calculatorInputs={calculation.calculatorInputs} calculatorOutputs={calculation.calculatorOutputs} isDraft={isDraft()} loggedIn={true}/>
                             <UnarchiveCalculationModal isOpen={isOpenUnarchive} onOpen={onOpenUnarchive} onClose={onCloseUnarchive} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
                             <EditCalculationModal isOpen={isOpenEdit} onOpen={onOpenEdit} onClose={onCloseEdit} overlay={overlay} calculationId={calculation.id} calculationName={calculation.name}/>
                             <EditAvatarImageModal isOpen={isOpenEditAvatar} onOpen={onOpenEditAvatar} onClose={onCloseEditAvatar} overlay={overlay} calculationId={calculation.id} setHasNewImage={setHasNewImage}/>

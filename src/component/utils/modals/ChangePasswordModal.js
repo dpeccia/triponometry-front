@@ -5,6 +5,7 @@ import { updateUserPassword } from "../../../BackendService"
 import { useNavigate } from "react-router"
 import { ConfirmPassInput } from "../../login/ConfirmPassInput"
 import { useToast } from "../useToast"
+import {BsNutFill} from "react-icons/bs";
 
 export const ChangePasswordModal = () => {
 
@@ -27,12 +28,12 @@ export const ChangePasswordModal = () => {
     const handleChangePasswordClick = async () => {
         
         if (!isPasswordValid || !arePassEquals){
-            errorToast("Corrija los campos en rojo y vuelva intentar")
+            errorToast("Corregí los campos en rojo y volvé a intentar")
         } else {
             const response = await updateUserPassword(actualPassword, newPassword)
 
             if(response.status !== "Error"){
-                successToast("Cambio de contraseña exitoso", "Su contraseña ha sido modificada exitosamente")
+                successToast("Cambio de contraseña exitoso", "Tu contraseña ha sido modificada exitosamente")
                 navigate('/mis-calculos')
                 handleClose()
     
@@ -51,7 +52,7 @@ export const ChangePasswordModal = () => {
 
     return(
         <>
-            <MenuItem onClick={onOpen}> Cambiar contraseña </MenuItem>
+            <MenuItem icon={<BsNutFill/>} onClick={onOpen}> Cambiar contraseña </MenuItem>
             <Modal isCentered isOpen={isOpen} onClose={handleClose} size='lg'>
                 <ModalOverlay/>
                 <ModalContent>

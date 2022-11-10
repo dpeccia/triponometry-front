@@ -17,8 +17,9 @@ import { PlantillaBadge } from "../utils/PlantillaBadge";
 import { getRandomImage } from "../utils/AdHandler";
 import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
+import { checkErrorTokenExpired } from "../../BackendService";
 
-export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo }) => {
+export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, status, original, userInfo, loggedIn, logout }) => {
     const [_, showErrorToast] = useToast()
     const changeInputType = (inputType) => { setInputType(inputType) }
     const [image, setImage] = useState(getRandomImage())
@@ -68,7 +69,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
             setTimeout(() => setCalculatorOutputs({ mapId: response.kml, events: response.events, daysAmount: response.daysAmount }), 3000)
         } else {
             setShowResults(false)
-            showErrorToast(response.msg)
+            showErrorToast(response.msg, logout)
         }
     }
 
@@ -85,7 +86,7 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         if(showAd) {
             return (
                 <Flex direction='column' minHeight='600px' w='100%' justify='center' align='center'>
-                    <Heading size='lg' mb={2}>Calculando tu viaje ideal en {calculatorInputs.city.name}...</Heading>
+                    <Heading size='lg' mb={2}>Calculando tu viaje ideal a {calculatorInputs.city.name}...</Heading>
                     <iframe 
                         width="1200" 
                         height="630" 
@@ -109,9 +110,9 @@ export const NewCalculationPage = ({ tripId, edit, beginInput, inputs, name, sta
         }
 
         if(edit) {
-            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo}/>
+            return <EditCalculationResult setShowResults={setShowResults} id={tripId} name={name} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} userInfo={userInfo} loggedIn={loggedIn} logout={logout}/>
         } else {
-            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original}/>
+            return <NewCalculationResult setShowResults={setShowResults} calculatorInputs={calculatorInputs} calculatorOutputs={calculatorOutputs} status={status} id={tripId} name={name} original={original} loggedIn={loggedIn} logout={logout}/>
         }
     }
     return (

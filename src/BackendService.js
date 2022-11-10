@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _, { isNull, isUndefined } from 'lodash';
+import _, { isEqual, isNull, isUndefined } from 'lodash';
 
 const backend = axios.create({
     baseURL: 'http://triponometry-back.triponometry.org/',
@@ -44,6 +44,10 @@ const getMinutes = (mealTime) => {
     } else {
         return null
     }
+}
+
+export const checkErrorTokenExpired = (error) => {
+    return isEqual(error, "Tu sesión expiró. Iniciá sesión nuevamente")
 }
 
 export const calculateNewTrip = async (calculatorInputs) => {
@@ -165,7 +169,7 @@ export const loadCalendarEvents = async (eventsList, startDate) => {
     const calendarRequest = {
         "events": eventsList,
         "startDate": {
-          "day": startDate.getDate(),
+          "day": startDate.getDate()+1,
           "hour": 0,
           "minute": 0,
           "month": startDate.getMonth(),
