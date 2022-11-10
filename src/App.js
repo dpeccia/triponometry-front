@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router"
+import { Outlet, useLocation, useNavigate } from "react-router"
 import {ChakraProvider, Flex } from '@chakra-ui/react'
 import { Header } from "./component/utils/Header";
 import { useState, useEffect } from "react";
@@ -9,6 +9,12 @@ function App(props) {
 
     const [showHeader, setShowHeader] = useState(false)
     const location = useLocation()
+    const navigate = useNavigate()
+
+    if(props.redirect){
+        navigate("/")
+        props.setRedirect(false)
+    }
 
     useEffect(() => {
         const path = window.location.pathname

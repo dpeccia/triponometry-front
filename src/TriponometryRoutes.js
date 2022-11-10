@@ -15,6 +15,7 @@ import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
 import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
+import { isEmpty } from "lodash";
 
 export function TriponometryRoutes() {
 
@@ -23,6 +24,7 @@ export function TriponometryRoutes() {
     const [isGoogle, setIsGoogle] = useState(false)
 
     const [isBusy, setIsBusy] = useState(true)
+    const [redirect, setRedirect] = useState(false)
 
     useEffect(() => {
         checkLogin()
@@ -33,6 +35,10 @@ export function TriponometryRoutes() {
                 setIsBusy(false)
             })
     }, []);
+
+    useEffect(() => {
+        setRedirect(true)
+    }, [username, pfp])
 
     
     const handleLogout = async () => {
@@ -61,7 +67,7 @@ export function TriponometryRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout}/>}>
+                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout} redirect={redirect} setRedirect={setRedirect}/>}>
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
