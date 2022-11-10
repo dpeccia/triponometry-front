@@ -15,6 +15,8 @@ import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
 import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
+import { HelpPage } from "./component/pages/HelpPage";
+import { isEmpty } from "lodash";
 
 export function TriponometryRoutes() {
 
@@ -23,6 +25,7 @@ export function TriponometryRoutes() {
     const [isGoogle, setIsGoogle] = useState(false)
 
     const [isBusy, setIsBusy] = useState(true)
+    const [redirect, setRedirect] = useState(false)
 
     useEffect(() => {
         checkLogin()
@@ -33,6 +36,10 @@ export function TriponometryRoutes() {
                 setIsBusy(false)
             })
     }, []);
+
+    useEffect(() => {
+        setRedirect(true)
+    }, [username, pfp])
 
     
     const handleLogout = async () => {
@@ -61,7 +68,7 @@ export function TriponometryRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout}/>}>
+                <Route path={'/'} element={<App username={username} pfp={pfp} isGoogle={isGoogle} logout={handleLogout} redirect={redirect} setRedirect={setRedirect}/>}>
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
@@ -72,6 +79,7 @@ export function TriponometryRoutes() {
                     <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage logout={handleCookieExpired} />))}/>
                     <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage logout={handleCookieExpired} />))}/>
                     <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<EditCalculationPage logout={handleCookieExpired}/>))}/>
+                    <Route path="ayuda" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<HelpPage />))}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>

@@ -3,6 +3,8 @@ import {Link as ReachLink} from "react-router-dom";
 import { isEmpty } from "lodash";
 import { ChangePasswordModal } from "./modals/ChangePasswordModal";
 import {MdLogin, MdLogout} from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { BiHelpCircle } from "react-icons/bi";
 
 const Logo = () => {
     return (
@@ -28,11 +30,16 @@ const NavigationMenu = () =>
         </Link>
     </>
 
-const NavBar = (props) =>{
+const NavBar = (props) => {
+    const navigate = useNavigate()
+
     const handleLogClick = () => {
         props.logout()
     }
 
+    const navigateToHelp = () => {
+        navigate(`/ayuda`)
+    }
 
     const loginlogout = () => {
         if(!isEmpty(props.username)){
@@ -50,10 +57,19 @@ const NavBar = (props) =>{
         }
     }
 
-    const changePassItem = () =>
-    {
+    const changePassItem = () => {
         if(!isEmpty(props.username) && !props.isGoogle){
             return <ChangePasswordModal/>
+        }
+    }
+
+    const helpItem = () => {
+        if(!isEmpty(props.username)){
+            return(               
+                <MenuItem icon={<BiHelpCircle/>} onClick={navigateToHelp}>
+                    Ayuda
+                </MenuItem>
+            )
         }
     }
 
@@ -67,6 +83,7 @@ const NavBar = (props) =>{
                     </WrapItem>
                 </MenuButton>
                 <MenuList>
+                    {helpItem()}
                     {changePassItem()}
                     {loginlogout()}
                 </MenuList>
