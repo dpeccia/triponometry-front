@@ -15,6 +15,7 @@ import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
 import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
+import { HelpPage } from "./component/pages/HelpPage";
 import { isEmpty } from "lodash";
 
 export function TriponometryRoutes() {
@@ -78,6 +79,7 @@ export function TriponometryRoutes() {
                     <Route path="mis-calculos" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationsPage logout={handleCookieExpired} />))}/>
                     <Route path="mis-calculos/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<MyCalculationPage logout={handleCookieExpired} />))}/>
                     <Route path="mis-calculos/:id/edicion" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<EditCalculationPage logout={handleCookieExpired}/>))}/>
+                    <Route path="ayuda" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<HelpPage />))}/>
                     <Route path={'*'} element={<NotFound/>}/>
                 </Route>
             </Routes>
