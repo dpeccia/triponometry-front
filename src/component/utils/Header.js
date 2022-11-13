@@ -1,4 +1,4 @@
-import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuItem, Box} from "@chakra-ui/react";
+import {Avatar, Flex, Image, Link, WrapItem, Menu, MenuButton, MenuList, MenuItem, Box, MenuDivider} from "@chakra-ui/react";
 import {Link as ReachLink} from "react-router-dom";
 import { isEmpty } from "lodash";
 import { ChangePasswordModal } from "./modals/ChangePasswordModal";
@@ -63,6 +63,20 @@ const NavBar = (props) => {
         }
     }
 
+    const aboutThis = () => {
+        return(
+            <MenuItem as={ReachLink} to="/about-this">
+                <Image
+                    boxSize='1.5rem'
+                    borderRadius='full'
+                    src='../logo-triponometry.png'
+                    mr={1}
+                />
+                Sobre Triponometry
+            </MenuItem>
+        )
+    }
+
     const helpItem = () => {
         if(!isEmpty(props.username)){
             return(               
@@ -86,6 +100,8 @@ const NavBar = (props) => {
                     {helpItem()}
                     {changePassItem()}
                     {loginlogout()}
+                    <MenuDivider />
+                    {aboutThis()}
                 </MenuList>
             </Menu>
         </Flex>
