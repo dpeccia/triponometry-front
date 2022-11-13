@@ -15,6 +15,7 @@ import {ExploredCalculationPage} from "./component/pages/ExploredCalculationPage
 import { EditCalculationPage } from "./component/pages/EditCalculationPage";
 import { PlantillaCalculationPage } from "./component/pages/PlantillaCalculationPage";
 import { SpinnerSearchBox } from "./component/utils/SpinnerSearchBox";
+import {AboutThisPage} from "./component/pages/AboutThisPage";
 import { HelpPage } from "./component/pages/HelpPage";
 import { isEmpty } from "lodash";
 
@@ -72,6 +73,7 @@ export function TriponometryRoutes() {
                     <Route path="" exact element={(!isLoggedIn() ? (<LandingPage/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-in" exact element={(!isLoggedIn() ? (<LoginPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
                     <Route path="sign-up" exact element={(!isLoggedIn() ? (<SignUpPage changeAvatar={changeAvatar}/>) : (<Navigate to="/mis-calculos" />))}/>
+                    <Route path="about-this" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<AboutThisPage/>))}/>
                     <Route path="nuevo" exact element={(<NewCalculationPage edit={false} beginInput='CITY' loggedIn={isLoggedIn()} logout={handleCookieExpired}/>)}/>
                     <Route path="explorar" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExplorerPage logout={handleCookieExpired}/>))}/>
                     <Route path="explorar/:id" exact element={(!isLoggedIn() ? (<Navigate to="/"/>) : (<ExploredCalculationPage logout={handleCookieExpired} />))}/>
