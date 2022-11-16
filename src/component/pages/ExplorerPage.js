@@ -1,9 +1,10 @@
 import {Text, Flex} from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import { checkErrorTokenExpired, getAllTrips } from '../../BackendService';
+import { getAllTrips } from '../../BackendService';
 import { SpinnerSearchBox } from '../utils/SpinnerSearchBox';
 import { ExplorerTable } from '../explorer/ExplorerTable';
 import { useToast } from '../utils/useToast';
+import {countryToAlpha3} from "country-to-iso";
 
 export const ExplorerPage = ({logout}) => {
     const [_, showErrorToast] = useToast()
@@ -24,7 +25,7 @@ export const ExplorerPage = ({logout}) => {
                     imageUrl: trip.calculatorInputs.city.imageUrl,
                     days: trip.calculatorOutputs.daysAmount,
                     city: trip.calculatorInputs.city.name,
-                    country: trip.calculatorInputs.city.country,
+                    country: countryToAlpha3(trip.calculatorInputs.city.country),
                     rating: trip.rating,
                 })
             })
