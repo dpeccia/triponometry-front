@@ -7,7 +7,6 @@ import {ColumnFilter} from "./ColumnFilter";
 import {useMemo} from 'react';
 import {useNavigate} from "react-router";
 import Flag from 'react-world-flags'
-import {countryToAlpha3} from "country-to-iso";
 import {BsFillPatchCheckFill} from 'react-icons/bs';
 
 export const ExplorerTable = ({ data }) => {
@@ -34,7 +33,7 @@ export const ExplorerTable = ({ data }) => {
                 Header: 'Pais',
                 accessor: 'country',
                 Filter: ColumnFilter,
-                Cell: (tableProps) => { return styleCountry(countryToAlpha3(tableProps.row.original.country))}
+                Cell: (tableProps) => { return styleCountry(tableProps.row.original.country)}
 
             },
             {
